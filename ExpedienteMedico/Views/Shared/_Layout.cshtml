@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ExpedienteMedico</title>
+    <title>@ViewData["Title"] - MedicalHistory</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -21,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarColor03">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link asp-controller="Home" asp-action="Index">Home
+                            <a class="nav-link" asp-controller="Home" asp-action="Index" asp-area="Patient">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -39,6 +39,7 @@
                             </div>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial"/>
                     <form class="d-flex">
                         <input class="form-control me-sm-2" type="text" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
