@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Patient\Controllers\" />
-    <Folder Include="Areas\Physician\Controllers\" />
     <Folder Include="Models\ViewModels\" />
   </ItemGroup>
 
