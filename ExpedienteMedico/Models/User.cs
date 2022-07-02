@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpedienteMedico.Models
 {
-    public class User
+    public class User : IdentityUser
     {
 
         [Key]
