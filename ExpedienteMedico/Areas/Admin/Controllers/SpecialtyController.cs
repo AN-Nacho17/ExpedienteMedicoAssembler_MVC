@@ -2,7 +2,9 @@
 
 namespace ExpedienteMedico.Controllers
 {
-    public class PhysicianController : Controller
+
+    [Area("Admin")]
+    public class SpecialtyController : Controller
     {
         public IActionResult Index()
         {
