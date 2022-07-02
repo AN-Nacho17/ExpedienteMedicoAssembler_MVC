@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Specialty\Views\Specialties\" />
     <Folder Include="Models\ViewModels\" />
   </ItemGroup>
 
