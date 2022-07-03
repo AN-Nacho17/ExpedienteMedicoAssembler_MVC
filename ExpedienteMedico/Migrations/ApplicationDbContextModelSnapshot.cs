@@ -24,21 +24,31 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>
                 {
-                    b.Property<int>("CollegeNumber")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CollegeNumber"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CollegeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("PicturePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CollegeNumber");
+                    b.HasKey("Id");
 
                     b.ToTable("Physics");
                 });
@@ -55,12 +65,12 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PhysicianCollegeNumber")
+                    b.Property<int?>("PhysicianId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhysicianCollegeNumber");
+                    b.HasIndex("PhysicianId");
 
                     b.ToTable("Specialties");
                 });
@@ -288,7 +298,7 @@ namespace ExpedienteMedico.Migrations
                 {
                     b.HasOne("ExpedienteMedico.Models.Physician", null)
                         .WithMany("Specialties")
-                        .HasForeignKey("PhysicianCollegeNumber");
+                        .HasForeignKey("PhysicianId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

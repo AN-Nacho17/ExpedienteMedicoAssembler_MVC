@@ -1,0 +1,100 @@
+﻿@model ExpedienteMedico.Models.ViewModels.PhysicianVM
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+
+    <input asp-for="Physician.Id" hidden />
+    <input asp-for="Physician.PicturePath" hidden />
+
+    <div class="row">
+        <div class="col-10">
+            <div class="border p-3 mt-4 row">
+
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.Physician.Id == 0 ? "Create" : "Update") Physician</h2><hr />
+                </div>
+
+                <div asp-validation-summary="All"></div>
+
+
+                <div class="mb-3">
+                    <label asp-for="Physician.Name"></label>
+                    <input asp-for="Physician.Name" class="form-control" />
+                    <span asp-validation-for="Physician.Name" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="Physician.Email"></label>
+                    <input asp-for="Physician.Email" class="form-control" />
+                    <span asp-validation-for="Physician.Email" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="Physician.PhoneNumber"></label>
+                    <input asp-for="Physician.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="Physician.CollegeNumber"></label>
+                    <input asp-for="Physician.CollegeNumber" class="form-control" />
+                    <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-3 col-6">
+                    <label asp-for="Physician.Specialties"></label>
+                    <select asp-for="Physician.Specialties" asp-items="@Model.SpecialtyList" class="form-select">
+                        <option disabled selected>---Select Category----</option>
+                    </select>
+                    <span asp-validation-for="Physician.Specialties" class="text-danger"></span>
+                </div>
+
+
+                @if (Model.Physician.Id == 0)
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width: 150px">Save</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width: 150px">Update</button>
+                }
+
+
+                <a asp-controller="Physician" asp-action="Index" class="btn btn-secondary" style="width: 150px">
+                    Back to list
+                </a>
+            </div>
+        </div>
+        <div class="col-2">
+            <img src="~/@Model.Physician.PicturePath" width="100%"
+                 style="border-radius:5px; border=1px solid #bbb9b9" />
+        </div>
+    </div>
+
+</form>
+
+
+<script>
+    function ValidateInput() {
+        if (document.getElementById("uploadBox").value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Uploading an image is a requirement!'
+            });
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<script src="https://cdn.tiny.cloud/1/q42wetwxuzt2jd885ctfc2r6v7ilnpi30khtp3acymi4jzw0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+        toolbar_mode: 'floating',
+    });
+</script>

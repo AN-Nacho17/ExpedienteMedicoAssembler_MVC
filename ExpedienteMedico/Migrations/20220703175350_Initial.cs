@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpedienteMedico.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,14 +55,17 @@ namespace ExpedienteMedico.Migrations
                 name: "Physics",
                 columns: table => new
                 {
-                    CollegeNumber = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollegeNumber = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
                     PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Physics", x => x.CollegeNumber);
+                    table.PrimaryKey("PK_Physics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,16 +181,16 @@ namespace ExpedienteMedico.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhysicianCollegeNumber = table.Column<int>(type: "int", nullable: true)
+                    PhysicianId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specialties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Specialties_Physics_PhysicianCollegeNumber",
-                        column: x => x.PhysicianCollegeNumber,
+                        name: "FK_Specialties_Physics_PhysicianId",
+                        column: x => x.PhysicianId,
                         principalTable: "Physics",
-                        principalColumn: "CollegeNumber");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -230,9 +233,9 @@ namespace ExpedienteMedico.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Specialties_PhysicianCollegeNumber",
+                name: "IX_Specialties_PhysicianId",
                 table: "Specialties",
-                column: "PhysicianCollegeNumber");
+                column: "PhysicianId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
