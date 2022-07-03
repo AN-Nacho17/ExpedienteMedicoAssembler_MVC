@@ -4,7 +4,7 @@ namespace ExpedienteMedico.Controllers
 {
 
     [Area("Admin")]
-    public class SpecialtyController : Controller
+    public class UserController : Controller
     {
         public IActionResult Index()
         {

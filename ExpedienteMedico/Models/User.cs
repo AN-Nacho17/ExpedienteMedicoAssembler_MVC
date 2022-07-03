@@ -18,6 +18,5 @@ namespace ExpedienteMedico.Models
         [Required]
         public string Password { get; set; }
 
-
     }
 }
