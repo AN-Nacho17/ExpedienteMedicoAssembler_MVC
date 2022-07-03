@@ -1,12 +1,14 @@
 ﻿using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExpedienteMedico.Controllers
 {
 
     [Area("Admin")]
+    [Authorize(Roles = Roles.Role_Admin)]
     public class SpecialtyController : Controller
     {
 
@@ -18,7 +20,6 @@ namespace ExpedienteMedico.Controllers
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
         }
-
 
         public IActionResult Index()
         {

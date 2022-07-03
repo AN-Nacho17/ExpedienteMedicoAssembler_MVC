@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ExpedienteMedico.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
 </head>
 <body>
     <header>
@@ -34,8 +37,8 @@
                         <li class="nav-item dropdown px-1">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Access</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Specialty">Physician Specialties</a>
-                                <a class="dropdown-item" asp-area="Physician" asp-controller="Physician">Manage Physics</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Specialty" asp-action="Index">Manage Physician Specialties</a>
+                                <a class="dropdown-item" asp-area="Physician" asp-controller="Physician" asp-action="Index">Manage Physicians</a>
                                 <a class="dropdown-item" href="#">Something else here</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>
@@ -64,7 +67,12 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

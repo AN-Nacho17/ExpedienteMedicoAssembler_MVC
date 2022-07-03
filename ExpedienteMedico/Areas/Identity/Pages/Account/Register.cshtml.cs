@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using ExpedienteMedico.Models;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -105,10 +106,15 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            public int Id { get; set; } //Cedula
+            public string Id { get; set; } //Cedula
 
             [Required]
-            public string Name { get; set; }
+            public string CompleteName { get; set; }
+
+            [Required]
+            public string PhoneNumber { get; set; }
+
+            public string? Role { get; set; }
 
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
@@ -149,8 +155,9 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.UserName = Input.Name;
-                user.Provice = Input.Id;
+                user.CompleteName = Input.CompleteName;
+                user.Id = Input.Id;
+                user.PhoneNumber = Input.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -160,7 +167,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
 
                     if (Input.Role == null)
                     {
-                        await _userManager.AddToRoleAsync(user, Roles.Role_Individual);
+                        await _userManager.AddToRoleAsync(user, Roles.Role_Patient); //En caso de un auto registro
                     }
                     else
                     {
@@ -199,11 +206,11 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private ApplicationUser CreateUser()
+        private User CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                return Activator.CreateInstance<User>();
             }
             catch
             {

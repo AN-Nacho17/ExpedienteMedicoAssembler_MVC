@@ -283,11 +283,7 @@ namespace ExpedienteMedico.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("CompleteName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

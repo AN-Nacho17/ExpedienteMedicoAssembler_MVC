@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220703175350_Initial")]
-    partial class Initial
+    [Migration("20220703190835_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -285,11 +285,7 @@ namespace ExpedienteMedico.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("CompleteName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
