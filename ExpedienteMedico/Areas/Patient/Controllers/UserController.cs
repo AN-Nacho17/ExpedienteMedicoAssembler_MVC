@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExpedienteMedico.Controllers
 {
@@ -8,7 +9,6 @@ namespace ExpedienteMedico.Controllers
     {
         public IActionResult Index()
         {
-
             return View();
         }
     }
