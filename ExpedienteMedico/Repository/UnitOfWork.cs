@@ -8,11 +8,13 @@ namespace ExpedienteMedico.Repository
         private ApplicationDbContext _db;
 
         public ISpecialtyRepository Specialty { get; private set; }
+        public IPhysicianRepository Physician { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Specialty = new SpecialtyRepository(_db);
+            Physician = new PhysicianRepository(_db);
             
         }
 
