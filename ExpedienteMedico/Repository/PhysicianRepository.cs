@@ -15,7 +15,7 @@ namespace ExpedienteMedico.Repository
 
         public void Update(Physician obj)
         {
-            _db.Physics.Update(obj);
+            _db.Physicians.Update(obj);
         }
     }
 }

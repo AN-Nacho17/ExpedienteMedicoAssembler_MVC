@@ -50,7 +50,7 @@ namespace ExpedienteMedico.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Physics");
+                    b.ToTable("Physicians");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Specialty", b =>
@@ -284,6 +284,10 @@ namespace ExpedienteMedico.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("CompleteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

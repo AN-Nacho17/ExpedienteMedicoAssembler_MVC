@@ -106,7 +106,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            public string Id { get; set; } //Cedula
+            public string UserId { get; set; } //Cedula
 
             [Required]
             public string CompleteName { get; set; }
@@ -156,7 +156,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.CompleteName = Input.CompleteName;
-                user.Id = Input.Id;
+                user.Id = Input.UserId;
                 user.PhoneNumber = Input.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

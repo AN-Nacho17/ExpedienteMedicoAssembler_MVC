@@ -26,7 +26,7 @@ namespace ExpedienteMedico.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Physician> objPhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "");
+            IEnumerable<Physician> objPhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "Specialties");
             return View(objPhysicianList);
         }
 
@@ -47,15 +47,12 @@ namespace ExpedienteMedico.Controllers
 
             if (id == null || id <= 0)
             {
-                //Create Physician
-                //ViewBag.CategoryList = CategoryList;
-                //ViewData["CoverTypeList"] = CoverTypeList;
 
                 return View(PhysicianVM);
             }
             else
             {
-                PhysicianVM.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id);
+                PhysicianVM.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, includeProperties: "Specialties");
                 return View(PhysicianVM);
             }
         }
@@ -91,16 +88,19 @@ namespace ExpedienteMedico.Controllers
                     }
                     obj.Physician.PicturePath = @"images\Physicians\" + fileName + extension;
                 }
-
-
                 if (obj.Physician.Id == 0)
+                {
                     _unitOfWork.Physician.Add(obj.Physician);
+                    TempData["success"] = "Physician saved successfully";
+                }
                 else
+                {
                     _unitOfWork.Physician.Update(obj.Physician);
+                    TempData["success"] = "Physician updated successfully";
+                }
 
                 _unitOfWork.Save();
             }
-            TempData["success"] = "Physician saved successfully";
             return RedirectToAction("Index");
         }
 
@@ -112,7 +112,7 @@ namespace ExpedienteMedico.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var PhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "Category,CoverType");
+            var PhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "Specialties");
             return Json(new { data = PhysicianList, success = true });
         }
 

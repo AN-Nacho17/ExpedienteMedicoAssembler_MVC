@@ -1,4 +1,5 @@
-﻿@model ExpedienteMedico.Models.ViewModels.PhysicianVM
+﻿@using Microsoft.CodeAnalysis
+@model ExpedienteMedico.Models.ViewModels.PhysicianVM
 
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
@@ -22,30 +23,35 @@
                     <input asp-for="Physician.Name" class="form-control" />
                     <span asp-validation-for="Physician.Name" class="text-danger"></span>
                 </div>
-                
+
                 <div class="mb-3">
                     <label asp-for="Physician.Email"></label>
                     <input asp-for="Physician.Email" class="form-control" />
                     <span asp-validation-for="Physician.Email" class="text-danger"></span>
                 </div>
-                
+
                 <div class="mb-3">
                     <label asp-for="Physician.PhoneNumber"></label>
                     <input asp-for="Physician.PhoneNumber" class="form-control" />
                     <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
                 </div>
-                
+
                 <div class="mb-3">
                     <label asp-for="Physician.CollegeNumber"></label>
                     <input asp-for="Physician.CollegeNumber" class="form-control" />
                     <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
                 </div>
 
+                <div class="mb-3 col-6">
+                    <label asp-for="Physician.PicturePath"></label>
+                    <input id="uploadBox" type="file" name="file" class="form-control" />
+                    <span asp-validation-for="Physician.PicturePath" class="text-danger"></span>
+                </div>
 
                 <div class="mb-3 col-6">
                     <label asp-for="Physician.Specialties"></label>
-                    <select asp-for="Physician.Specialties" asp-items="@Model.SpecialtyList" class="form-select">
-                        <option disabled selected>---Select Category----</option>
+                    <select asp-for="Physician.Specialties" asp-items="@Model.SpecialtyList" class="form-select" id="specialtyList">
+                        <option disabled selected>---Select Specialty----</option>
                     </select>
                     <span asp-validation-for="Physician.Specialties" class="text-danger"></span>
                 </div>
@@ -53,15 +59,15 @@
 
                 @if (Model.Physician.Id == 0)
                 {
-                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width: 150px">Save</button>
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary">Save</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-primary" style="width: 150px">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 }
 
 
-                <a asp-controller="Physician" asp-action="Index" class="btn btn-secondary" style="width: 150px">
+                <a asp-controller="Physician" asp-action="Index" class="btn btn-primary">
                     Back to list
                 </a>
             </div>
@@ -87,14 +93,5 @@
         }
         return true;
     }
-</script>
-
-<script src="https://cdn.tiny.cloud/1/q42wetwxuzt2jd885ctfc2r6v7ilnpi30khtp3acymi4jzw0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-<script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
-        toolbar_mode: 'floating',
-    });
+    
 </script>

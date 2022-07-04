@@ -29,6 +29,7 @@ namespace ExpedienteMedico.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompleteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,7 +52,7 @@ namespace ExpedienteMedico.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Physics",
+                name: "Physicians",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -64,7 +65,7 @@ namespace ExpedienteMedico.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Physics", x => x.Id);
+                    table.PrimaryKey("PK_Physicians", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,9 +187,9 @@ namespace ExpedienteMedico.Migrations
                 {
                     table.PrimaryKey("PK_Specialties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Specialties_Physics_PhysicianId",
+                        name: "FK_Specialties_Physicians_PhysicianId",
                         column: x => x.PhysicianId,
-                        principalTable: "Physics",
+                        principalTable: "Physicians",
                         principalColumn: "Id");
                 });
 
@@ -264,7 +265,7 @@ namespace ExpedienteMedico.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Physics");
+                name: "Physicians");
         }
     }
 }

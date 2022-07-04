@@ -1,6 +1,9 @@
-﻿namespace ExpedienteMedico.Repository.IRepository
+﻿using ExpedienteMedico.Models;
+
+namespace ExpedienteMedico.Repository.IRepository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
+        void Update(User obj);
     }
 }

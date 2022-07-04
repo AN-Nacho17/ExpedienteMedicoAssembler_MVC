@@ -4,6 +4,7 @@
     {
         ISpecialtyRepository Specialty { get; }
         IPhysicianRepository Physician { get; }
+        IUserRepository User { get; }
 
         void Save();
     }

@@ -7,7 +7,7 @@ namespace ExpedienteMedico.Models
     {
 
         [Required]
-        public string Id { get; set; } //Cedula
+        public string UserId { get; set; } //Cedula
 
         [Required]
         public string CompleteName { get; set; }

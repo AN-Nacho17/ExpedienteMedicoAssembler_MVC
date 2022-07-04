@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220703190835_initial")]
+    [Migration("20220704032234_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace ExpedienteMedico.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Physics");
+                    b.ToTable("Physicians");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Specialty", b =>
@@ -286,6 +286,10 @@ namespace ExpedienteMedico.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("CompleteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

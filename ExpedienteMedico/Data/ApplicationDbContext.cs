@@ -14,7 +14,8 @@ namespace ExpedienteMedico.Data
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Physician> Physics { get; set; }
-
+        public DbSet<Physician> Physicians { get; set; }
     }
+
 }
+
