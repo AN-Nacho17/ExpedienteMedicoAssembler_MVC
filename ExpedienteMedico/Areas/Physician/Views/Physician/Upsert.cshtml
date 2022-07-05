@@ -48,14 +48,6 @@
                     <span asp-validation-for="Physician.PicturePath" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3 col-6">
-                    <label asp-for="Physician.Specialties"></label>
-                    <select asp-for="Physician.Specialties" asp-items="@Model.SpecialtyList" class="form-select" id="specialtyList">
-                        <option disabled selected>---Select Specialty----</option>
-                    </select>
-                    <span asp-validation-for="Physician.Specialties" class="text-danger"></span>
-                </div>
-
 
                 @if (Model.Physician.Id == 0)
                 {
