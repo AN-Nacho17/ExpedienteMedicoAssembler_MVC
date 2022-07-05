@@ -27,8 +27,5 @@ namespace ExpedienteMedico.Models
         //[Required]
         public ICollection<PhysicianSpecialty> PhysicianSpecialties { get; set; }
 
-
-
-
     }
 }
