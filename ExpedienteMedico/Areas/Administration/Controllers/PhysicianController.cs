@@ -4,10 +4,10 @@ using ExpedienteMedico.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ExpedienteMedico.Controllers
+namespace ExpedienteMedico.Areas.Administration.Controllers
 {
 
-    [Area("Physician")]
+    [Area("Administration")]
 
     public class PhysicianController : Controller
     {

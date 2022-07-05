@@ -1,17 +1,12 @@
-﻿
-using ExpedienteMedico.Data;
-using ExpedienteMedico.Models;
+﻿using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
-using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
-namespace ExpedienteMedico.Controllers
+namespace ExpedienteMedico.Areas.Administration.Controllers
 {
 
-    [Area("Patient")]
+    [Area("Administration")]
     public class UserController : Controller
     {
         private IUnitOfWork _db;
