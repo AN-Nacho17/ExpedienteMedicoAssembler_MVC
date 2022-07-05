@@ -24,8 +24,8 @@ namespace ExpedienteMedico.Models
         [ValidateNever]
         public string PicturePath { get; set; }
 
-        [Required]
-        public List<Specialty> Specialties { get; set; }
+        //[Required]
+        //public ICollection<PhysicianSpecialty> PhysicianSpecialties { get; set; }
 
 
 

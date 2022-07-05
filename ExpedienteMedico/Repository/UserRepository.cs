@@ -15,7 +15,15 @@ namespace ExpedienteMedico.Repository
 
         public void Update(User obj)
         {
-            _db.Users.Update(obj);
+            var objFromDB = _db.Users.FirstOrDefault(u => u.Id == obj.Id);
+            if (objFromDB != null)
+            {
+                objFromDB.CompleteName = obj.CompleteName;
+                objFromDB.UserId = obj.UserId;
+                objFromDB.Email = obj.Email;
+                objFromDB.PhoneNumber = obj.PhoneNumber;
+            }
         }
+
     }
 }

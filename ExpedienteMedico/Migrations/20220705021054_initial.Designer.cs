@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220704032234_initial")]
+    [Migration("20220705021054_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,12 +67,7 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PhysicianId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PhysicianId");
 
                     b.ToTable("Specialties");
                 });
@@ -296,13 +291,6 @@ namespace ExpedienteMedico.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("ExpedienteMedico.Models.Specialty", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.Physician", null)
-                        .WithMany("Specialties")
-                        .HasForeignKey("PhysicianId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -352,11 +340,6 @@ namespace ExpedienteMedico.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>
-                {
-                    b.Navigation("Specialties");
                 });
 #pragma warning restore 612, 618
         }
