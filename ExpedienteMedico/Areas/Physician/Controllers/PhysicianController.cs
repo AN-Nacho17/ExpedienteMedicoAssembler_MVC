@@ -26,7 +26,7 @@ namespace ExpedienteMedico.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Physician> objPhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "Specialties");
+            IEnumerable<Physician> objPhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "PhysicianSpecialties");
             return View(objPhysicianList);
         }
 

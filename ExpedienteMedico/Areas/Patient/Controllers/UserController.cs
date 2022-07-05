@@ -2,9 +2,11 @@
 using ExpedienteMedico.Data;
 using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpedienteMedico.Controllers
 {
@@ -13,10 +15,12 @@ namespace ExpedienteMedico.Controllers
     public class UserController : Controller
     {
         private IUnitOfWork _db;
+        private UserManager<IdentityUser> _userManager;
 
-        public UserController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
         {
             _db = unitOfWork;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -59,16 +63,14 @@ namespace ExpedienteMedico.Controllers
         }
 
         //POST
-        public IActionResult Delete(string? id)
+        public IActionResult Banned(string? id)
         {
-            var obj = _db.User.GetFirstOrDefault(u => u.Id == id);
-
-            if (obj == null)
-                return NotFound();
-
-            _db.User.Remove(obj);
+            if (id != null)
+            {
+                _userManager.SetLockoutEnabledAsync(_db.User.GetFirstOrDefault(x => x.Id == id), true);
+            }
             _db.Save();
-            TempData["success"] = "User deleted successfully";
+
             return RedirectToAction("Index");
         }
 
