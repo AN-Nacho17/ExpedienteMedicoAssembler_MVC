@@ -27,8 +27,5 @@ namespace ExpedienteMedico.Models
         [Required]
         public List<Specialty> Specialties { get; set; }
 
-
-
-
     }
 }

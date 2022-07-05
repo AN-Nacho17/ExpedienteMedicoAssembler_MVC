@@ -11,5 +11,7 @@ namespace ExpedienteMedico.Models
         [Required]
         public string Name { get; set; }
 
+        public List<Physician> physics { get; set; }
+
     }
 }
