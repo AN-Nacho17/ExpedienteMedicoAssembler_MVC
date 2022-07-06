@@ -49,65 +49,52 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Specialty obj)
         {
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Specialty.Update(obj);
                 _unitOfWork.Save();
             }
+
             TempData["success"] = "Specialty edited succesfully";
             return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int? id)
         {
-            if (id == null || id <= 0)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
-            //var SpecialtyFromDb = _unitOfWork.Categories.FirstOrDefault(x => x.Id == id);
+            var user = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
 
-            if (specialty == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(specialty);
+            return View(user);
         }
-
-        //GET
+        
         public IActionResult Delete(int? id)
         {
-            if (id == null || id <= 0)
-            {
-                return NotFound();
-            }
-
-            var Specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
-            //var SpecialtyFromDb = _unitOfWork.Categories.FirstOrDefault(x => x.Id == id);
-
-            if (Specialty == null)
-            {
-                return NotFound();
-            }
-
-            return View(Specialty);
-        }
-
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(Specialty obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Specialty.Remove(obj);
-                _unitOfWork.Save();
-            }
+            var speciality = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
+            _unitOfWork.Specialty.Remove(speciality);
+            _unitOfWork.Save();
 
             TempData["success"] = "Specialty deleted succesfully";
             return RedirectToAction("Index");
         }
+
+
+        #region API
+
+        public IActionResult GetAll()
+        {
+            var specialty = _unitOfWork.Specialty.GetAll();
+            return Json(new { data = specialty, success = true });
+        }
+        #endregion
     }
 }
