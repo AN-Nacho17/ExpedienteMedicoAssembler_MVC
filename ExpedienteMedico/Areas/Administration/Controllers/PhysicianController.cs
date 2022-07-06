@@ -3,6 +3,8 @@ using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpedienteMedico.Areas.Administration.Controllers
 {
@@ -52,7 +54,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             }
             else
             {
-                PhysicianVM.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, includeProperties: "Specialties");
+                PhysicianVM.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, null, includeProperties: "PhysicianSpecialties");
                 return View(PhysicianVM);
             }
         }
@@ -112,14 +114,24 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var PhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "Specialties");
+            var PhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "PhysicianSpecialties");
+            for (int i = 0; i < PhysicianList.Count(); i++)
+            {
+                var obj = PhysicianList.ElementAt(i);
+                for (int j = 0; j < obj.PhysicianSpecialties.Count(); j++)
+                {
+                    var aux = obj.PhysicianSpecialties.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(u => u.SpecialtyId == aux.SpecialtyId, x => x.SpecialtyId == aux.SpecialtyId, includeProperties: "Specialty");
+                }
+            }
+
             return Json(new { data = PhysicianList, success = true });
         }
 
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            var obj = _unitOfWork.Physician.GetFirstOrDefault(x => x.Id == id);
+            var obj = _unitOfWork.Physician.GetFirstOrDefault(x => x.Id == id, null);
 
             if (obj == null)
                 return Json(new { success = false, message = "Error thile deleting" });
@@ -130,7 +142,6 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             {
                 System.IO.File.Delete(oldImageUrl);
             }
-
 
             _unitOfWork.Physician.Remove(obj);
             _unitOfWork.Save();

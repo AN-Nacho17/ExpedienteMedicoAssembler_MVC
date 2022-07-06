@@ -6,7 +6,7 @@ namespace ExpedienteMedico.Repository.IRepository
     {
         IEnumerable<T> GetAll(string? includeProperties = null);
 
-        T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        T GetFirstOrDefault(Expression<Func<T, bool>> filter, Expression<Func<T, bool>>? filter2, string? includeProperties = null);
 
         void Add(T entity);
 

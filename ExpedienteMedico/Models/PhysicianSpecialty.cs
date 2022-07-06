@@ -8,12 +8,9 @@ namespace ExpedienteMedico.Models
         [Required]
         public int PhysicianId { get; set; }
 
-        public Physician Physician { get; set; }
-
         [Required]
         public int SpecialtyId { get; set; }
-
-        [Required]
+        
         public Specialty Specialty { get; set; }
 
 

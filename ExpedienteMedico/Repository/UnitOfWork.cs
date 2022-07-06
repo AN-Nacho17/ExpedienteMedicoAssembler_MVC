@@ -12,13 +12,16 @@ namespace ExpedienteMedico.Repository
 
         public IUserRepository User { get; private set; }
 
+        public IPhysicianSpecialty PhysicianSpecialty { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Specialty = new SpecialtyRepository(_db);
             Physician = new PhysicianRepository(_db);
             User = new UserRepository(_db);
-            
+            PhysicianSpecialty = new PhysicianSpecialtyRepository(_db);
+
         }
 
         public void Save()

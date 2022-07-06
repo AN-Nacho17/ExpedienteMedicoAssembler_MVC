@@ -65,7 +65,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id);
+            var specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
             //var SpecialtyFromDb = _unitOfWork.Categories.FirstOrDefault(x => x.Id == id);
 
             if (specialty == null)
@@ -84,7 +84,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var Specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id);
+            var Specialty = _unitOfWork.Specialty.GetFirstOrDefault(x => x.Id == id, null);
             //var SpecialtyFromDb = _unitOfWork.Categories.FirstOrDefault(x => x.Id == id);
 
             if (Specialty == null)

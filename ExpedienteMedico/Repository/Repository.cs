@@ -20,9 +20,7 @@ namespace ExpedienteMedico.Repository
         {
             dbSet.Add(entity);
         }
-
-
-        //"Category,CoverType" 
+        
         public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
@@ -37,7 +35,7 @@ namespace ExpedienteMedico.Repository
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, Expression<Func<T, bool>>? filter2 , string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -49,7 +47,14 @@ namespace ExpedienteMedico.Repository
                 }
             }
 
-            query = query.Where(filter);
+            if (filter2 != null)
+            {
+                query = query.Where(filter).Where(filter2);
+            }
+            else
+            {
+                query = query.Where(filter);
+            }
             return query.FirstOrDefault();
         }
 

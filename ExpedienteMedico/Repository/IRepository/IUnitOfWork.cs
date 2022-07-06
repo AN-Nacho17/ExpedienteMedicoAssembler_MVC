@@ -6,6 +6,8 @@
         IPhysicianRepository Physician { get; }
         IUserRepository User { get; }
 
+        IPhysicianSpecialty PhysicianSpecialty { get; }
+
         void Save();
     }
 }

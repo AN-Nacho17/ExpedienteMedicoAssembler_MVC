@@ -4,6 +4,7 @@ using ExpedienteMedico.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220705222048_adding intermediate table in context")]
+    partial class addingintermediatetableincontext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,12 +82,7 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PhysicianId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PhysicianId");
 
                     b.ToTable("Specialties");
                 });
@@ -328,13 +325,6 @@ namespace ExpedienteMedico.Migrations
                     b.Navigation("Specialty");
                 });
 
-            modelBuilder.Entity("ExpedienteMedico.Models.Specialty", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.Physician", null)
-                        .WithMany("Specialties")
-                        .HasForeignKey("PhysicianId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -389,8 +379,6 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>
                 {
                     b.Navigation("PhysicianSpecialties");
-
-                    b.Navigation("Specialties");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Specialty", b =>

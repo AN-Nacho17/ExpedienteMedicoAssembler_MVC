@@ -32,7 +32,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var user = _db.User.GetFirstOrDefault(x => x.Id == id);
+            var user = _db.User.GetFirstOrDefault(x => x.Id == id, null);
             //var categoryFromDb = _db.Categories.FirstOrDefault(x => x.Id == id);
 
             if (user == null)
@@ -58,15 +58,16 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         }
 
         //POST
+        [HttpPost]
         public IActionResult Banned(string? id)
         {
             if (id != null)
             {
-                _userManager.SetLockoutEnabledAsync(_db.User.GetFirstOrDefault(x => x.Id == id), true);
+                _userManager.SetLockoutEnabledAsync(_db.User.GetFirstOrDefault(x => x.Id == id, null), true);
+                _userManager.SetLockoutEndDateAsync(_db.User.GetFirstOrDefault(x => x.Id == id, null), DateTimeOffset.MaxValue);
             }
             _db.Save();
-
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = "Banned Successfully" });
         }
 
         #region API

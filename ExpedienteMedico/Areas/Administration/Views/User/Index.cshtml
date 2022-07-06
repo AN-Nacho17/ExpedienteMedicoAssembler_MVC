@@ -1,4 +1,6 @@
 ﻿
+@using ExpedienteMedico.Utility
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<User>
 
 <partial name="_Notifications"></partial>
@@ -21,58 +23,33 @@
 
     <br>
 
-    <table class="table">
+    <table id="tblData" class="table">
         <thead> 
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CompleteName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                
-                <th></th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompleteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            
+            <th>
+                Actions
+            </th>
+
+        </tr>
         </thead>
-        <tbody>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompleteName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        <a asp-controller="User" asp-action="Edit" asp-route-id=@item.Id  class="btn btn-primary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </td>
-
-                    <td>
-                        <a asp-controller="User" asp-action="Banned" asp-route-id=@item.Id  class="btn btn-primary">
-                            <i class="bi bi-lock-fill"></i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
     </table>
 
+
 </div>
+
+@section Scripts{
+    <script src="~/js/jsUser.js"></script>
+}

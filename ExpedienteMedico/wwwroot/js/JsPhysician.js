@@ -1,34 +1,31 @@
-var dataTable;
+﻿var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
+    dataTable = $('#tblDataPhy').DataTable({
         "ajax": {
-            "url": "/Physician/Physician/GetAll"
+            "url": "/Administration/Physician/getall"
         },
         "columns": [
             { "data": "name", "width": "15%" },
             { "data": "collegeNumber", "width": "15%" },
             { "data": "email", "width": "15%" },
             { "data": "phoneNumber", "width": "15%" },
-            {
-                "data": "specialties[, ].name", "width": "15%"
-            },
-
+            { "data": "physicianSpecialties[, ].specialty.name" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="btn-group w-75">
 
-                                <a href="/Physician/Physician/Upsert?id=${data}"
+                                <a href="/Administration/Physician/Upsert?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
-							    <a onClick=Delete('/Physician/Physician/Delete/${data}') class="btn btn-danger mx-2">
+							    <a onClick=Delete('/Administration/Physician/Delete/${data}') class="btn btn-danger mx-2">
 							    <i class="bi bi-trash"></i>Delete</a>
 
                             </div
