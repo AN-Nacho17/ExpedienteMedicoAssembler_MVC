@@ -1,10 +1,10 @@
-﻿using ExpedienteMedico.Models;
-using ExpedienteMedico.Models.ViewModels;
-using ExpedienteMedico.Repository.IRepository;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
+using System.Windows;
+using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.ViewModels;
+using ExpedienteMedico.Repository.IRepository;
 
 namespace ExpedienteMedico.Areas.Administration.Controllers
 {
@@ -35,38 +35,42 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         //GET ********************************
         public IActionResult Upsert(int? id)   //Update + Insert
         {
+            var physician = new Physician();
+            physician.Id = 0;
 
-            PhysicianVM PhysicianVM = new()
+            var vm = new PhysicianCreateVM()
             {
                 Physician = new(),
-                SpecialtyList = _unitOfWork.Specialty.GetAll().Select(i => new SelectListItem
+                Specialties = _unitOfWork.Specialty.GetAll().Select(i => new SpecialtySelectVM()
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
+                    SpecialtyId = i.Id,
+                    Name = i.Name,
+                    IsSelected = false
+                }).ToList()
             };
 
 
-            if (id == null || id <= 0)
+            if (id == 0 || id == null)
             {
-
-                return View(PhysicianVM);
+                return View(vm);
             }
             else
             {
-                PhysicianVM.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, null, includeProperties: "PhysicianSpecialties");
-                return View(PhysicianVM);
+                vm.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, null,
+                    includeProperties: "PhysicianSpecialties");
+                return View(vm);
             }
         }
 
         //POST **********************************
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(PhysicianVM obj, IFormFile? file)
+        public IActionResult Upsert(PhysicianCreateVM obj, List<SpecialtySelectVM> list, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
 
+                #region imageManage
                 string wwwRootPath = _hostEnvironment.WebRootPath;
 
                 if (file != null)
@@ -84,12 +88,38 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                         }
                     }
 
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    using (var fileStreams =
+                           new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
+
                     obj.Physician.PicturePath = @"images\Physicians\" + fileName + extension;
                 }
+
+                #endregion
+
+                #region specialtiesManage
+
+                var Physician = obj.Physician;
+
+
+
+                foreach (var selectedCompany in obj.Specialties.Where(c => c.IsSelected))
+                {
+                    var specialty = new Specialty { Id = selectedCompany.SpecialtyId };
+                    _unitOfWork.Specialty.Add(specialty);
+
+                    var physicianSpecialty = new PhysicianSpecialty
+                    {
+                        Specialty = specialty
+                    };
+
+                    Physician.PhysicianSpecialties.Add(physicianSpecialty);
+                    _unitOfWork.Physician.Add(Physician);
+                }
+                #endregion
+
                 if (obj.Physician.Id == 0)
                 {
                     _unitOfWork.Physician.Add(obj.Physician);

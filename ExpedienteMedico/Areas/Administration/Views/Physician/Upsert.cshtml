@@ -1,81 +1,92 @@
 ﻿@using Microsoft.CodeAnalysis
-@model ExpedienteMedico.Models.ViewModels.PhysicianVM
+
+@model ExpedienteMedico.Models.ViewModels.PhysicianCreateVM
 
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
 
-    <input asp-for="Physician.Id" hidden />
-    <input asp-for="Physician.PicturePath" hidden />
+    <fieldset>
 
-    <div class="row">
-        <div class="col-10">
-            <div class="border p-3 mt-4 row">
+        <input asp-for="Physician.Id" hidden />
+        <input asp-for="Physician.PicturePath" hidden />
 
-                <div class="col-12 pb-2">
-                    <h2 class="text-primary">@(Model.Physician.Id == 0 ? "Create" : "Update") Physician</h2><hr />
+        <div class="row">
+            <div class="col-10">
+                <div class="border p-3 mt-4 row">
+
+                    <div class="col-12 pb-2">
+                        <h2 class="text-primary">@(Model.Physician.Id == 0 ? "Create" : "Update") Physician</h2><hr />
+                    </div>
+
+                    <div asp-validation-summary="All"></div>
+
+
+                    <div class="mb-3">
+                        <label asp-for="Physician.Name"></label>
+                        <input asp-for="Physician.Name" class="form-control" />
+                        <span asp-validation-for="Physician.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Physician.Email"></label>
+                        <input asp-for="Physician.Email" class="form-control" />
+                        <span asp-validation-for="Physician.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Physician.PhoneNumber"></label>
+                        <input asp-for="Physician.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Physician.CollegeNumber"></label>
+                        <input asp-for="Physician.CollegeNumber" class="form-control" />
+                        <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="checkbox col-6">
+                        <h5>Mark specialties</h5>
+
+                        @for (int i = 0; i < @Model.Specialties.Count(); i++)
+                        {
+                            <label asp-for="@Model.Specialties.ElementAt(i).Name" class="form-control">@Model.Specialties.ElementAt(i).Name</label>
+                            <input asp-for="@Model.Specialties.ElementAt(i).IsSelected" type="checkbox" class="form-control" />
+                            <input asp-for="@Model.Specialties.ElementAt(i).Name"  class="form-control" hidden />
+                            <input asp-for="@Model.Specialties.ElementAt(i).SpecialtyId hidden" class="form-control" />
+                            <br>
+
+                        }
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label asp-for="Physician.PicturePath"></label>
+                        <input id="uploadBox" type="file" name="file" class="form-control" />
+                        <span asp-validation-for="Physician.PicturePath" class="text-danger"></span>
+                    </div>
+
+
+                    @if (Model.Physician.Id == 0)
+                    {
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary">Save</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    }
+
+
+                    <a asp-controller="Physician" asp-action="Index" class="btn btn-primary">
+                        Back to list
+                    </a>
                 </div>
-
-                <div asp-validation-summary="All"></div>
-
-
-                <div class="mb-3">
-                    <label asp-for="Physician.Name"></label>
-                    <input asp-for="Physician.Name" class="form-control" />
-                    <span asp-validation-for="Physician.Name" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Physician.Email"></label>
-                    <input asp-for="Physician.Email" class="form-control" />
-                    <span asp-validation-for="Physician.Email" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Physician.PhoneNumber"></label>
-                    <input asp-for="Physician.PhoneNumber" class="form-control" />
-                    <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Physician.CollegeNumber"></label>
-                    <input asp-for="Physician.CollegeNumber" class="form-control" />
-                    <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
-                </div>
-                
-                <div class="mb-3">
-                    <label asp-for="Physician.PhysicianSpecialties"></label>
-                    <select asp-for="Physician.PhysicianSpecialties" class="form-control"> </select>
-                    <span asp-validation-for="Physician.PhysicianSpecialties" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3 col-6">
-                    <label asp-for="Physician.PicturePath"></label>
-                    <input id="uploadBox" type="file" name="file" class="form-control" />
-                    <span asp-validation-for="Physician.PicturePath" class="text-danger"></span>
-                </div>
-
-
-                @if (Model.Physician.Id == 0)
-                {
-                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary">Save</button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-primary">Update</button>
-                }
-
-
-                <a asp-controller="Physician" asp-action="Index" class="btn btn-primary">
-                    Back to list
-                </a>
+            </div>
+            <div class="col-2">
+                <img src="~/@Model.Physician.PicturePath" width="100%"
+                     style="border-radius: 5px; border=1px solid #bbb9b9" />
             </div>
         </div>
-        <div class="col-2">
-            <img src="~/@Model.Physician.PicturePath" width="100%"
-                 style="border-radius:5px; border=1px solid #bbb9b9" />
-        </div>
-    </div>
-
+    </fieldset>
 </form>
 
 
@@ -91,5 +102,5 @@
         }
         return true;
     }
-    
+
 </script>

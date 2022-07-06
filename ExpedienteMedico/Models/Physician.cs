@@ -17,14 +17,13 @@ namespace ExpedienteMedico.Models
 
         [Required]
         public string Email { get; set; }
-
-        [Required]
+        
         public int PhoneNumber { get; set; }
 
         [ValidateNever]
         public string PicturePath { get; set; }
 
-        //[Required]
+        [ValidateNever]
         public ICollection<PhysicianSpecialty> PhysicianSpecialties { get; set; }
 
     }
