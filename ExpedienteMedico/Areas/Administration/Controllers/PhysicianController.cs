@@ -46,7 +46,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                     SpecialtyId = i.Id,
                     Name = i.Name,
                     IsSelected = false
-                })
+                }).ToList()
             };
 
 
