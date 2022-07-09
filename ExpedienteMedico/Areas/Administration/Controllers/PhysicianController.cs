@@ -65,7 +65,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         //POST **********************************
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(PhysicianCreateVM obj, List<SpecialtySelectVM> list, IFormFile? file)
+        public IActionResult Upsert(PhysicianCreateVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
