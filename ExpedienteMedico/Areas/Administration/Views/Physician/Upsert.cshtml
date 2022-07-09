@@ -45,18 +45,34 @@
                         <input asp-for="Physician.CollegeNumber" class="form-control" />
                         <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
                     </div>
-                    
-                        <div class="checkbox col-6">
-                            <h5>Mark specialties</h5>
-                            @foreach (var item in @Model.Specialties)
-                            {
-                                <label>@item.Name</label>
-                                <input asp-for="@item.IsSelected" type="checkbox" />
-                                <input asp-for="@item.Name" hidden />
-                                <input asp-for="@item.SpecialtyId" hidden />
-                                <br>
-                            }
-                        </div>
+
+                    <div >
+                        <h5>Mark specialties</h5>
+
+                        @for (int i = 0; i < @Model.Specialties.Count(); i++)
+                        {
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(it => it.Specialties[i].SpecialtyId)
+                                        @Html.HiddenFor(it => it.Specialties[i].Name)
+                                        @Html.DisplayFor(it => it.Specialties[i].Name)
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(it => it.Specialties[i].IsSelected, false)
+                                    </td>
+                                </tr>
+                            </table>
+
+                           @* <span>@Model.Specialties.ElementAt(i).Name </span> @Html.CheckBoxFor(m => m.Specialties.ElementAt(i).IsSelected, false)
+                            <label asp-for="@Model.Specialties.ElementAt(i).Name" class="form-control">@Model.Specialties.ElementAt(i).Name</label>
+                                <input asp-for="@Model.Specialties.ElementAt(i).IsSelected" type="checkbox" class="form-control" />
+                            <input asp-for="@Model.Specialties.ElementAt(i).SpecialtyId" class="form-control"/>
+                            <br>*@
+                        }
+                        @*<input asp-for="@Model.Specialties.Add(@Model.Specialties.ElementAt(0))" class="form-control"/>*@
+                        
+                    </div>
 
                     <div class="mb-3 col-6">
                         <label asp-for="Physician.PicturePath"></label>
