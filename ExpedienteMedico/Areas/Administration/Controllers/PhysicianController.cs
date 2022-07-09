@@ -66,6 +66,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(PhysicianCreateVM obj, IFormFile? file)
         {
+            bool IsGetted = false;
             if (ModelState.IsValid)
             {
 
@@ -98,43 +99,62 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
                 #endregion
 
-                #region specialtiesManage
-
                 var Physician = obj.Physician;
-
-
-
-                foreach (var selectedCompany in obj.Specialties.Where(c => c.IsSelected))
-                {
-                    var specialty = new Specialty { Id = selectedCompany.SpecialtyId };
-                    _unitOfWork.Specialty.Add(specialty);
-
-                    var physicianSpecialty = new PhysicianSpecialty
-                    {
-                        Specialty = specialty
-                    };
-
-                    Physician.PhysicianSpecialties.Add(physicianSpecialty);
-                    _unitOfWork.Physician.Add(Physician);
-                }
-                #endregion
 
                 if (obj.Physician.Id == 0)
                 {
                     _unitOfWork.Physician.Add(obj.Physician);
-                    TempData["success"] = "Physician saved successfully";
-                }
-                else
-                {
-                    _unitOfWork.Physician.Update(obj.Physician);
-                    TempData["success"] = "Physician updated successfully";
+                    _unitOfWork.Save();
+                    IsGetted = true;
+                    Physician = _unitOfWork.Physician.GetLast();
                 }
 
+                #region specialtiesManage
+
+
+                foreach (var selectedSpecialty in obj.Specialties.Where(c => c.IsSelected))
+                {
+                    var specialty = new Specialty { Id = selectedSpecialty.SpecialtyId, Name = selectedSpecialty.Name };
+
+                    var physicianSpecialty = new PhysicianSpecialty
+                    {
+                        PhysicianId = Physician.Id,
+                        SpecialtyId = specialty.Id
+                    };
+
+                    var physicianSpecialtyAux = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(
+                        u => u.SpecialtyId == selectedSpecialty.SpecialtyId, x => x.PhysicianId == Physician.Id);
+                    if (physicianSpecialtyAux == null)
+                    {
+                        Physician.PhysicianSpecialties.Add(physicianSpecialty);
+                        _unitOfWork.Physician.Add(Physician);
+                    }
+                }
+
+                foreach (var selectedSpecialty in obj.Specialties.Where(c => !c.IsSelected))
+                {
+                    var physicianSpecialtyAux = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(
+                        u => u.SpecialtyId == selectedSpecialty.SpecialtyId, x => x.PhysicianId == Physician.Id);
+                    if (physicianSpecialtyAux != null)
+                    {
+                        _unitOfWork.PhysicianSpecialty.Remove(physicianSpecialtyAux);
+                    }
+
+                }
+
+                #endregion
+
+                _unitOfWork.Physician.Update(Physician);
+                if (!IsGetted)
+                    TempData["success"] = "Physician updated successfully";
+                else
+                    TempData["success"] = "Physician saved successfully";
+
                 _unitOfWork.Save();
+
             }
             return RedirectToAction("Index");
         }
-
 
         #endregion
 
@@ -150,7 +170,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 for (int j = 0; j < obj.PhysicianSpecialties.Count(); j++)
                 {
                     var aux = obj.PhysicianSpecialties.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(u => u.SpecialtyId == aux.SpecialtyId, x => x.SpecialtyId == aux.SpecialtyId, includeProperties: "Specialty");
+                    var physicianSpecialty = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(u => u.SpecialtyId == aux.SpecialtyId, x => x.PhysicianId == aux.PhysicianId, includeProperties: "Specialty");
                 }
             }
 
