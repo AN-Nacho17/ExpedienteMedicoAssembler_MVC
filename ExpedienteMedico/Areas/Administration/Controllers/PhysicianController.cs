@@ -46,7 +46,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                     SpecialtyId = i.Id,
                     Name = i.Name,
                     IsSelected = false
-                }).ToList()
+                })
             };
 
 
@@ -56,8 +56,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             }
             else
             {
-                vm.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, null,
-                    includeProperties: "PhysicianSpecialties");
+                vm.Physician = _unitOfWork.Physician.GetFirstOrDefault(u => u.Id == id, null);
                 return View(vm);
             }
         }
@@ -65,7 +64,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         //POST **********************************
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(PhysicianCreateVM obj, List<SpecialtySelectVM> list, IFormFile? file)
+        public IActionResult Upsert(PhysicianCreateVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {

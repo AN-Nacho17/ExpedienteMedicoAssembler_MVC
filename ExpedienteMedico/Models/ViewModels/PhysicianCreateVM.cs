@@ -8,8 +8,7 @@ namespace ExpedienteMedico.Models.ViewModels
     {
         [ValidateNever]
         public Physician Physician { get; set; }
-        
-        public List<SpecialtySelectVM> Specialties { get; set; }
+        public IEnumerable<SpecialtySelectVM> Specialties { get; set; }
 
 
     }
