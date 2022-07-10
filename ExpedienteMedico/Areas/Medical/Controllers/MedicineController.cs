@@ -4,17 +4,17 @@ using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExpedienteMedico.Areas.Administration.Controllers
+namespace ExpedienteMedico.Areas.Medical.Controllers
 {
-    [Area("Administration")]
-    [Authorize(Roles = Roles.Role_Admin)]
-    public class SufferingController : Controller
+    [Area("Medical")]
+    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
+    public class MedicineController : Controller
     {
 
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
 
-        public SufferingController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicineController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
@@ -22,8 +22,8 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Suffering> objSufferingList = _unitOfWork.Suffering.GetAll();
-            return View(objSufferingList);
+            IEnumerable<Medicine> objMedicineList = _unitOfWork.Medicine.GetAll();
+            return View(objMedicineList);
         }
 
         public IActionResult Create()
@@ -33,29 +33,29 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Suffering obj)
+        public IActionResult Create(Medicine obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Suffering.Add(obj);
+                _unitOfWork.Medicine.Add(obj);
                 _unitOfWork.Save();
             }
-            TempData["success"] = "Suffering created succesfully";
+            TempData["success"] = "Medicine created succesfully";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Suffering obj)
+        public IActionResult Edit(Medicine obj)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Suffering.Update(obj);
+                _unitOfWork.Medicine.Update(obj);
                 _unitOfWork.Save();
             }
 
-            TempData["success"] = "Suffering edited succesfully";
+            TempData["success"] = "Medicine edited succesfully";
             return RedirectToAction("Index");
         }
 
@@ -66,7 +66,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 return NotFound();
             }
 
-            var user = _unitOfWork.Suffering.GetFirstOrDefault(x => x.Id == id, null);
+            var user = _unitOfWork.Medicine.GetFirstOrDefault(x => x.Id == id, null);
 
             if (user == null)
             {
@@ -78,11 +78,11 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var suffering = _unitOfWork.Suffering.GetFirstOrDefault(x => x.Id == id, null);
-            _unitOfWork.Suffering.Remove(suffering);
+            var medicine = _unitOfWork.Medicine.GetFirstOrDefault(x => x.Id == id, null);
+            _unitOfWork.Medicine.Remove(medicine);
             _unitOfWork.Save();
 
-            TempData["success"] = "Suffering deleted succesfully";
+            TempData["success"] = "Medicine deleted succesfully";
             return RedirectToAction("Index");
         }
 
@@ -91,8 +91,8 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
         public IActionResult GetAll()
         {
-            var suffering = _unitOfWork.Suffering.GetAll();
-            return Json(new { data = suffering, success = true });
+            var medicine = _unitOfWork.Medicine.GetAll();
+            return Json(new { data = medicine, success = true });
         }
         #endregion
     }

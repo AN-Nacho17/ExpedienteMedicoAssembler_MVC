@@ -1,5 +1,6 @@
 ﻿using ExpedienteMedico.Data;
 using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.IntermediateTables;
 using ExpedienteMedico.Repository.IRepository;
 
 namespace ExpedienteMedico.Repository

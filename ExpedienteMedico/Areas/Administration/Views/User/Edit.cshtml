@@ -19,22 +19,20 @@
 
                 <div class="mb-3 col-6">
                     <label asp-for="UserId"></label>
-                    <input asp-for="UserId" rows="3" class="form-control"></input>
+                    <input asp-for="UserId" rows="3" class="form-control">
                     <span asp-validation-for="UserId" class="text-danger"></span>
                 </div>
 
 
                 <div class="mb-3 col-6">
                     <label asp-for="Email"></label>
-                    <input asp-for="Email" rows="3" class="form-control"></input>
+                    <input asp-for="Email" rows="3" class="form-control">
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-
 
                 <div class="mb-3">
                     <label asp-for="PhoneNumber"></label>
                     <input asp-for="PhoneNumber" asp-items="@Model.PhoneNumber" class="form-control">
-                    </input>
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
 

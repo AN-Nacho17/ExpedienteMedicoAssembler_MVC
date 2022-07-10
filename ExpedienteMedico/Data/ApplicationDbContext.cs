@@ -1,4 +1,5 @@
 ﻿using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.IntermediateTables;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,16 @@ namespace ExpedienteMedico.Data
         public DbSet<Treatment> Treatments { get; set; }
 
         public DbSet<Suffering> Sufferings { get; set; }
+
         public DbSet<Medicine> Medicines { get; set; }
+
+        public DbSet<MedicalHistory> MedicalHistories { get; set; }
+
+        public DbSet<MedicalHistory_Medicine> MedicalHistoryMedicines { get; set; }
+
+        public DbSet<MedicalHistory_Suffering> MedicalHistorySufferings { get; set; }
+
+        public DbSet<MedicalHistory_Treatment> MedicalHistoryTreatments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,16 +40,15 @@ namespace ExpedienteMedico.Data
 
             modelBuilder.Entity<PhysicianSpecialty>()
                 .HasKey(bc => new { bc.PhysicianId, bc.SpecialtyId });
-            //modelBuilder.Entity<PhysicianSpecialty>()
-            //    .HasOne(bc => bc.Physician)
-            //    .WithMany(b => b.PhysicianSpecialties)
-            //    .HasForeignKey(bc => bc.PhysicianId);
-            //modelBuilder.Entity<PhysicianSpecialty>()
-            //    .HasOne(bc => bc.Specialty)
-            //    .WithMany(c => c.PhysicianSpecialties)
-            //    .HasForeignKey(bc => bc.SpecialtyId);
 
-            //modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
+            modelBuilder.Entity<MedicalHistory_Medicine>()
+                .HasKey(bc => new { bc.MedicalHistoricalId, bc.MedicineId });
+
+            modelBuilder.Entity<MedicalHistory_Suffering>()
+                .HasKey(bc => new { bc.MedicalHistoricalId, bc.SufferingId });
+
+            modelBuilder.Entity<MedicalHistory_Treatment>()
+                .HasKey(bc => new { bc.MedicalHistoricalId, bc.TreatmentId });
         }
     }
 

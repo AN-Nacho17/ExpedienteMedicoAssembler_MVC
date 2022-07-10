@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Windows;
 using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.IntermediateTables;
 using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 

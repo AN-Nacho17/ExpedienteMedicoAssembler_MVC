@@ -4,6 +4,7 @@ using ExpedienteMedico.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220710052611_adding module B models")]
+    partial class addingmoduleBmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace ExpedienteMedico.Migrations
 
                     b.HasIndex("MedicineId");
 
-                    b.ToTable("MedicalHistoryMedicines");
+                    b.ToTable("MedicalHistory_Medicine");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Suffering", b =>
@@ -49,7 +51,7 @@ namespace ExpedienteMedico.Migrations
 
                     b.HasIndex("SufferingId");
 
-                    b.ToTable("MedicalHistorySufferings");
+                    b.ToTable("MedicalHistory_Suffering");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Treatment", b =>
@@ -64,7 +66,7 @@ namespace ExpedienteMedico.Migrations
 
                     b.HasIndex("TreatmentId");
 
-                    b.ToTable("MedicalHistoryTreatments");
+                    b.ToTable("MedicalHistory_Treatment");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.PhysicianSpecialty", b =>
@@ -82,25 +84,6 @@ namespace ExpedienteMedico.Migrations
                     b.ToTable("PhysicianSpecialties");
                 });
 
-            modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("MedicalHistories");
-                });
-
             modelBuilder.Entity("ExpedienteMedico.Models.Medicine", b =>
                 {
                     b.Property<int>("Id")
@@ -109,16 +92,11 @@ namespace ExpedienteMedico.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("MedicalHistoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicalHistoryId");
 
                     b.ToTable("Medicines");
                 });
@@ -184,16 +162,11 @@ namespace ExpedienteMedico.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("MedicalHistoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicalHistoryId");
 
                     b.ToTable("Sufferings");
                 });
@@ -211,16 +184,11 @@ namespace ExpedienteMedico.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("MedicalHistoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicalHistoryId");
 
                     b.ToTable("Treatments");
                 });
@@ -494,38 +462,6 @@ namespace ExpedienteMedico.Migrations
                     b.Navigation("Specialty");
                 });
 
-            modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.Medicine", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
-                        .WithMany("Medicines")
-                        .HasForeignKey("MedicalHistoryId");
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.Suffering", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
-                        .WithMany("Sufferings")
-                        .HasForeignKey("MedicalHistoryId");
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.Treatment", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
-                        .WithMany("Treatments")
-                        .HasForeignKey("MedicalHistoryId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -575,15 +511,6 @@ namespace ExpedienteMedico.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
-                {
-                    b.Navigation("Medicines");
-
-                    b.Navigation("Sufferings");
-
-                    b.Navigation("Treatments");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>
