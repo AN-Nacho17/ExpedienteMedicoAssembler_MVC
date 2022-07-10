@@ -31,7 +31,7 @@ function loadDataTable() {
                                 <a href="/Administration/User/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
-                            </div
+                            </div>
                             `;
                 },
                 "width": "15%"
