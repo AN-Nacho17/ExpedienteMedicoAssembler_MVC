@@ -14,6 +14,12 @@ namespace ExpedienteMedico.Repository
 
         public IPhysicianSpecialty PhysicianSpecialty { get; private set; }
 
+        public ITreatmentRepository Treatment { get; private set; }
+
+        public ISufferingRepository Suffering { get; private set; }
+
+        public IMedicineRepository Medicine { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -21,7 +27,9 @@ namespace ExpedienteMedico.Repository
             Physician = new PhysicianRepository(_db);
             User = new UserRepository(_db);
             PhysicianSpecialty = new PhysicianSpecialtyRepository(_db);
-
+            Treatment = new TreatmentRepository(_db);
+            Suffering = new SufferingRepository(_db);
+            Medicine = new MedicineRepository(_db);
         }
 
         public void Save()

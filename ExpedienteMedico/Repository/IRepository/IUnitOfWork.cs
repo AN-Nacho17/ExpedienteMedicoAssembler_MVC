@@ -8,6 +8,11 @@
 
         IPhysicianSpecialty PhysicianSpecialty { get; }
 
+        ITreatmentRepository Treatment { get; }
+
+        ISufferingRepository Suffering { get; }
+
+        IMedicineRepository Medicine { get; }
         void Save();
     }
 }

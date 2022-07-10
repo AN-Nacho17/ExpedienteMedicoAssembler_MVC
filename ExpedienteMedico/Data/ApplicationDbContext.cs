@@ -19,7 +19,10 @@ namespace ExpedienteMedico.Data
 
         public DbSet<PhysicianSpecialty> PhysicianSpecialties { get; set; }
 
+        public DbSet<Treatment> Treatments { get; set; }
 
+        public DbSet<Suffering> Sufferings { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
