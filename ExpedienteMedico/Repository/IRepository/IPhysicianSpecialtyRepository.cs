@@ -1,4 +1,5 @@
 ﻿using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.IntermediateTables;
 
 namespace ExpedienteMedico.Repository.IRepository
 {

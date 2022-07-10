@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ExpedienteMedico.Models.IntermediateTables;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ExpedienteMedico.Models

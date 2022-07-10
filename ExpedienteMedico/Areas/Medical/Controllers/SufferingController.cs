@@ -4,10 +4,10 @@ using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExpedienteMedico.Areas.Administration.Controllers
+namespace ExpedienteMedico.Areas.Medical.Controllers
 {
-    [Area("Administration")]
-    [Authorize(Roles = Roles.Role_Admin)]
+    [Area("Medical")]
+    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
     public class SufferingController : Controller
     {
 
