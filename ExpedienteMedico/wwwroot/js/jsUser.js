@@ -1,8 +1,5 @@
 ﻿var dataTable;
 
-var lockButton = `<a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2">< i class="bi bi-lock" ></i > Lock</a >`;
-var unlockButton = `<a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2">< i class="bi bi-lock" ></i > Unlock</a >`;
-
 $(document).ready(function () {
     loadDataTable();
 });
@@ -10,7 +7,8 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Administration/User/getall"},
+            "url": "/Administration/User/getall"
+        },
         "columns": [
             { "data": "userId", "width": "15%" },
             { "data": "completeName", "width": "15%" },
@@ -19,18 +17,15 @@ function loadDataTable() {
             {
                 "data": "id",
                 "render": function (data) {
-                    var string = '';
-                    if (data.LockoutEnabled) {
-                        string = lockButton;
-                    } else {
-                        string = unlockButton;
-                    }
                     return `
                             <div class="btn-group w-75">
 
                                 <a href="/Administration/User/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
+
+                            <a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
+
                             </div
                             `;
                 },

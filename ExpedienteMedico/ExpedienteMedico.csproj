@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Medical\" />
     <Folder Include="wwwroot\images\NewFolder\" />
   </ItemGroup>
 
