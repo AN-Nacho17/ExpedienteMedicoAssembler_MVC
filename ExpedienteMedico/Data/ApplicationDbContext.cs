@@ -38,6 +38,7 @@ namespace ExpedienteMedico.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //For intermediate tables or models
             modelBuilder.Entity<PhysicianSpecialty>()
                 .HasKey(bc => new { bc.PhysicianId, bc.SpecialtyId });
 

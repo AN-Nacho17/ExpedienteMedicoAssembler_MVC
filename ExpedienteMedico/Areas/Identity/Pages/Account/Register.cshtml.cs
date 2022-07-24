@@ -8,12 +8,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
-using ExpedienteMedico.Models;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -210,11 +206,11 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private User CreateUser()
+        private Models.User CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                return Activator.CreateInstance<Models.User>();
             }
             catch
             {

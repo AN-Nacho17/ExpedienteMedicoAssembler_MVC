@@ -5,9 +5,9 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
+    dataTable = $('#tblDataUs').DataTable({
         "ajax": {
-            "url": "/Administration/User/getall"
+            "url": "/User/User/getall"
         },
         "columns": [
             { "data": "userId", "width": "15%" },
@@ -19,22 +19,22 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <div class="btn-group w-75">
+                            <div class="btn-group w-25 h-25">
 
-                                <a href="/Administration/User/Edit?id=${data}"
+                                <a href="/User/User/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
-                                <a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
+                                <a onClick=Banned('/User/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
 
-                                <a onClick=Unbanned('/Administration/User/Unbanned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-unlock"></i>Unlock</a>
+                                <a onClick=Unbanned('/USer/User/Unbanned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-unlock"></i>Unlock</a>
 
                             </div
                             `;
                 },
                 "width": "15%"
             }
-        ].sort(lastDateAttended)
+        ]
     });
 }
 

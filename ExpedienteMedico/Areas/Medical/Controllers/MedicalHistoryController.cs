@@ -9,13 +9,13 @@ using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ExpedienteMedico.Areas.Administration.Controllers
+namespace ExpedienteMedico.Areas.Medical.Controllers
 {
 
-    [Area("Administration")]
-    [Authorize(Roles = Roles.Role_Admin)]
+    [Area("Medical")]
+    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
 
-    public class PhysicianController : Controller
+    public class MedicalHistoryController : Controller
     {
 
         #region HTTP GET POST
@@ -23,20 +23,15 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
 
-        public PhysicianController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicalHistoryController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
         }
 
-        public IActionResult Index()
-        {
-            IEnumerable<Physician> objPhysicianList = _unitOfWork.Physician.GetAll(includeProperties: "PhysicianSpecialties");
-            return View(objPhysicianList);
-        }
 
         //GET ********************************
-        public IActionResult Upsert(int? id)   //Update + Insert
+        public IActionResult Upsert(int? id)  //ID of user
         {
             var physician = new Physician();
             physician.Id = 0;
@@ -156,7 +151,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                 _unitOfWork.Save();
 
             }
-            return RedirectToAction("Index");
+            return Redirect("/Medical/");
         }
 
         #endregion

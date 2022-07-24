@@ -5,26 +5,28 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
+    dataTable = $('#tblDataUs').DataTable({
+        order: [[4, 'asc']],
         "ajax": {
-            "url": "/Administration/User/getall"
+            "url": "/User/User/getallmedical"
         },
         "columns": [
             { "data": "userId", "width": "15%" },
             { "data": "completeName", "width": "15%" },
             { "data": "email", "width": "15%" },
             { "data": "phoneNumber", "width": "15%" },
+            { "data": "lastDateAttended", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <div class="btn-group w-75">
+                            <div class="btn-group w-25 h-25">
 
-                                <a href="/Administration/User/Edit?id=${data}"
+                                <a href="/User/User/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
-                                <a href="/Administration/User/Attend?id=${data}"
+                                <a href="/User/User/Attend?id=${data}"
                                    class="btn btn-primary mx-2">
 							    <i class="bi bi-clipboard2-pulse"></i></i>Attend</a>
 

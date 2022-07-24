@@ -1,6 +1,8 @@
 ﻿using ExpedienteMedico.Data;
 using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpedienteMedico.Repository
 {
@@ -24,8 +26,5 @@ namespace ExpedienteMedico.Repository
                 objFromDB.PhoneNumber = obj.PhoneNumber;
             }
         }
-
-        
-
     }
 }

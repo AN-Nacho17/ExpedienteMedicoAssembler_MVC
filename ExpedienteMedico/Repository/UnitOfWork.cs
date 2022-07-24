@@ -1,5 +1,7 @@
 ﻿using ExpedienteMedico.Data;
 using ExpedienteMedico.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace ExpedienteMedico.Repository
 {

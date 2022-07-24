@@ -97,13 +97,14 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            IdentityUser user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
+            var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
 
             returnUrl = Url.Content("~/");
-            
+
+
             if (user != null && _signInManager.UserManager.GetRolesAsync(user).Result[0].Equals(Roles.Role_Physician))
             {
-                returnUrl = Url.Content("~/Administration/User/Index");
+                returnUrl = Url.Content("~/User/User/Index");
             }
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

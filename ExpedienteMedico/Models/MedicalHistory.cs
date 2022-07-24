@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using ExpedienteMedico.Models.IntermediateTables;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ExpedienteMedico.Models
@@ -7,22 +8,20 @@ namespace ExpedienteMedico.Models
     public class MedicalHistory
     {
 
-        [Key]
-        public int Id { get; set; } 
 
-        [Required]
+        [Key]
         public string UserId { get; set; }
 
         public User User { get; set; }
 
         [ValidateNever]
-        public ICollection<Treatment> Treatments { get; set; }
+        public ICollection<MedicalHistory_Treatment> Treatments { get; set; }
 
         [ValidateNever]
-        public ICollection<Suffering> Sufferings { get; set; }
+        public ICollection<MedicalHistory_Suffering> Sufferings { get; set; }
 
         [ValidateNever]
-        public ICollection<Medicine> Medicines { get; set; }
+        public ICollection<MedicalHistory_Medicine> Medicines { get; set; }
 
 
     }

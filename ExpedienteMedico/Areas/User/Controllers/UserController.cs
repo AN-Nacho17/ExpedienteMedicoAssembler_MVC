@@ -1,15 +1,13 @@
-﻿using ExpedienteMedico.Models;
-using ExpedienteMedico.Repository.IRepository;
+﻿using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace ExpedienteMedico.Areas.Administration.Controllers
+namespace ExpedienteMedico.Areas.User.Controllers
 {
 
-    [Area("Administration")]
+    [Area("User")]
     [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
     public class UserController : Controller
     {
@@ -25,6 +23,15 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         public IActionResult Index()
         {
             var users = _db.User.GetAll();
+            if (User.IsInRole(Roles.Role_Physician))
+            {
+                IList<IdentityUser> usersAux = _userManager.GetUsersInRoleAsync(Roles.Role_Patient).Result;
+                List<Models.User> usersList = new List<Models.User>();
+                foreach (var user in usersAux)
+                {
+                    usersList.Add(_db.User.GetFirstOrDefault(x => x.Id == user.Id, null));
+                }
+            }
             return View(users);
         }
 
@@ -50,7 +57,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         //POST **********************************
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(User obj)
+        public IActionResult Edit(Models.User obj)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +70,7 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Attend(User obj)
+        public IActionResult Attend(Models.User obj)
         {
             if (ModelState.IsValid)
             {
@@ -105,8 +112,20 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         [HttpGet]
         public IActionResult GetAll()   
         {
-            IEnumerable<User> users = _db.User.GetAll();
-            return Json(new { data = users, success = true, rows = (users.OrderByDescending(x => x.LastDateAttended)) });
+            var users = _db.User.GetAll();
+            return Json(new { data = users, success = true });
+        }
+
+        [HttpGet]
+        public IActionResult GetAllMedical()
+        {
+            IList<IdentityUser> users = _userManager.GetUsersInRoleAsync(Roles.Role_Patient).Result;
+            List<Models.User> usersList = new List<Models.User>();
+            foreach (var user in users)
+            {
+                usersList.Add(_db.User.GetFirstOrDefault(x => x.Id == user.Id, null));
+            }
+            return Json(new { data = usersList, success = true });
         }
 
         #endregion
