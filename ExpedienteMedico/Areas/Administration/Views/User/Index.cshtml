@@ -39,9 +39,19 @@
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             
-            <th>
-                Actions
-            </th>
+            @if (User.IsInRole(Roles.Role_Admin))
+            {
+                <th>
+                    Admin Actions
+                </th>
+            }
+            
+            @if (User.IsInRole(Roles.Role_Physician))
+            {
+                <th>
+                    Medical Actions
+                </th>
+            }
 
         </tr>
         </thead>
@@ -51,5 +61,13 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/JsUser.js"></script>
+    
+    @if (User.IsInRole(Roles.Role_Physician))
+    {
+        <script src="~/js/JsMedicalUsers.js"></script>
+    }
+    else
+    {
+        <script src="~/js/JsUsers.js"></script>
+    }
 }

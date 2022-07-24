@@ -24,7 +24,9 @@ function loadDataTable() {
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
-                            <a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
+                                <a href="/Administration/User/Attend?id=${data}"
+                                   class="btn btn-primary mx-2">
+							    <i class="bi bi-clipboard2-pulse"></i></i>Attend</a>
 
                             </div
                             `;
@@ -32,32 +34,5 @@ function loadDataTable() {
                 "width": "15%"
             }
         ]
-    });
-}
-
-function Banned(_url) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, banned it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: _url,
-                type: "POST",
-                success: function (data) {
-                    if (data.success) {
-                        dataTable.ajax.reload();
-                        toastr.success(data.message);
-                    } else {
-                        toastr.error(data.message);
-                    }
-                }
-            });
-        }
     });
 }

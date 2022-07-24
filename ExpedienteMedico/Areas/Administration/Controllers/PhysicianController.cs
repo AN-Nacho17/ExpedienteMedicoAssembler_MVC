@@ -6,11 +6,14 @@ using ExpedienteMedico.Models;
 using ExpedienteMedico.Models.IntermediateTables;
 using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpedienteMedico.Areas.Administration.Controllers
 {
 
     [Area("Administration")]
+    [Authorize(Roles = Roles.Role_Admin)]
 
     public class PhysicianController : Controller
     {

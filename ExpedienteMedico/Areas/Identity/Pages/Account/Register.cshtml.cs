@@ -112,6 +112,9 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public string CompleteName { get; set; }
 
             [Required]
+            public DateTime LastDateAttended { get; set; }
+
+            [Required]
             public string PhoneNumber { get; set; }
 
             public string? Role { get; set; }
@@ -158,6 +161,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
                 user.CompleteName = Input.CompleteName;
                 user.UserId = Input.UserId;
                 user.PhoneNumber = Input.PhoneNumber;
+                user.LastDateAttended = DateTime.Now;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

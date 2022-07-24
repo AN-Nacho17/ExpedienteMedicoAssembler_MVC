@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using ExpedienteMedico.Utility
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,18 +33,21 @@
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item px-1">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
                         <li class="nav-item dropdown px-1">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Access</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="Specialty" asp-action="Index">Manage Physician Specialties</a>
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="Physician" asp-action="Index">Manage Physicians</a>
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="User" asp-action="Index">Manage Users</a>
-                                <a class="dropdown-item" asp-area="Medical" asp-controller="Treatment" asp-action="Index">Manage Treatments</a>
-                                <a class="dropdown-item" asp-area="Medical" asp-controller="Suffering" asp-action="Index">Manage Sufferings</a>
-                                <a class="dropdown-item" asp-area="Medical" asp-controller="Medicine" asp-action="Index">Manage Medicines</a>
+                                @if (User.IsInRole(Roles.Role_Admin))
+                                {
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Specialty" asp-action="Index">Manage Physician Specialties   <i class="bi bi-list-stars"></i></a>
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Physician" asp-action="Index">Manage Physicians   <i class="bi bi-person-badge-fill"></i></a>
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="User" asp-action="Index">Manage Users   <i class="bi bi-people"></i></a>
+                                }
+                                @if (User.IsInRole(Roles.Role_Admin) || User.IsInRole(Roles.Role_Physician))
+                                {
+                                    <a class="dropdown-item" asp-area="Medical" asp-controller="Treatment" asp-action="Index">Manage Treatments   <i class="bi bi-clipboard2-pulse"></i></a>
+                                    <a class="dropdown-item" asp-area="Medical" asp-controller="Suffering" asp-action="Index">Manage Sufferings   <i class="bi bi-heart-pulse"></i></a>
+                                    <a class="dropdown-item" asp-area="Medical" asp-controller="Medicine" asp-action="Index">Manage Medicines   <i class="bi bi-bandaid"></i></a>
+                                }
                                 <a class="dropdown-item" href="#">Something else here</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>

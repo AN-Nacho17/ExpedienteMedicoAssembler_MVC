@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using ExpedienteMedico.Models;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpedienteMedico.Areas.Patient.Controllers

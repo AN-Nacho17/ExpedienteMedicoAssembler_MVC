@@ -1,12 +1,16 @@
 ﻿using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ExpedienteMedico.Areas.Administration.Controllers
 {
 
     [Area("Administration")]
+    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
     public class UserController : Controller
     {
         private IUnitOfWork _db;
@@ -57,6 +61,19 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Attend(User obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.User.Update(obj);
+                _db.Save();
+                TempData["success"] = "User Updated successfully";
+            }
+            return RedirectToAction("Index");
+        }
+
         //POST
         [HttpPost]
         public IActionResult Banned(string? id)
@@ -73,10 +90,10 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         #region API
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll()   
         {
-            var users = _db.User.GetAll();
-            return Json(new { data = users, success = true });
+            IEnumerable<User> users = _db.User.GetAll();
+            return Json(new { data = users, success = true, rows = (users.OrderByDescending(x => x.LastDateAttended)) });
         }
 
         #endregion

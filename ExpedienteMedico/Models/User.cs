@@ -12,5 +12,8 @@ namespace ExpedienteMedico.Models
         [Required]
         public string CompleteName { get; set; }
 
+        [Required]
+        public DateTime LastDateAttended { get; set; }
+
     }
 }
