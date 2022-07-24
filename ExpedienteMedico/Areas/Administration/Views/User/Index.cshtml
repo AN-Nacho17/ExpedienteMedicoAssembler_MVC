@@ -1,5 +1,4 @@
-﻿
-@using ExpedienteMedico.Utility
+﻿@using ExpedienteMedico.Utility
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<User>
 
@@ -37,6 +36,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDateAttended)
             </th>
             
             @if (User.IsInRole(Roles.Role_Admin))
