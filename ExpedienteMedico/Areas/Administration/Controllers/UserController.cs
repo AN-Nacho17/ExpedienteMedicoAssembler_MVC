@@ -87,6 +87,19 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             return Json(new { success = true, message = "Banned Successfully" });
         }
 
+        //POST
+        [HttpPost]
+        public IActionResult Unbanned(string? id)
+        {
+            if (id != null)
+            {
+                _userManager.SetLockoutEnabledAsync(_db.User.GetFirstOrDefault(x => x.Id == id, null), false);
+                _userManager.SetLockoutEndDateAsync(_db.User.GetFirstOrDefault(x => x.Id == id, null), null);
+            }
+            _db.Save();
+            return Json(new { success = true, message = "Unbanned Successfully" });
+        }
+
         #region API
 
         [HttpGet]

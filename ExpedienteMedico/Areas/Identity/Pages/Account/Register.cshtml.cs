@@ -173,7 +173,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, Roles.Role_Patient); //En caso de un auto registro
                     }
-                    else
+                    else if (User.IsInRole(Roles.Role_Admin))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
                     }

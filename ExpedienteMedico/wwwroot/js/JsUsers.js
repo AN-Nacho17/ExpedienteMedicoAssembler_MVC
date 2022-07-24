@@ -26,6 +26,8 @@ function loadDataTable() {
 
                                 <a onClick=Banned('/Administration/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
 
+                                <a onClick=Unbanned('/Administration/User/Unbanned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-unlock"></i>Unlock</a>
+
                             </div
                             `;
                 },
@@ -44,6 +46,33 @@ function Banned(_url) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, banned it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: _url,
+                type: "POST",
+                success: function (data) {
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    });
+}
+
+function Unbanned(_url) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Unbanned it!'
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

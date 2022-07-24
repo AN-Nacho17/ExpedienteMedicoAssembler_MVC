@@ -1,4 +1,5 @@
 ﻿@page
+@using ExpedienteMedico.Utility
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -48,12 +49,15 @@
                 <label asp-for="Input.UserId"></label>
                 <span asp-validation-for="Input.UserId" class="text-danger"></span>
             </div>
-
-            <div class="form-floating py-2">
-                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                    <option disabled selected>--Select Role--</option>
-                </select>
-            </div>
+            
+            @if (User.IsInRole(Roles.Role_Admin))
+            {
+                <div class="form-floating py-2">
+                    <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                        <option disabled selected>--Select Role--</option>
+                    </select>
+                </div>
+            }
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
