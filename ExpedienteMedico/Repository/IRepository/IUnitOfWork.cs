@@ -13,6 +13,12 @@
         ISufferingRepository Suffering { get; }
 
         IMedicineRepository Medicine { get; }
+
+        IMedicalHistoryRepository MedicalHistory { get; }
+
+        IMedicalNoteRepository MedicalNote { get; }
+
+        IMedicalImageRepository MedicalImage { get; }
         void Save();
     }
 }

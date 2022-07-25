@@ -11,7 +11,6 @@ namespace ExpedienteMedico.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-
         public DbSet<Specialty> Specialties { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -27,6 +26,10 @@ namespace ExpedienteMedico.Data
         public DbSet<Medicine> Medicines { get; set; }
 
         public DbSet<MedicalHistory> MedicalHistories { get; set; }
+
+        public DbSet<MedicalNote> MedicalNotes { get; set; }
+
+        public DbSet<MedicalImage> MedicalImages { get; set; }
 
         public DbSet<MedicalHistory_Medicine> MedicalHistoryMedicines { get; set; }
 
