@@ -24,38 +24,38 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Medicine", b =>
                 {
-                    b.Property<int>("MedicalHistoricalId")
-                        .HasColumnType("int");
+                    b.Property<string>("MedicalHistoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("MedicineId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MedicalHistoryUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PhysicianId")
+                        .HasColumnType("int");
 
-                    b.HasKey("MedicalHistoricalId", "MedicineId");
-
-                    b.HasIndex("MedicalHistoryUserId");
+                    b.HasKey("MedicalHistoryId", "MedicineId");
 
                     b.HasIndex("MedicineId");
+
+                    b.HasIndex("PhysicianId");
 
                     b.ToTable("MedicalHistoryMedicines");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Suffering", b =>
                 {
-                    b.Property<int>("MedicalHistoricalId")
-                        .HasColumnType("int");
+                    b.Property<string>("MedicalHistoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SufferingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MedicalHistoryUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PhysicianId")
+                        .HasColumnType("int");
 
-                    b.HasKey("MedicalHistoricalId", "SufferingId");
+                    b.HasKey("MedicalHistoryId", "SufferingId");
 
-                    b.HasIndex("MedicalHistoryUserId");
+                    b.HasIndex("PhysicianId");
 
                     b.HasIndex("SufferingId");
 
@@ -64,18 +64,18 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Treatment", b =>
                 {
-                    b.Property<int>("MedicalHistoricalId")
-                        .HasColumnType("int");
+                    b.Property<string>("MedicalHistoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TreatmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MedicalHistoryUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PhysicianId")
+                        .HasColumnType("int");
 
-                    b.HasKey("MedicalHistoricalId", "TreatmentId");
+                    b.HasKey("MedicalHistoryId", "TreatmentId");
 
-                    b.HasIndex("MedicalHistoryUserId");
+                    b.HasIndex("PhysicianId");
 
                     b.HasIndex("TreatmentId");
 
@@ -110,6 +110,72 @@ namespace ExpedienteMedico.Migrations
                     b.HasIndex("UserId1");
 
                     b.ToTable("MedicalHistories");
+                });
+
+            modelBuilder.Entity("ExpedienteMedico.Models.MedicalImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MedicalHistoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PdfUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicalHistoryId");
+
+                    b.ToTable("MedicalImages");
+                });
+
+            modelBuilder.Entity("ExpedienteMedico.Models.MedicalNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("MedicalHistoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NoteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NoteTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PhysicianId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicalHistoryId");
+
+                    b.HasIndex("PhysicianId");
+
+                    b.ToTable("MedicalNotes");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Medicine", b =>
@@ -445,9 +511,11 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Medicine", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
                         .WithMany("Medicines")
-                        .HasForeignKey("MedicalHistoryUserId");
+                        .HasForeignKey("MedicalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ExpedienteMedico.Models.Medicine", "medicine")
                         .WithMany()
@@ -455,14 +523,32 @@ namespace ExpedienteMedico.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                        .WithMany()
+                        .HasForeignKey("PhysicianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicalHistory");
+
                     b.Navigation("medicine");
+
+                    b.Navigation("physician");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Suffering", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
                         .WithMany("Sufferings")
-                        .HasForeignKey("MedicalHistoryUserId");
+                        .HasForeignKey("MedicalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                        .WithMany()
+                        .HasForeignKey("PhysicianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ExpedienteMedico.Models.Suffering", "suffering")
                         .WithMany()
@@ -470,20 +556,36 @@ namespace ExpedienteMedico.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("MedicalHistory");
+
+                    b.Navigation("physician");
+
                     b.Navigation("suffering");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Treatment", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
                         .WithMany("Treatments")
-                        .HasForeignKey("MedicalHistoryUserId");
+                        .HasForeignKey("MedicalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                        .WithMany()
+                        .HasForeignKey("PhysicianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ExpedienteMedico.Models.Treatment", "treatment")
                         .WithMany()
                         .HasForeignKey("TreatmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MedicalHistory");
+
+                    b.Navigation("physician");
 
                     b.Navigation("treatment");
                 });
@@ -512,6 +614,36 @@ namespace ExpedienteMedico.Migrations
                         .HasForeignKey("UserId1");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ExpedienteMedico.Models.MedicalImage", b =>
+                {
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
+                        .WithMany("Images")
+                        .HasForeignKey("MedicalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicalHistory");
+                });
+
+            modelBuilder.Entity("ExpedienteMedico.Models.MedicalNote", b =>
+                {
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
+                        .WithMany("Notes")
+                        .HasForeignKey("MedicalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExpedienteMedico.Models.Physician", "Physician")
+                        .WithMany()
+                        .HasForeignKey("PhysicianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicalHistory");
+
+                    b.Navigation("Physician");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -567,7 +699,11 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Medicines");
+
+                    b.Navigation("Notes");
 
                     b.Navigation("Sufferings");
 

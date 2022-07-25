@@ -12,10 +12,10 @@ namespace ExpedienteMedico.Models
         public string Note { get; set; }
 
         [Required]
-        public DateOnly NoteDate { get; set; }
+        public DateTime NoteDate { get; set; }
 
         [Required]
-        public TimeOnly NoteTime { get; set; }
+        public DateTime NoteTime { get; set; }
 
         [Required]
         public int PhysicianId { get; set; }
@@ -23,7 +23,7 @@ namespace ExpedienteMedico.Models
         public Physician Physician { get; set; }
 
         [Required]
-        public int MedicalHistoryId { get; set; }
+        public string MedicalHistoryId { get; set; }
 
         public MedicalHistory MedicalHistory { get; set; }
 

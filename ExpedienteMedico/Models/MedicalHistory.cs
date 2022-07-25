@@ -21,17 +21,13 @@ namespace ExpedienteMedico.Models
         public List<MedicalNote> Notes { get; set; }
 
         [ValidateNever]
-        public ICollection<MedicalHistory_Treatment> Treatments { get; set; }
+        public List<MedicalHistory_Treatment> Treatments { get; set; }
 
         [ValidateNever]
-        public ICollection<MedicalHistory_Suffering> Sufferings { get; set; }
+        public List<MedicalHistory_Suffering> Sufferings { get; set; }
 
         [ValidateNever]
-        public ICollection<MedicalHistory_Medicine> Medicines { get; set; }
-
-
-
-
+        public List<MedicalHistory_Medicine> Medicines { get; set; }
 
 
     }

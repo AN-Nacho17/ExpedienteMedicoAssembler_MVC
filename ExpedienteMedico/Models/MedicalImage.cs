@@ -14,7 +14,7 @@ namespace ExpedienteMedico.Models
         public string PdfUrl { get; set; }
 
         [Required]
-        public int MedicalHistoryId { get; set; }
+        public string MedicalHistoryId { get; set; }
 
         public MedicalHistory MedicalHistory { get; set; }
 

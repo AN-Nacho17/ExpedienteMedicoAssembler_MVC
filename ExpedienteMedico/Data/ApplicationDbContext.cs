@@ -46,13 +46,13 @@ namespace ExpedienteMedico.Data
                 .HasKey(bc => new { bc.PhysicianId, bc.SpecialtyId });
 
             modelBuilder.Entity<MedicalHistory_Medicine>()
-                .HasKey(bc => new { bc.MedicalHistoricalId, bc.MedicineId });
+                .HasKey(bc => new { bc.MedicalHistoryId, bc.MedicineId });
 
             modelBuilder.Entity<MedicalHistory_Suffering>()
-                .HasKey(bc => new { bc.MedicalHistoricalId, bc.SufferingId });
+                .HasKey(bc => new { bc.MedicalHistoryId, bc.SufferingId });
 
             modelBuilder.Entity<MedicalHistory_Treatment>()
-                .HasKey(bc => new { bc.MedicalHistoricalId, bc.TreatmentId });
+                .HasKey(bc => new { bc.MedicalHistoryId, bc.TreatmentId });
         }
     }
 
