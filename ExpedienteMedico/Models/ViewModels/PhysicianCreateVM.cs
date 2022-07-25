@@ -10,6 +10,5 @@ namespace ExpedienteMedico.Models.ViewModels
         public Physician Physician { get; set; }
         public List<SpecialtySelectVM> Specialties { get; set; }
 
-
     }
 }
