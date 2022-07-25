@@ -192,8 +192,21 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (User.IsInRole(Roles.Role_Admin))
+                        {
+                            TempData["success"] = "User created successfully";
+                            return Redirect("/User/User/Index");
+                        }
+                        else if (User.IsInRole(Roles.Role_Physician))
+                        {
+                            TempData["success"] = "User created successfully";
+                            return Redirect("/User/User/Index");
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return Redirect(returnUrl);
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
