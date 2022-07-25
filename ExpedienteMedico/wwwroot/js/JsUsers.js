@@ -27,7 +27,7 @@ function loadDataTable() {
 
                                 <a onClick=Banned('/User/User/Banned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-lock"></i>Lock</a>
 
-                                <a onClick=Unbanned('/USer/User/Unbanned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-unlock"></i>Unlock</a>
+                                <a onClick=Unbanned('/User/User/Unbanned/${data}') class="btn btn-danger mx - 2"><i class="bi bi-unlock"></i>Unlock</a>
 
                             </div
                             `;

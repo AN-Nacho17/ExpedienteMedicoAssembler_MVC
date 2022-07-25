@@ -151,7 +151,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 _unitOfWork.Save();
 
             }
-            return Redirect("/Medical/");
+            return Redirect("/User/User/Index");
         }
 
         #endregion
