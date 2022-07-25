@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using ExpedienteMedico.Models.IntermediateTables;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -10,6 +11,7 @@ namespace ExpedienteMedico.Models
 
 
         [Key]
+        [ForeignKey("User")]
         public string UserId { get; set; }
 
         public User User { get; set; }

@@ -53,6 +53,7 @@ namespace ExpedienteMedico.Data
 
             modelBuilder.Entity<MedicalHistory_Treatment>()
                 .HasKey(bc => new { bc.MedicalHistoryId, bc.TreatmentId });
+
         }
     }
 
