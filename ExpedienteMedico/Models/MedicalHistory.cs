@@ -15,6 +15,12 @@ namespace ExpedienteMedico.Models
         public User User { get; set; }
 
         [ValidateNever]
+        public List<MedicalImage> Images { get; set; }
+
+        [ValidateNever]
+        public List<MedicalNote> Notes { get; set; }
+
+        [ValidateNever]
         public ICollection<MedicalHistory_Treatment> Treatments { get; set; }
 
         [ValidateNever]
@@ -22,6 +28,10 @@ namespace ExpedienteMedico.Models
 
         [ValidateNever]
         public ICollection<MedicalHistory_Medicine> Medicines { get; set; }
+
+
+
+
 
 
     }
