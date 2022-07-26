@@ -13,11 +13,11 @@ namespace ExpedienteMedico.Models.IntermediateTables
         [Required]
         public int SufferingId { get; set; }
 
-        public Suffering suffering { get; set; }
+        public Suffering Sufferings { get; set; }
 
         [Required]
         public int PhysicianId { get; set; }
 
-        public Physician physician { get; set; }
+        public Physician Physicians { get; set; }
     }
 }

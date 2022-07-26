@@ -13,12 +13,12 @@ namespace ExpedienteMedico.Models.IntermediateTables
         [Required]
         public int TreatmentId { get; set; }
 
-        public Treatment treatment { get; set; }
+        public Treatment Treatments { get; set; }
 
         [Required]
         public int PhysicianId { get; set; }
 
-        public Physician physician { get; set; }
+        public Physician Physicians { get; set; }
 
 
 

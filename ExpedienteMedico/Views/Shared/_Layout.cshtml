@@ -39,10 +39,10 @@
                                 @if (User.IsInRole(Roles.Role_Admin))
                                 {
                                     <a class="dropdown-item" asp-area="Administration" asp-controller="Specialty" asp-action="Index">Manage Physician Specialties   <i class="bi bi-list-stars"></i></a>
-                                    <a class="dropdown-item" asp-area="User" asp-controller="User" asp-action="Index">Manage Users   <i class="bi bi-people"></i></a>
                                 }
                                 @if (User.IsInRole(Roles.Role_Admin) || User.IsInRole(Roles.Role_Physician))
                                 {
+                                    <a class="dropdown-item" asp-area="User" asp-controller="User" asp-action="Index">Manage Users   <i class="bi bi-people"></i></a>
                                     <a class="dropdown-item" asp-area="Medical" asp-controller="Treatment" asp-action="Index">Manage Treatments   <i class="bi bi-clipboard2-pulse"></i></a>
                                     <a class="dropdown-item" asp-area="Medical" asp-controller="Suffering" asp-action="Index">Manage Sufferings   <i class="bi bi-heart-pulse"></i></a>
                                     <a class="dropdown-item" asp-area="Medical" asp-controller="Medicine" asp-action="Index">Manage Medicines   <i class="bi bi-bandaid"></i></a>
