@@ -29,7 +29,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-
         //GET ********************************
         public IActionResult Upsert(string? id)  //ID of user
         {
@@ -41,6 +40,36 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             {
                 medicalHistory = new MedicalHistory(id);
                 _unitOfWork.MedicalHistory.Add(medicalHistory);
+                _unitOfWork.Save();
+            }
+
+            //Añadiendo los objetos de datos del expediente medico del paciente
+
+            if (medicalHistory.MedicalHistoryTreatments != null)
+            {
+                for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
+                {
+                    var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
+                }
+            }
+
+            if (medicalHistory.MedicalHistorySufferings != null)
+            {
+                for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
+                {
+                    var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
+                }
+            }
+
+            if (medicalHistory.MedicalHistoryMedicines != null)
+            {
+                for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
+                {
+                    var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines");
+                }
             }
 
 

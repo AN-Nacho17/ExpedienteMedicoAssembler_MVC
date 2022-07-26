@@ -76,6 +76,16 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(user);
         }
 
+
+        #region API
+
+        public IActionResult GetAll()
+        {
+            var medicine = _unitOfWork.Medicine.GetAll();
+            return Json(new { data = medicine, success = true });
+        }
+
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var medicine = _unitOfWork.Medicine.GetFirstOrDefault(x => x.Id == id, null);
@@ -89,17 +99,9 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Delete Successful" });
-            //return RedirectToAction("Index");
         }
 
 
-        #region API
-
-        public IActionResult GetAll()
-        {
-            var medicine = _unitOfWork.Medicine.GetAll();
-            return Json(new { data = medicine, success = true });
-        }
         #endregion
     }
 }

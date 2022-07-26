@@ -76,6 +76,17 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(user);
         }
 
+
+
+        #region API
+
+        public IActionResult GetAll()
+        {
+            var suffering = _unitOfWork.Suffering.GetAll();
+            return Json(new { data = suffering, success = true });
+        }
+
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var suffering = _unitOfWork.Suffering.GetFirstOrDefault(x => x.Id == id, null);
@@ -92,14 +103,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             //return RedirectToAction("Index");
         }
 
-
-        #region API
-
-        public IActionResult GetAll()
-        {
-            var suffering = _unitOfWork.Suffering.GetAll();
-            return Json(new { data = suffering, success = true });
-        }
         #endregion
     }
 }
