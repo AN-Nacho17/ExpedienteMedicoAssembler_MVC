@@ -176,7 +176,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         #region API
 
-        public IActionResult GetAll(string? id)
+        public IActionResult GetHistory(string? id)
         {
             MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
                 includeProperties: "User,MedicalHistoryTreatments,MedicalHistorySufferings,MedicalHistoryMedicines,MedicalImages,MedicalNotes");

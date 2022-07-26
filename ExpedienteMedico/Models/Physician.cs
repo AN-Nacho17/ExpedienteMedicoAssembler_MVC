@@ -20,8 +20,7 @@ namespace ExpedienteMedico.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        
-        
+
         public int PhoneNumber { get; set; }
 
 

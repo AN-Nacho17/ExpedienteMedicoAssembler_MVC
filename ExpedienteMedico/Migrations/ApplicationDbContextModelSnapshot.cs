@@ -158,9 +158,6 @@ namespace ExpedienteMedico.Migrations
                     b.Property<DateTime>("NoteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NoteTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("PhysicianId")
                         .HasColumnType("int");
 
@@ -497,97 +494,87 @@ namespace ExpedienteMedico.Migrations
                     b.Property<DateTime>("LastDateAttended")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PhysicianId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("PhysicianId");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Medicine", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
                         .WithMany("MedicalHistoryMedicines")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Medicine", "medicine")
+                    b.HasOne("ExpedienteMedico.Models.Medicine", "Medicines")
                         .WithMany()
                         .HasForeignKey("MedicineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                    b.HasOne("ExpedienteMedico.Models.Physician", "Physicians")
                         .WithMany()
                         .HasForeignKey("PhysicianId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MedicalHistory");
+                    b.Navigation("Medicines");
 
-                    b.Navigation("medicine");
-
-                    b.Navigation("physician");
+                    b.Navigation("Physicians");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Suffering", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
                         .WithMany("MedicalHistorySufferings")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                    b.HasOne("ExpedienteMedico.Models.Physician", "Physicians")
                         .WithMany()
                         .HasForeignKey("PhysicianId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Suffering", "suffering")
+                    b.HasOne("ExpedienteMedico.Models.Suffering", "Sufferings")
                         .WithMany()
                         .HasForeignKey("SufferingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MedicalHistory");
+                    b.Navigation("Physicians");
 
-                    b.Navigation("physician");
-
-                    b.Navigation("suffering");
+                    b.Navigation("Sufferings");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Treatment", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
                         .WithMany("MedicalHistoryTreatments")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
+                    b.HasOne("ExpedienteMedico.Models.Physician", "Physicians")
                         .WithMany()
                         .HasForeignKey("PhysicianId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Treatment", "treatment")
+                    b.HasOne("ExpedienteMedico.Models.Treatment", "Treatments")
                         .WithMany()
                         .HasForeignKey("TreatmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MedicalHistory");
+                    b.Navigation("Physicians");
 
-                    b.Navigation("physician");
-
-                    b.Navigation("treatment");
+                    b.Navigation("Treatments");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.PhysicianSpecialty", b =>
@@ -697,17 +684,6 @@ namespace ExpedienteMedico.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ExpedienteMedico.Models.User", b =>
-                {
-                    b.HasOne("ExpedienteMedico.Models.Physician", "physician")
-                        .WithMany()
-                        .HasForeignKey("PhysicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("physician");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
