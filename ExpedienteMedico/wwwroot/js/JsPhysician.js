@@ -22,7 +22,7 @@ function loadDataTable() {
                             <div class="btn-group w-75">
 
                                 <a href="/Administration/Physician/Upsert?id=${data}"
-                                   class="btn btn-primary mx-2"> 
+                                   class="btn btn-dark mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
 							    <a onClick=Delete('/Administration/Physician/Delete/${data}') class="btn btn-danger mx-2">

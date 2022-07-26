@@ -15,14 +15,14 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <div class="btn-group w-75">
+                            <div class="btn-group w-55">
 
                                 <a href="/Administration/Specialty/Edit?id=${data}"
-                                   class="btn btn-primary mx-2"> 
-							    <i class="bi bi-pencil-square"></i>Edit</a>
+                                   class="btn btn-primary mx-4"> 
+							    <i class="bi bi-pencil-circle"></i>Edit</a>
 
                                 <a href="/Administration/Specialty/Delete?id=${data}"
-                                   class="btn btn-primary mx-2">
+                                   class="btn btn-primary mx-4">
 							    <i class="bi bi-pencil-square"></i>Delete</a>
                             </div>
                             `;
