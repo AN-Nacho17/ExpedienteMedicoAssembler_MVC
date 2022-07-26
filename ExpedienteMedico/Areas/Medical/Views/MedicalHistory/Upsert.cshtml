@@ -17,44 +17,51 @@
                 </div>
 
                 <div asp-validation-summary="All"></div>
-
-                @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
-                {
-                    <table>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians)
-                                @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments)
-                            </td>
-                        </tr>
-                    </table>
-                }
-
-                @for (int i = 0; i < @Model.MedicalHistorySufferings.Count(); i++)
-                {
-                    <table>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians)
-                                @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings)
-                            </td>
-                        </tr>
-                    </table>
-                }
-
-                @for (int i = 0; i < @Model.MedicalHistoryMedicines.Count(); i++)
-                        {
-                            <table>
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians)
-                                        @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines)
-                                    </td>
-                                </tr>
-                            </table>
-                        }
-
-                 @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
+                <br />
+                <div>
+                    @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians)
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments)
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+                <br />
+                <div>
+                    @for (int i = 0; i < @Model.MedicalHistorySufferings.Count(); i++)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians)
+                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings)
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+                <br />
+                <div>
+                    @for (int i = 0; i < @Model.MedicalHistoryMedicines.Count(); i++)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians)
+                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines)
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+                <br />
+                <div>
+                @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
                 {
                     <table>
                         <tr>
@@ -67,7 +74,9 @@
                         </tr>
                     </table>
                 }
-
+                </div>
+                <br />
+                <div>
                 @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
                 {
                     <table>
@@ -79,6 +88,7 @@
                         </tr>
                     </table>
                 }
+                </div>
 
                 @if (Model.UserId == null)
                 {
