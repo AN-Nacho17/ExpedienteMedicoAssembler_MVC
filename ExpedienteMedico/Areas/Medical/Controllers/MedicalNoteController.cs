@@ -4,18 +4,16 @@ using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
     [Area("Medical")]
     [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
-    public class TreatmentController : Controller
+    public class MedicalNoteController : Controller
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
 
-        public TreatmentController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicalNoteController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
@@ -23,8 +21,8 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Treatment> objTreatmentList = _unitOfWork.Treatment.GetAll();
-            return View(objTreatmentList);
+            IEnumerable<MedicalNote> objMedicalNoteList = _unitOfWork.MedicalNote.GetAll();
+            return View(objMedicalNoteList);
         }
 
         public IActionResult Create()
@@ -34,29 +32,29 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Treatment obj)
+        public IActionResult Create(MedicalNote obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Treatment.Add(obj);
+                _unitOfWork.MedicalNote.Add(obj);
                 _unitOfWork.Save();
             }
-            TempData["success"] = "Treatment created succesfully";
+            TempData["success"] = "Medical Note created succesfully";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Treatment obj)
+        public IActionResult Edit(MedicalNote obj)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Treatment.Update(obj);
+                _unitOfWork.MedicalNote.Update(obj);
                 _unitOfWork.Save();
             }
 
-            TempData["success"] = "Treatment edited succesfully";
+            TempData["success"] = "Medical Note edited succesfully";
             return RedirectToAction("Index");
         }
 
@@ -67,7 +65,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 return NotFound();
             }
 
-            var user = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
+            var user = _unitOfWork.MedicalNote.GetFirstOrDefault(x => x.Id == id, null);
 
             if (user == null)
             {
@@ -79,14 +77,14 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var treatment = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
+            var medicalNote = _unitOfWork.MedicalNote.GetFirstOrDefault(x => x.Id == id, null);
 
-            if (treatment == null)
+            if (medicalNote == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            _unitOfWork.Treatment.Remove(treatment);
+            _unitOfWork.MedicalNote.Remove(medicalNote);
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Delete Successful" });
@@ -98,9 +96,10 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult GetAll()
         {
-            var treatment = _unitOfWork.Treatment.GetAll();
-            return Json(new { data = treatment, success = true });
+            var medicalNote = _unitOfWork.MedicalNote.GetAll();
+            return Json(new { data = medicalNote, success = true });
         }
         #endregion
     }
 }
+

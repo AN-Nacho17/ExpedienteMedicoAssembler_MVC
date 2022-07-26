@@ -6,80 +6,94 @@
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
 
-        <input asp-for="UserId" hidden />
+    <input asp-for="UserId" hidden />
 
-        <div class="row">
-            <div class="col-10">
-                <div class="border p-3 mt-4 row">
+    <div class="row">
+        <div class="col-10">
+            <div class="border p-3 mt-4 row">
 
-                    <div class="col-12 pb-2">
-                        <h2 class="text-primary">@(Model.UserId == null ? "Create" : "Update") Physician</h2><hr />
-                    </div>
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.UserId == null ? "Create" : "Update") Physician</h2><hr />
+                </div>
 
-                    <div asp-validation-summary="All"></div>
-                    
-                    <div class="mb-3">
-                        <label asp-for="MedicalHistoryTreatments"></label>
-                        <input asp-for="MedicalHistoryTreatments" class="form-control" />
-                        <span asp-validation-for="MedicalHistoryTreatments" class="text-danger"></span>
-                    </div>
+                <div asp-validation-summary="All"></div>
 
-                    <div class="mb-3">
-                        <label asp-for="MedicalHistorySufferings"></label>
-                        <input asp-for="MedicalHistorySufferings" class="form-control" />
-                        <span asp-validation-for="MedicalHistorySufferings" class="text-danger"></span>
-                    </div>
+                @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians)
+                                @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments)
+                            </td>
+                        </tr>
+                    </table>
+                }
 
-                    <div class="mb-3">
-                        <label asp-for="MedicalHistoryMedicines"></label>
-                        <input asp-for="MedicalHistoryMedicines" class="form-control" />
-                        <span asp-validation-for="MedicalHistoryMedicines" class="text-danger"></span>
-                    </div>
+                @for (int i = 0; i < @Model.MedicalHistorySufferings.Count(); i++)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians)
+                                @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings)
+                            </td>
+                        </tr>
+                    </table>
+                }
 
-                    <div class="mb-3">
-                        <label asp-for="MedicalNotes"></label>
-                        <input asp-for="MedicalNotes" class="form-control" />
-                        <span asp-validation-for="MedicalNotes" class="text-danger"></span>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label asp-for="MedicalImages"></label>
-                        <input asp-for="MedicalImages" class="form-control" />
-                        <span asp-validation-for="MedicalImages" class="text-danger"></span>
-                    </div>
-
-                    <div>
-
-                        @*@for (int i = 0; i < @Model.Specialties.Count(); i++)
+                @for (int i = 0; i < @Model.MedicalHistoryMedicines.Count(); i++)
                         {
                             <table>
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(it => it.Specialties[i].SpecialtyId)
-                                        @Html.DisplayFor(it => it.Specialties[i].Name)
-                                        @Html.DisplayFor(it => it.Specialties[i].Name)
+                                        @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians)
+                                        @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines)
                                     </td>
                                 </tr>
                             </table>
-                        }*@
-                        <br />
-                    </div>
+                        }
+
+                 @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Note)
+                                @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).NoteDate)
+                                @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).NoteTime)
+                                @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Physician)
+                            </td>
+                        </tr>
+                    </table>
+                }
+
+                @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Id)
+                                @*@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)*@
+                            </td>
+                        </tr>
+                    </table>
+                }
+
+                @if (Model.UserId == null)
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary">Save</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Update</button>
+                }
 
 
-                    @if (Model.UserId == null)
-                    {
-                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary">Save</button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    }
-
-
-                    <a asp-area="User" asp-action="Index" asp-controller="User" class="btn btn-primary">
-                        Back to Users
-                    </a>
-                </div>
+                <a asp-area="User" asp-action="Index" asp-controller="User" class="btn btn-primary">
+                    Back to Users
+                </a>
             </div>
         </div>
+    </div>
 </form>

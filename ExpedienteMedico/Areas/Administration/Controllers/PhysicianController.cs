@@ -186,8 +186,9 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
             var obj = _unitOfWork.Physician.GetFirstOrDefault(x => x.Id == id, null);
 
             if (obj == null)
-                return Json(new { success = false, message = "Error thile deleting" });
-
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
 
             var oldImageUrl = Path.Combine(_hostEnvironment.WebRootPath, obj.PicturePath);
             if (System.IO.File.Exists(oldImageUrl))

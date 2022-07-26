@@ -1,21 +1,15 @@
 ﻿using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository.IRepository;
-using ExpedienteMedico.Utility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
-    [Area("Medical")]
-    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
-    public class TreatmentController : Controller
+    public class MedicalImageController : Controller
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
 
-        public TreatmentController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicalImageController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
@@ -23,8 +17,8 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Treatment> objTreatmentList = _unitOfWork.Treatment.GetAll();
-            return View(objTreatmentList);
+            IEnumerable<MedicalImage> objMedicalImageList = _unitOfWork.MedicalImage.GetAll();
+            return View(objMedicalImageList);
         }
 
         public IActionResult Create()
@@ -34,29 +28,29 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Treatment obj)
+        public IActionResult Create(MedicalImage obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Treatment.Add(obj);
+                _unitOfWork.MedicalImage.Add(obj);
                 _unitOfWork.Save();
             }
-            TempData["success"] = "Treatment created succesfully";
+            TempData["success"] = "Medical Image created succesfully";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Treatment obj)
+        public IActionResult Edit(MedicalImage obj)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Treatment.Update(obj);
+                _unitOfWork.MedicalImage.Update(obj);
                 _unitOfWork.Save();
             }
 
-            TempData["success"] = "Treatment edited succesfully";
+            TempData["success"] = "Medical Image edited succesfully";
             return RedirectToAction("Index");
         }
 
@@ -67,7 +61,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 return NotFound();
             }
 
-            var user = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
+            var user = _unitOfWork.MedicalImage.GetFirstOrDefault(x => x.Id == id, null);
 
             if (user == null)
             {
@@ -79,14 +73,14 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var treatment = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
+            var medicalImage = _unitOfWork.MedicalImage.GetFirstOrDefault(x => x.Id == id, null);
 
-            if (treatment == null)
+            if (medicalImage == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            _unitOfWork.Treatment.Remove(treatment);
+            _unitOfWork.MedicalImage.Remove(medicalImage);
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Delete Successful" });
@@ -98,8 +92,8 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult GetAll()
         {
-            var treatment = _unitOfWork.Treatment.GetAll();
-            return Json(new { data = treatment, success = true });
+            var medicalImage = _unitOfWork.MedicalImage.GetAll();
+            return Json(new { data = medicalImage, success = true });
         }
         #endregion
     }

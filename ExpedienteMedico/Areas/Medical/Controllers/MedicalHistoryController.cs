@@ -191,8 +191,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return Json(new { data = medicalHistory, success = true });
         }
 
-
-
         [HttpDelete]
         public IActionResult Delete(int? id)
         {

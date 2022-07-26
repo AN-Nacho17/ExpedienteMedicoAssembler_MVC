@@ -79,11 +79,17 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         public IActionResult Delete(int? id)
         {
             var suffering = _unitOfWork.Suffering.GetFirstOrDefault(x => x.Id == id, null);
+
+            if (suffering == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
             _unitOfWork.Suffering.Remove(suffering);
             _unitOfWork.Save();
 
-            TempData["success"] = "Suffering deleted succesfully";
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = "Delete Successful" });
+            //return RedirectToAction("Index");
         }
 
 
