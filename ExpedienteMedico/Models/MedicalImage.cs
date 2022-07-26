@@ -16,7 +16,10 @@ namespace ExpedienteMedico.Models
         [Required]
         public string MedicalHistoryId { get; set; }
 
-        public MedicalHistory MedicalHistory { get; set; }
+        [Required]
+        public int PhysicianId { get; set; }
+
+        public Physician Physician { get; set; }
 
         [Required]
         [StringLength(200)]

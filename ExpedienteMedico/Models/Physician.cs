@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ExpedienteMedico.Models
 {
-    public class Physician 
+    public class Physician
     {
 
         [Key]
