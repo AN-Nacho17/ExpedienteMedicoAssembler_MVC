@@ -4,6 +4,7 @@ using ExpedienteMedico.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220726210952_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,14 +134,9 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhysicianId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MedicalHistoryId");
-
-                    b.HasIndex("PhysicianId");
 
                     b.ToTable("MedicalImages");
                 });
@@ -612,19 +609,13 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalImage", b =>
                 {
-                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", null)
+                    b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
                         .WithMany("MedicalImages")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpedienteMedico.Models.Physician", "Physician")
-                        .WithMany()
-                        .HasForeignKey("PhysicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Physician");
+                    b.Navigation("MedicalHistory");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalNote", b =>

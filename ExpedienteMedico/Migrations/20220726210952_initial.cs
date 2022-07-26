@@ -29,7 +29,7 @@ namespace ExpedienteMedico.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
                     CompleteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastDateAttended = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -393,7 +393,6 @@ namespace ExpedienteMedico.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NoteDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NoteTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PhysicianId = table.Column<int>(type: "int", nullable: false),
                     MedicalHistoryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },

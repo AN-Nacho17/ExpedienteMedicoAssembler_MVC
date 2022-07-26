@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ExpedienteMedico.Models
 {
-    public class Physician 
+    public class Physician
     {
 
         [Key]
@@ -20,8 +20,7 @@ namespace ExpedienteMedico.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        
-        
+
         public int PhoneNumber { get; set; }
 
 

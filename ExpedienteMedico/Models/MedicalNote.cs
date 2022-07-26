@@ -15,17 +15,12 @@ namespace ExpedienteMedico.Models
         public DateTime NoteDate { get; set; }
 
         [Required]
-        public DateTime NoteTime { get; set; }
-
-        [Required]
         public int PhysicianId { get; set; }
 
         public Physician Physician { get; set; }
 
         [Required]
         public string MedicalHistoryId { get; set; }
-
-        public MedicalHistory MedicalHistory { get; set; }
 
 
 
