@@ -39,7 +39,6 @@
                                 @if (User.IsInRole(Roles.Role_Admin))
                                 {
                                     <a class="dropdown-item" asp-area="Administration" asp-controller="Specialty" asp-action="Index">Manage Physician Specialties   <i class="bi bi-list-stars"></i></a>
-                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Physician" asp-action="Index">Manage Physicians   <i class="bi bi-person-badge-fill"></i></a>
                                     <a class="dropdown-item" asp-area="User" asp-controller="User" asp-action="Index">Manage Users   <i class="bi bi-people"></i></a>
                                 }
                                 @if (User.IsInRole(Roles.Role_Admin) || User.IsInRole(Roles.Role_Physician))

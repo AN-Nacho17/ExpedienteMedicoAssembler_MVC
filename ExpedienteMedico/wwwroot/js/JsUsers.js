@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblDataUs').DataTable({
+    dataTable = $('#tblDataUser').DataTable({
         "ajax": {
             "url": "/User/User/getall"
         },
@@ -14,7 +14,6 @@ function loadDataTable() {
             { "data": "completeName", "width": "15%" },
             { "data": "email", "width": "15%" },
             { "data": "phoneNumber", "width": "15%" },
-            { "data": "lastDateAttended", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

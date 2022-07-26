@@ -7,69 +7,104 @@
 <div class="container p-3">
 
     <div class="row pt-4">
-        <div class="col-6">
+        <div class="col-3">
             <h2 class="text-decoration">Users</h2>
         </div>
 
-        <div class="col-6 text-end p-1">
+        <div class="col-3 text-end p-1">
             <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i>
                 Add User
             </a>
         </div>
 
+        @if (User.IsInRole(Roles.Role_Admin))
+        {
+            <div class="col-3 text-end p-1">
+                <a asp-area="Administration" asp-controller="Physician" asp-action="Index" class="btn btn-primary">
+                    <i class="bi bi-person-badge-fill"></i>
+                    View Medics
+                </a>
+            </div>
+        }
+
     </div>
 
     <br>
 
-    <table id="tblDataUs" class="table">
-        <thead> 
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompleteName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastDateAttended)
-            </th>
-            
-            @if (User.IsInRole(Roles.Role_Admin))
-            {
+    
+    @if (User.IsInRole(Roles.Role_Admin))
+    {
+        <table id="tblDataUser" class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompleteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+
                 <th>
                     Admin Actions
                 </th>
-            }
-            
-            @if (User.IsInRole(Roles.Role_Physician))
-            {
-                <th>
-                    Medical Actions
-                </th>
-            }
 
-        </tr>
-        </thead>
-    </table>
+
+            </tr>
+            </thead>
+        </table>
+    }
+
+    
+
+    @if (User.IsInRole(Roles.Role_Physician))
+    {
+        <table id="tblDataPatient" class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompleteName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastDateAttended)
+                </th>
+
+                <th>
+                    Patient Actions
+                </th>
+
+            </tr>
+            </thead>
+        </table>
+    }
+    
 
 
 </div>
 
 @section Scripts{
-    
+
     @if (User.IsInRole(Roles.Role_Physician))
     {
-        <script src="~/js/JsMEdicalUsers.js"></script>
+<script src="~/js/JsMedUsers.js"></script>
     }
     else
     {
-        <script src="~/js/JsUSers.js"></script>
+<script src="~/js/JsUSers.js"></script>
     }
 }

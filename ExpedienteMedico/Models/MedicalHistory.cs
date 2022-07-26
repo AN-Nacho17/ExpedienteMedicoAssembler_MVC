@@ -17,19 +17,19 @@ namespace ExpedienteMedico.Models
         public User User { get; set; }
 
         [ValidateNever]
-        public List<MedicalImage> Images { get; set; }
+        public ICollection<MedicalImage> MedicalImages { get; set; }
 
         [ValidateNever]
-        public List<MedicalNote> Notes { get; set; }
+        public ICollection<MedicalNote> MedicalNotes { get; set; }
 
         [ValidateNever]
-        public List<MedicalHistory_Treatment> Treatments { get; set; }
+        public ICollection<MedicalHistory_Treatment> MedicalHistoryTreatments { get; set; }
 
         [ValidateNever]
-        public List<MedicalHistory_Suffering> Sufferings { get; set; }
+        public ICollection<MedicalHistory_Suffering> MedicalHistorySufferings { get; set; }
 
         [ValidateNever]
-        public List<MedicalHistory_Medicine> Medicines { get; set; }
+        public ICollection<MedicalHistory_Medicine> MedicalHistoryMedicines { get; set; }
 
 
     }

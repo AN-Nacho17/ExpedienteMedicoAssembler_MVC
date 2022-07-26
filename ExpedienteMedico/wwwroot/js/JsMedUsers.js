@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblDataUs').DataTable({
+    dataTable = $('#tblDataPatient').DataTable({
         order: [[4, 'asc']],
         "ajax": {
             "url": "/User/User/getallmedical"
@@ -26,7 +26,7 @@ function loadDataTable() {
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
 
-                                <a href="/User/User/Attend?id=${data}"
+                                <a href="/Medical/MedicalHistory/Upsert?id=${data}"
                                    class="btn btn-primary mx-2">
 							    <i class="bi bi-clipboard2-pulse"></i></i>Attend</a>
 

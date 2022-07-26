@@ -19,6 +19,12 @@
         IMedicalNoteRepository MedicalNote { get; }
 
         IMedicalImageRepository MedicalImage { get; }
+
+        IHistoryMedicineRepository HistoryMedicine { get; }
+
+        IHistorySufferingRepository HistorySuffering { get; }
+
+        IHistoryTreatmentRepository HistoryTreatment { get; }
         void Save();
     }
 }

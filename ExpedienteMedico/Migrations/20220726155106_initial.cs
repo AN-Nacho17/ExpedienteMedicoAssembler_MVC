@@ -233,17 +233,17 @@ namespace ExpedienteMedico.Migrations
                 name: "MedicalHistories",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicalHistories", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_MedicalHistories_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_MedicalHistories_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -452,11 +452,6 @@ namespace ExpedienteMedico.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicalHistories_UserId1",
-                table: "MedicalHistories",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicalHistoryMedicines_MedicineId",

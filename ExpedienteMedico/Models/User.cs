@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders.Physical;
 
 namespace ExpedienteMedico.Models
 {
@@ -14,6 +15,7 @@ namespace ExpedienteMedico.Models
 
         [Required]
         public DateTime LastDateAttended { get; set; }
+
 
     }
 }

@@ -55,20 +55,18 @@
 
             @for (int i = 0; i < @Model.Input.RoleList.Count(); i++)
             {
-                @if (@Model.Input.RoleList.ElementAt(i).Text != Roles.Role_Physician)
-                {
+                @*@if (@Model.Input.RoleList.ElementAt(i).Text != Roles.Role_Physician)
+                {*@
                     roles.Add(@Model.Input.RoleList.ElementAt(i));
-                }
+                @*}*@
             }
-
-            @if (User.IsInRole(Roles.Role_Admin))
-            {
+            
                 <div class="form-floating py-2">
                     <select asp-for="Input.Role" asp-items="@roles" class="form-select">
                         <option disabled selected>--Select Role--</option>
                     </select>
                 </div>
-            }
+            
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>

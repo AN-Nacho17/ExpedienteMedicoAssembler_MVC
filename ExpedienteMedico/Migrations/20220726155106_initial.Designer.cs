@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220725045149_fixingDataypes")]
-    partial class fixingDataypes
+    [Migration("20220726155106_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -509,7 +509,7 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Medicine", b =>
                 {
                     b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
-                        .WithMany("Medicines")
+                        .WithMany("MedicalHistoryMedicines")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -536,7 +536,7 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Suffering", b =>
                 {
                     b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
-                        .WithMany("Sufferings")
+                        .WithMany("MedicalHistorySufferings")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -563,7 +563,7 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.IntermediateTables.MedicalHistory_Treatment", b =>
                 {
                     b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
-                        .WithMany("Treatments")
+                        .WithMany("MedicalHistoryTreatments")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -618,7 +618,7 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalImage", b =>
                 {
                     b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
-                        .WithMany("Images")
+                        .WithMany("MedicalImages")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -629,7 +629,7 @@ namespace ExpedienteMedico.Migrations
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalNote", b =>
                 {
                     b.HasOne("ExpedienteMedico.Models.MedicalHistory", "MedicalHistory")
-                        .WithMany("Notes")
+                        .WithMany("MedicalNotes")
                         .HasForeignKey("MedicalHistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -698,15 +698,15 @@ namespace ExpedienteMedico.Migrations
 
             modelBuilder.Entity("ExpedienteMedico.Models.MedicalHistory", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("MedicalHistoryMedicines");
 
-                    b.Navigation("Medicines");
+                    b.Navigation("MedicalHistorySufferings");
 
-                    b.Navigation("Notes");
+                    b.Navigation("MedicalHistoryTreatments");
 
-                    b.Navigation("Sufferings");
+                    b.Navigation("MedicalImages");
 
-                    b.Navigation("Treatments");
+                    b.Navigation("MedicalNotes");
                 });
 
             modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>

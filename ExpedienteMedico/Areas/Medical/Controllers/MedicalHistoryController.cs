@@ -33,18 +33,36 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         //GET ********************************
         public IActionResult Upsert(string? id)  //ID of user
         {
-            if (id.Length <= 0 || id == null)
+            if (id == null)
             {
                 return View(new MedicalHistory());
             }
             else
             {
                 MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                    includeProperties: "Treatments, Sufferings, Medicines, Images, Notes");
-                foreach (var treat in medicalHistory.Treatments)
+                    includeProperties: "MedicalHistoryTreatments,MedicalHistorySufferings,MedicalHistoryMedicines,MedicalImages,MedicalNotes");
+
+                //Añadiendo los objetos de datos del expediente medico del paciente
+
+                for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
                 {
-                    
+                    var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatment");
                 }
+
+                for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
+                {
+                    var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Suffering");
+                }
+
+                for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
+                {
+                    var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
+                    var physicianSpecialty = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicine");
+                }
+
+
                 return View(medicalHistory);
             }
         }
@@ -148,7 +166,35 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         #region API
 
- 
+        public IActionResult GetAll(string? id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalHistoryTreatments, MedicalHistorySufferings, MedicalHistoryMedicines, Images, Notes");
+
+            //Añadiendo los objetos de datos del expediente medico del paciente
+
+            for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
+                var physicianSpecialty = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatment");
+            }
+
+            for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
+                var physicianSpecialty = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Suffering");
+            }
+
+            for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
+                var physicianSpecialty = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicine");
+            }
+
+            return Json(new { data = medicalHistory, success = true });
+        }
+
+
 
         [HttpDelete]
         public IActionResult Delete(int? id)
@@ -171,6 +217,8 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return Json(new { success = true, message = "Deleted Successfully" });
 
             #endregion
+
+
 
         }
     }

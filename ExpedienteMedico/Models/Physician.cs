@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ExpedienteMedico.Models.IntermediateTables;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ExpedienteMedico.Models
 {
-    public class Physician
+    public class Physician 
     {
 
         [Key]
@@ -21,8 +22,10 @@ namespace ExpedienteMedico.Models
         
         public int PhoneNumber { get; set; }
 
+
         [ValidateNever]
         public string PicturePath { get; set; }
+
 
         [ValidateNever]
         public ICollection<PhysicianSpecialty> PhysicianSpecialties { get; set; }
