@@ -55,20 +55,9 @@
                             <table>
                                 <tr>
                                     <td>
-                                        @Html.HiddenFor(it => it.Specialties[i].SpecialtyId)
-                                        @Html.HiddenFor(it => it.Specialties[i].Name)
+                                        @Html.DisplayFor(it => it.Specialties[i].SpecialtyId)
                                         @Html.DisplayFor(it => it.Specialties[i].Name)
-                                    </td>
-
-                                    <td>
-                                        @if (@Model.Specialties[i].IsSelected == true)
-                                        {
-                                            <input asp-for="@Model.Specialties[i].IsSelected" type="checkbox" checked/>
-                                        }
-                                        else
-                                        {
-                                            <input asp-for="@Model.Specialties[i].IsSelected" type="checkbox"/>
-                                        }
+                                        @Html.DisplayFor(it => it.Specialties[i].Name)
                                     </td>
                                 </tr>
                             </table>

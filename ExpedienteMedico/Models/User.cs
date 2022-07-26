@@ -8,6 +8,7 @@ namespace ExpedienteMedico.Models
     {
 
         [Required]
+        [StringLength(9)]
         public string UserId { get; set; } //Cedula
 
         [Required]

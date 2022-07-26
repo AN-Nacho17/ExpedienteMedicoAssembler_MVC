@@ -9,6 +9,11 @@ namespace ExpedienteMedico.Models
     public class MedicalHistory
     {
 
+        public MedicalHistory(string userId)
+        {
+            UserId = userId;
+        }
+
 
         [Key]
         [ForeignKey("User")]
