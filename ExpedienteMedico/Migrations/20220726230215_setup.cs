@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpedienteMedico.Migrations
 {
-    public partial class initial : Migration
+    public partial class setup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,23 +63,6 @@ namespace ExpedienteMedico.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicines", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Physicians",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CollegeNumber = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
-                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Physicians", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,27 +230,26 @@ namespace ExpedienteMedico.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PhysicianSpecialties",
+                name: "Physicians",
                 columns: table => new
                 {
-                    PhysicianId = table.Column<int>(type: "int", nullable: false),
-                    SpecialtyId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollegeNumber = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
+                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhysicianSpecialties", x => new { x.PhysicianId, x.SpecialtyId });
+                    table.PrimaryKey("PK_Physicians", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhysicianSpecialties_Physicians_PhysicianId",
-                        column: x => x.PhysicianId,
-                        principalTable: "Physicians",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PhysicianSpecialties_Specialties_SpecialtyId",
-                        column: x => x.SpecialtyId,
-                        principalTable: "Specialties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Physicians_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -372,6 +354,7 @@ namespace ExpedienteMedico.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PdfUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MedicalHistoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PhysicianId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -382,6 +365,12 @@ namespace ExpedienteMedico.Migrations
                         column: x => x.MedicalHistoryId,
                         principalTable: "MedicalHistories",
                         principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MedicalImages_Physicians_PhysicianId",
+                        column: x => x.PhysicianId,
+                        principalTable: "Physicians",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -409,6 +398,30 @@ namespace ExpedienteMedico.Migrations
                         name: "FK_MedicalNotes_Physicians_PhysicianId",
                         column: x => x.PhysicianId,
                         principalTable: "Physicians",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhysicianSpecialties",
+                columns: table => new
+                {
+                    PhysicianId = table.Column<int>(type: "int", nullable: false),
+                    SpecialtyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhysicianSpecialties", x => new { x.PhysicianId, x.SpecialtyId });
+                    table.ForeignKey(
+                        name: "FK_PhysicianSpecialties_Physicians_PhysicianId",
+                        column: x => x.PhysicianId,
+                        principalTable: "Physicians",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PhysicianSpecialties_Specialties_SpecialtyId",
+                        column: x => x.SpecialtyId,
+                        principalTable: "Specialties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -488,6 +501,11 @@ namespace ExpedienteMedico.Migrations
                 column: "MedicalHistoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedicalImages_PhysicianId",
+                table: "MedicalImages",
+                column: "PhysicianId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicalNotes_MedicalHistoryId",
                 table: "MedicalNotes",
                 column: "MedicalHistoryId");
@@ -496,6 +514,12 @@ namespace ExpedienteMedico.Migrations
                 name: "IX_MedicalNotes_PhysicianId",
                 table: "MedicalNotes",
                 column: "PhysicianId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Physicians_UserId",
+                table: "Physicians",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhysicianSpecialties_SpecialtyId",

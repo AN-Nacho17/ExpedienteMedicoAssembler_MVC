@@ -8,6 +8,7 @@ using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpedienteMedico.Areas.Administration.Controllers
 {
@@ -21,12 +22,15 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
         #region HTTP GET POST
 
         private readonly IUnitOfWork _unitOfWork;
+        private UserManager<IdentityUser> _userManager;
         private IWebHostEnvironment _hostEnvironment;
 
-        public PhysicianController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public PhysicianController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
             _hostEnvironment = hostEnvironment;
+
         }
 
         public IActionResult Index()
@@ -106,10 +110,28 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
 
                 if (obj.Physician.Id == 0)
                 {
-                    _unitOfWork.Physician.Add(obj.Physician);
-                    _unitOfWork.Save();
-                    IsGetted = true;
-                    Physician = _unitOfWork.Physician.GetLast();
+                    //Aqui se obtiene el id de usuario mediante el email asociado, para que en un futuro el medico se logee
+                    Models.User user = _unitOfWork.User.GetFirstOrDefault(x => x.Email == Physician.Email, null);
+                    if (user != null)
+                    {
+                        if (_userManager.IsInRoleAsync(user, Roles.Role_Physician).Result)
+                        {
+                            Physician.UserId = user.Id;
+                        }
+                    }
+
+                    try
+                    {
+                        _unitOfWork.Physician.Add(obj.Physician);
+                        _unitOfWork.Save();
+                        IsGetted = true;
+                        Physician = _unitOfWork.Physician.GetLast();
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["error"] = "The Physician must be associated with a physician login or the email is already taken";
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 #region specialtiesManage

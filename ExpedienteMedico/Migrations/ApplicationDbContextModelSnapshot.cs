@@ -218,7 +218,14 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Physicians");
                 });
@@ -642,6 +649,17 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired();
 
                     b.Navigation("Physician");
+                });
+
+            modelBuilder.Entity("ExpedienteMedico.Models.Physician", b =>
+                {
+                    b.HasOne("ExpedienteMedico.Models.User", "User")
+                        .WithOne()
+                        .HasForeignKey("ExpedienteMedico.Models.Physician", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

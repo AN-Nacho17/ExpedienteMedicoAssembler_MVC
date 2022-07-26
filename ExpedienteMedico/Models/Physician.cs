@@ -23,9 +23,13 @@ namespace ExpedienteMedico.Models
 
         public int PhoneNumber { get; set; }
 
-
         [ValidateNever]
         public string PicturePath { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+        public User User { get; set; }
 
 
         [ValidateNever]
