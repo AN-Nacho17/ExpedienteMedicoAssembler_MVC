@@ -25,25 +25,25 @@
 
                     <div class="mb-3">
                         <label asp-for="Physician.Name"></label>
-                        <input asp-for="Physician.Name" class="form-control" />
+                        <input asp-for="Physician.Name" class="form-control text-dark" />
                         <span asp-validation-for="Physician.Name" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Physician.Email"></label>
-                        <input asp-for="Physician.Email" class="form-control" />
+                        <input asp-for="Physician.Email" class="form-control text-dark" />
                         <span asp-validation-for="Physician.Email" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Physician.PhoneNumber"></label>
-                        <input asp-for="Physician.PhoneNumber" class="form-control" />
+                        <label asp-for="Physician.PhoneNumber"></label> 
+                        <input asp-for="Physician.PhoneNumber" class="form-control text-dark" />
                         <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Physician.CollegeNumber"></label>
-                        <input asp-for="Physician.CollegeNumber" class="form-control" />
+                        <input asp-for="Physician.CollegeNumber" class="form-control text-dark" />
                         <span asp-validation-for="Physician.CollegeNumber" class="text-danger"></span>
                     </div>
 
@@ -98,8 +98,11 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     }
 
-
-                    <a asp-controller="Physician" asp-action="Index" class="btn btn-primary">
+                    <br />
+                    <br />
+                    <br /> 
+                    <br />
+                    <a asp-controller="Physician" asp-action="Index" class="btn btn-secondary">
                         Back to list
                     </a>
                 </div>
