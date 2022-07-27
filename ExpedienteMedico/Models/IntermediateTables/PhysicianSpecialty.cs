@@ -14,7 +14,5 @@ namespace ExpedienteMedico.Models.IntermediateTables
         
         public Specialty Specialty { get; set; }
 
-
-
     }
 }

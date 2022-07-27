@@ -7,5 +7,7 @@ namespace ExpedienteMedico.Repository.IRepository
         void Update(Physician obj);
 
         Physician GetLast();
+
+        Physician GetByEmail(string email);
     }
 }

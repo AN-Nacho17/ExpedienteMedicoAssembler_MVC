@@ -6,5 +6,7 @@ namespace ExpedienteMedico.Repository.IRepository
     {
         void Update(Treatment obj);
 
+        Treatment GetLast();
+
     }
 }

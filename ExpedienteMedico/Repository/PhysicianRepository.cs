@@ -22,5 +22,10 @@ namespace ExpedienteMedico.Repository
         {
             return _db.Physicians.OrderByDescending(p => p.Id).FirstOrDefault();
         }
+
+        public Physician GetByEmail(string email)
+        {
+            return _db.Physicians.FirstOrDefault(x => x.Email == email);
+        }
     }
 }
