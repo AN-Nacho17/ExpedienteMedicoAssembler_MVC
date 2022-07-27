@@ -91,7 +91,9 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
             }
 
-            return RedirectToAction("Index");
+            string url = "/Medical/MedicalHistory/Upsert?id=" + objMedicalImage.Image.MedicalHistoryId;
+
+            return Redirect(url);
         }
 
         [HttpPost]
