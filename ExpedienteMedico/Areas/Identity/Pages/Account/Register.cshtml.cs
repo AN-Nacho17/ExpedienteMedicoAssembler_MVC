@@ -102,6 +102,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [StringLength(9)]
             [Display(Name = "User DNI")]
             public string UserId { get; set; } //Cedula
 
