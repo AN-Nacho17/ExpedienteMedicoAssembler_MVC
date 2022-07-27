@@ -55,7 +55,7 @@ namespace ExpedienteMedico.Data
                 .HasKey(bc => new { bc.MedicalHistoryId, bc.TreatmentId });
 
             modelBuilder.Entity<Physician>().HasOne(d => d.User)
-                .WithOne().OnDelete(DeleteBehavior.Cascade);
+                .WithOne().OnDelete(DeleteBehavior.NoAction);
 
         }
     }

@@ -69,6 +69,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
             _unitOfWork.HistoryMedicine.Add(historyMedicine);
             _unitOfWork.Save();
+            TempData["success"] = "Medicine added successfully";
             return RedirectToAction("Index");
         }
 

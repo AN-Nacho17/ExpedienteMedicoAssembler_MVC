@@ -10,6 +10,7 @@ using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 
+
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
 

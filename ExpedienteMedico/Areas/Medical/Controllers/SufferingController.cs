@@ -70,6 +70,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
             _unitOfWork.HistorySuffering.Add(historySuffering);
             _unitOfWork.Save();
+            TempData["success"] = "Suffering added successfully";
             return RedirectToAction("Index");
         }
 

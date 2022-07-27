@@ -1,18 +1,28 @@
 ﻿using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
+
+    [Area("Medical")]
+    [Authorize(Roles = Roles.Role_Admin + "," + Roles.Role_Physician)]
     public class MedicalImageController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
+        UserManager<IdentityUser> _userManager;
 
-        public MedicalImageController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicalImageController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -21,39 +31,66 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(objMedicalImageList);
         }
 
-        public IActionResult View(string id)
+        public IActionResult CreateForHistory(string id)
         {
+            MedicalImageVM objMedicalImage = new MedicalImageVM();
+            objMedicalImage.Image = new MedicalImage();
 
-            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "MedicalHistoryMedicines");
+            
+            int PhysicianId =
+                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
+            objMedicalImage.Image.PhysicianId = PhysicianId;
+            objMedicalImage.Image.MedicalHistoryId = id;
 
-            List<Medicine> medicines = new List<Medicine>();
-
-            for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
-            {
-                var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                Medicine medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines").Medicines;
-                medicines.Add(medicine);
-            }
-
-            return View(medicines);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
+            return View(objMedicalImage);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(MedicalImage obj)
+        public IActionResult CreateForHistory(MedicalImageVM objMedicalImage, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.MedicalImage.Add(obj);
+
+                #region imageManage
+
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images\MedicalImages");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    if (objMedicalImage.Image.ImageUrl != null)
+                    {
+                        var oldImageUrl = Path.Combine(wwwRootPath, objMedicalImage.Image.ImageUrl);
+                        if (System.IO.File.Exists(oldImageUrl))
+                        {
+                            System.IO.File.Delete(oldImageUrl);
+                        }
+                    }
+
+                    using (var fileStreams =
+                           new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+
+                    objMedicalImage.Image.ImageUrl = @"images\MedicalImages\" + fileName + extension;
+                }
+
+                #endregion
+
+                #region medicalImage
+
+                _unitOfWork.MedicalImage.Add(objMedicalImage.Image);
                 _unitOfWork.Save();
+                TempData["success"] = "Medical image added succesfully";
+
+                #endregion
+
             }
-            TempData["success"] = "Medical Image created succesfully";
+
             return RedirectToAction("Index");
         }
 
@@ -112,6 +149,23 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             var medicalImage = _unitOfWork.MedicalImage.GetAll();
             return Json(new { data = medicalImage, success = true });
+        }
+
+        public IActionResult Get(string id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalImages");
+
+            List<MedicalImage> images = new List<MedicalImage>();
+
+            for (int j = 0; j < medicalHistory.MedicalImages.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalImages.ElementAt(j);
+                MedicalImage image = _unitOfWork.MedicalImage.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "Images");
+                images.Add(image);
+            }
+
+            return Json(new { data = images, success = true });
         }
         #endregion
     }

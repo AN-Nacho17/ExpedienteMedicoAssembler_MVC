@@ -97,30 +97,32 @@
                 
                 <a asp-controller="MedicalNote" asp-action="CreateForHistory" asp-route-id="@Model.UserId"  class="btn btn-dark">
                     <i class="bi bi-plus-circle"></i>
-                    &nbsp; add new medical note
+                    &nbsp; Add new medical note
                 </a>
                 </div>
                 <br />
                 
                 <label class="form-label">Medical Images</label>
                 <div>
-                @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
-                {
-                    <table>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Id)
-                                @*@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)*@
-                            </td>
-                        </tr>
-                    </table>
-                }
+                    @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Id)
+                                    @*@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)*@
+                                </td>
+                            </tr>
+                        </table>
+                    }
                 
-                <a asp-controller="MedicalNote" asp-action="CreateForHistory" asp-route-id="@Model.UserId"  class="btn btn-dark">
-                    <i class="bi bi-plus-circle"></i>
-                    &nbsp; add new medical note
-                </a>
+                    <a asp-controller="MedicalImage" asp-action="CreateForHistory" asp-route-id="@Model.UserId"  class="btn btn-dark">
+                        <i class="bi bi-plus-circle"></i>
+                        &nbsp; Add new medical image
+                    </a>
                 </div>
+                
+                <br/>
 
                 @if (Model.UserId == null)
                 {
