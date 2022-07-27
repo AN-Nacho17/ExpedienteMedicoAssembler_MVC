@@ -4,6 +4,8 @@ using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
+
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
     [Area("Medical")]
@@ -23,11 +25,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             IEnumerable<MedicalNote> objMedicalNoteList = _unitOfWork.MedicalNote.GetAll();
             return View(objMedicalNoteList);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -98,6 +95,23 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             var medicalNote = _unitOfWork.MedicalNote.GetAll();
             return Json(new { data = medicalNote, success = true });
+        }
+
+        public IActionResult Get(string id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "Notes");
+
+            List<MedicalNote> notes = new List<MedicalNote>();
+
+            for (int j = 0; j < medicalHistory.MedicalNotes.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalNotes.ElementAt(j);
+                MedicalNote note = _unitOfWork.MedicalNote.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "Notes");
+                notes.Add(note);
+            }
+
+            return Json(new { data = notes, success = true });
         }
         #endregion
     }

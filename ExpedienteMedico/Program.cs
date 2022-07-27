@@ -1,12 +1,12 @@
 using System.Configuration;
 using System.Text.Json.Serialization;
-using BookStore.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ExpedienteMedico.Data;
 using ExpedienteMedico.Models;
 using ExpedienteMedico.Repository;
 using ExpedienteMedico.Repository.IRepository;
+using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
