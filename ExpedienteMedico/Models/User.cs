@@ -9,14 +9,15 @@ namespace ExpedienteMedico.Models
 
         [Required]
         [StringLength(9)]
+        [Display(Name = "User DNI")]
         public string UserId { get; set; } //Cedula
 
         [Required]
+        [Display(Name = "Complete name")]
         public string CompleteName { get; set; }
 
         [Required]
         public DateTime LastDateAttended { get; set; }
-
 
     }
 }

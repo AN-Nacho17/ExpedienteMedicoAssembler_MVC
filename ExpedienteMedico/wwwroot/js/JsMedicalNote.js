@@ -12,7 +12,6 @@ function loadDataTable() {
         "columns": [
             { "data": "note", "width": "15%" },
             { "data": "noteDate", "width": "15%" },
-            { "data": "noteTime", "width": "15%" },
             { "data": "physician", "width": "15%" },
             {
                 "data": "id",

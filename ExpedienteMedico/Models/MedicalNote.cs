@@ -22,8 +22,5 @@ namespace ExpedienteMedico.Models
         [Required]
         public string MedicalHistoryId { get; set; }
 
-
-
-
     }
 }

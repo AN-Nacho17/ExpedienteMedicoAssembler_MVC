@@ -8,9 +8,11 @@ namespace ExpedienteMedico.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
 
         [Required]
+        [Display(Name = "pdf URL")]
         public string PdfUrl { get; set; }
 
         [Required]
