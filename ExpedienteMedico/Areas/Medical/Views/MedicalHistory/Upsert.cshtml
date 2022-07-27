@@ -20,50 +20,72 @@
 
                 <div asp-validation-summary="All"></div>
                 <br />
-                <br />
                 <label class="form-label">Treatments</label>
                 <br />
                 <br />
-                <div>
+                <div class="text-info">
                     @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
                     {
-                        <table>
+                        <table class="table table-stripped table-sm text-info">
+                            <thead class="text-dark">
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name)
+                                    Name
+                                </td>
+                                <td>
+                                    Description
+                                </td>
+                                <td>
+                                    Physician name
+                                </td>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name) 
+                                </td>
+                                <td>
+                                    @Html.Raw(@Model.MedicalHistoryTreatments.ElementAt(i).Treatments.Description)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
                         </table>
                     }
                     <br />
-                    <a asp-controller="Treatment" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-dark">
+                    <a asp-controller="Treatment" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new treatment
                     </a>
+                    <br />
+                    <br />
                 </div>
                 <br />
                 <br />
                 <label class="form-label">Sufferings</label>
                 <br />
                 <br />
-                <div>
+                <div class="text-info">
                     @for (int i = 0; i < @Model.MedicalHistorySufferings.Count(); i++)
                     {
                         <table>
                             <tr>
                                 <td>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings.Name)
+                                    @Html.Raw(@Model.MedicalHistorySufferings.ElementAt(i).Sufferings.Description)
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
                         </table>
                     }
-                    <a asp-controller="Suffering" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-dark">
+                    <br />
+                    <a asp-controller="Suffering" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new suffering
                     </a>
-
+                    <br />
+                    <br />
                 </div>
                 <br />
                 <br />
@@ -83,10 +105,12 @@
                         </table>
                     }
                     <br />
-                    <a asp-controller="Medicine" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-dark">
+                    <a asp-controller="Medicine" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medicine
                     </a>
+                    <br />
+                    <br />
                 </div>
                 <br />
                 <br />
@@ -106,8 +130,8 @@
                             </tr>
                         </table>
                     }
-
-                    <a asp-controller="MedicalNote" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-dark">
+                    <br />
+                    <a asp-controller="MedicalNote" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medical note
                     </a>
@@ -119,7 +143,7 @@
                 <label class="form-label">Medical Images</label>
                 <br />
                 <br />
-                <div class="row pb-3">
+                <div>
                     @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
                     {
                         <table>
@@ -143,21 +167,21 @@
                             </tr>
                         </table>
                     }
-
-                    <a asp-controller="MedicalImage" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-dark">
+                    <br />
+                    <a asp-controller="MedicalImage" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medical image
                     </a>
                     <br />
                     <br />
-                    <div />
-                    <br />
-                    <br />
-
-                    <a asp-area="User" asp-action="Index" asp-controller="User" class="btn btn-primary">
-                        Back to Users
-                    </a>
                 </div>
+                <br />
+                <br />
+
+                <a asp-area="User" asp-action="Index" asp-controller="User" class="btn btn-primary text-info">
+                    Back to Users
+                </a>
             </div>
         </div>
+    </div>
 </form>
