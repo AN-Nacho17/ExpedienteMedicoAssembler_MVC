@@ -1,7 +1,7 @@
 ﻿@model MedicalNote
 
 <form method="post">
-    <h2 class="text-primary p-1">Create new Medicine</h2>
+    <h2 class="text-primary p-1">Create new Medical Note</h2>
     <div class="border p-2 mt-3">
         <div class="row pb-1"></div>
 
@@ -9,6 +9,12 @@
             <label asp-for="Note"></label>
             <input asp-for="Note" class="form-control">
             <span asp-validation-for="Note" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NoteDate"></label>
+            <input asp-for="NoteDate" class="form-control">
+            <span asp-validation-for="NoteDate" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Create</button>
