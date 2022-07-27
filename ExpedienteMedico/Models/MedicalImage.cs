@@ -7,15 +7,12 @@ namespace ExpedienteMedico.Models
     {
         [Key]
         public int Id { get; set; }
-
+        
         [Required]
-        [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
 
-        [ValidateNever]
-        [Display(Name = "PDF URL")]
         public string PdfUrl { get; set; }
-
+        
         [Required]
         public string MedicalHistoryId { get; set; }
 
