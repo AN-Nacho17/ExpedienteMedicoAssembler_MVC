@@ -8,8 +8,7 @@ namespace ExpedienteMedico.Models.ViewModels
     {
         [ValidateNever]
         public string HistoryId { get; set; }
-
-        [ValidateNever]
+        
         public MedicalImage Image { get; set; }
 
     }
