@@ -24,6 +24,7 @@ namespace ExpedienteMedico.Repository
                 objFromDB.UserId = obj.UserId;
                 objFromDB.Email = obj.Email;
                 objFromDB.PhoneNumber = obj.PhoneNumber;
+                objFromDB.LastDateAttended = obj.LastDateAttended;
             }
         }
     }

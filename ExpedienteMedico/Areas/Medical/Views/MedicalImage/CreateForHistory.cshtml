@@ -1,5 +1,8 @@
 ﻿@model ExpedienteMedico.Models.ViewModels.MedicalImageVM
 
+
+<partial name="_Notifications"></partial>
+
 <form method="post" enctype="multipart/form-data">
 
     <input asp-for="Image.Id" hidden/>
@@ -36,4 +39,19 @@
 
     </div>
 </form>
+
+<script>
+    function ValidateInput() {
+        if (document.getElementById("uploadBox").value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Uploading an image is a requirement!'
+            });
+            return false;
+        }
+        return true;
+    }
+
+</script>
 
