@@ -4,11 +4,11 @@ using Microsoft.Build.Framework;
 
 namespace ExpedienteMedico.Models.ViewModels
 {
-    public class MedicalNoteVM
+    public class SufferingVM
     {
         [ValidateNever]
         public string HistoryId { get; set; }
-        public MedicalNote Note { get; set; }
+        public Suffering Suffering { get; set; }
 
     }
 }

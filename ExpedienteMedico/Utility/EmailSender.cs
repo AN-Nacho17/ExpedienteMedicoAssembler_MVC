@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 
-namespace BookStore.Utility
+namespace ExpedienteMedico.Utility
 {
     public class EmailSender : IEmailSender
     {

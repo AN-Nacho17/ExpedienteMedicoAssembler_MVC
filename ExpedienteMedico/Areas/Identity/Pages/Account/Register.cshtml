@@ -7,16 +7,14 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@{List<SelectListItem> roles = new List<SelectListItem>();}
-
 
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
-            <hr/>
+            <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-floating text-info">
                 <input asp-for="Input.CompleteName" class="form-control text-dark" aria-required="true" />
                 <label asp-for="Input.CompleteName"></label>
@@ -54,26 +52,19 @@
             </div>
             <br />
 
-            @for (int i = 0; i < @Model.Input.RoleList.Count(); i++)
-            {
-                @*@if (@Model.Input.RoleList.ElementAt(i).Text != Roles.Role_Physician)
-                {*@
-                    roles.Add(@Model.Input.RoleList.ElementAt(i));
-                @*}*@
-            }
-            
-                <div class="form-floating py-2">
-                    <select asp-for="Input.Role" asp-items="@roles" class="form-select">
-                        <option disabled selected>--Select Role--</option>
-                    </select>
-                </div>
+            <div class="form-floating py-2">
+                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                    <option enabled selected>--Select Role--</option>
+                </select>
+            </div>
+
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-priamry text-success">Register</button>
         </form>
     </div>
-    
+
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

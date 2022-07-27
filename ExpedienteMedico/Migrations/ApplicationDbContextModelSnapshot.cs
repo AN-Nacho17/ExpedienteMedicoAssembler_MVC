@@ -656,7 +656,7 @@ namespace ExpedienteMedico.Migrations
                     b.HasOne("ExpedienteMedico.Models.User", "User")
                         .WithOne()
                         .HasForeignKey("ExpedienteMedico.Models.Physician", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

@@ -9,6 +9,7 @@ using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
 
