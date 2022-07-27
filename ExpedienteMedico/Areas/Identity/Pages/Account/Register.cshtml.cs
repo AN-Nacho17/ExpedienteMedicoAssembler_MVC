@@ -114,6 +114,7 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public DateTime LastDateAttended { get; set; }
 
             [Required]
+            [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
             public string? Role { get; set; }
