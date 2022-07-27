@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpedienteMedico.Areas.User.Controllers
 {
+
     [Route("User/[controller]")]
     [ApiController]
     [EnableCors("GeneralPolicy")]
     public class AuthController : Controller
     {
-
         private readonly IUnitOfWork _db;
         private UserManager<IdentityUser> _userManager;
 
@@ -31,13 +31,31 @@ namespace ExpedienteMedico.Areas.User.Controllers
             IdentityUser user = _userManager.FindByEmailAsync(email).Result;
             if (user != null && _userManager.CheckPasswordAsync(user, password).Result)
             {
-                return Json(new { data = user.Id, success = true });
+                return Json(new { data = user, success = true });
             }
             else
             {
                 return Json(new { data = "No se pudo encontrar el usuario", success = false });
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("userInfo")]
+        public IActionResult UserInfo(string userId)
+        {
+            IdentityUser u = _userManager.FindByIdAsync(userId).Result;
+            Models.User user  = (Models.User)u;
+            if (user != null)
+            {
+                return Json(new { data = user, sucess = true });
+            } else
+            {
+                return Json(new { data = "No se pudo encontrar el usuario", sucess = true });
+
+            }
+        }
+
 
 
     }
