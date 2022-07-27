@@ -28,6 +28,12 @@
                         </div>
                     }
                 </th>
+                <th>
+                    @foreach (var treatment in Model)
+                    {
+                        <button>Suspend</button>
+                    }
+                </th>
             </tr>
         </thead>
     </table>
