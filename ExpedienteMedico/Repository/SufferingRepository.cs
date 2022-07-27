@@ -17,5 +17,10 @@ namespace ExpedienteMedico.Repository
         {
             _db.Sufferings.Update(obj);
         }
+
+        public Suffering GetLast()
+        {
+            return _db.Sufferings.OrderByDescending(p => p.Id).FirstOrDefault();
+        }
     }
 }

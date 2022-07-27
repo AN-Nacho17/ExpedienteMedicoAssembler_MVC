@@ -164,7 +164,6 @@ namespace ExpedienteMedico.Areas.Administration.Controllers
                     {
                         _unitOfWork.PhysicianSpecialty.Remove(physicianSpecialtyAux);
                     }
-
                 }
 
                 #endregion

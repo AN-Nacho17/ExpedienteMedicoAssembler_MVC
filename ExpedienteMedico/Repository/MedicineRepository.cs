@@ -17,5 +17,10 @@ namespace ExpedienteMedico.Repository
         {
             _db.Medicines.Update(obj);
         }
+
+        public Medicine GetLast()
+        {
+            return _db.Medicines.OrderByDescending(p => p.Id).FirstOrDefault();
+        }
     }
 }

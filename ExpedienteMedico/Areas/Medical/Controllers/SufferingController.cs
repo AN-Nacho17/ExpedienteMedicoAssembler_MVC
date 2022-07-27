@@ -1,7 +1,10 @@
 ﻿using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.IntermediateTables;
+using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpedienteMedico.Areas.Medical.Controllers
@@ -13,17 +16,60 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
+        private UserManager<IdentityUser> _userManager;
 
-        public SufferingController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public SufferingController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
             IEnumerable<Suffering> objSufferingList = _unitOfWork.Suffering.GetAll();
             return View(objSufferingList);
+        }
+
+        public IActionResult CreateForHistory(string id) //User id
+        {
+
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalHistorySufferings");
+
+            SufferingVM vm = new SufferingVM();
+
+            vm.HistoryId = medicalHistory.UserId;
+            vm.Suffering = null;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult CreateForHistory(SufferingVM vm) //User id
+        {
+            Suffering savedSuffering = null;
+            if (ModelState.IsValid)
+            {
+                var Suffering = new Suffering() { Name = vm.Suffering.Name, Description = vm.Suffering.Description };
+                _unitOfWork.Suffering.Add(Suffering);
+                _unitOfWork.Save();
+                savedSuffering = _unitOfWork.Suffering.GetLast();
+            }
+
+            int PhysicianId =
+                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
+
+            var historySuffering = new MedicalHistory_Suffering()
+            {
+                MedicalHistoryId = vm.HistoryId,
+                SufferingId = savedSuffering.Id,
+                PhysicianId = PhysicianId
+            };
+
+            _unitOfWork.HistorySuffering.Add(historySuffering);
+            _unitOfWork.Save();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Create()
@@ -84,6 +130,22 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             var suffering = _unitOfWork.Suffering.GetAll();
             return Json(new { data = suffering, success = true });
+        }
+
+        public IActionResult Get(string id)//User id or expedient id, is the same
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalHistorySufferings");
+
+            List<Suffering> sufferings = new List<Suffering>();
+
+            for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
+                Suffering suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings").Sufferings;
+                sufferings.Add(suffering);
+            }
+            return Json(new { data = sufferings, success = true });
         }
 
         [HttpDelete]

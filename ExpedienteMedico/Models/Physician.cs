@@ -15,12 +15,14 @@ namespace ExpedienteMedico.Models
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "College number")]
         public int CollegeNumber { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
+        [Display(Name = "Phone number")]
         public int PhoneNumber { get; set; }
 
         [ValidateNever]
