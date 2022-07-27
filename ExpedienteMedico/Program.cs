@@ -9,8 +9,20 @@ using ExpedienteMedico.Repository;
 using ExpedienteMedico.Repository.IRepository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
+//CORS SERVICE with named policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "GeneralPolicy",
+                      policy =>
+                      {
+                          policy.WithOrigins("http://127.0.0.1:5500/")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders() //options => options.SignIn.RequireConfirmedAccount = true
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -46,12 +58,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//Usage of the CORS policy
+app.UseCors("GeneralPolicy");
+
 app.UseAuthentication();;
-
-app.UseAuthentication();
-
 app.MapRazorPages();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

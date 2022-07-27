@@ -107,6 +107,8 @@ namespace ExpedienteMedico.Areas.User.Controllers
             return Json(new { success = true, message = "Unbanned Successfully" });
         }
 
+  
+
         #region API
 
         [HttpGet]
@@ -127,6 +129,7 @@ namespace ExpedienteMedico.Areas.User.Controllers
             }
             return Json(new { data = usersList, success = true });
         }
+
 
         #endregion
     }
