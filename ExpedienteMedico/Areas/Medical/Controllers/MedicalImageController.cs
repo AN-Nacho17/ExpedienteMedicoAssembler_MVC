@@ -21,22 +21,15 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(objMedicalImageList);
         }
 
-        public IActionResult View(string id)
+        public IActionResult CreateForHistory(string id)
         {
 
             MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "MedicalHistoryMedicines");
+                includeProperties: "Images");
 
-            List<Medicine> medicines = new List<Medicine>();
+            
 
-            for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
-            {
-                var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                Medicine medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines").Medicines;
-                medicines.Add(medicine);
-            }
-
-            return View(medicines);
+            return View();
         }
 
         public IActionResult Create()
@@ -112,6 +105,23 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             var medicalImage = _unitOfWork.MedicalImage.GetAll();
             return Json(new { data = medicalImage, success = true });
+        }
+
+        public IActionResult Get(string id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "Images");
+
+            List<MedicalImage> images = new List<MedicalImage>();
+
+            for (int j = 0; j < medicalHistory.MedicalImages.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalImages.ElementAt(j);
+                MedicalImage image = _unitOfWork.MedicalImage.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "Images");
+                images.Add(image);
+            }
+
+            return Json(new { data = images, success = true });
         }
         #endregion
     }

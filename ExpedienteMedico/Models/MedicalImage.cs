@@ -12,7 +12,7 @@ namespace ExpedienteMedico.Models
         public string ImageUrl { get; set; }
 
         [Required]
-        [Display(Name = "pdf URL")]
+        [Display(Name = "PDF URL")]
         public string PdfUrl { get; set; }
 
         [Required]
