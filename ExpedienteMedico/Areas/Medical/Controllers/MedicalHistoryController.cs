@@ -8,6 +8,7 @@ using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace ExpedienteMedico.Areas.Medical.Controllers
 {
@@ -175,50 +176,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         #endregion
 
         #region API
-
-        public IActionResult GetHistory(string? id)
-        {
-            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "User,MedicalHistoryTreatments,MedicalHistorySufferings,MedicalHistoryMedicines,MedicalImages,MedicalNotes");
-
-            if (medicalHistory == null)
-            {
-                medicalHistory = new MedicalHistory(id);
-                _unitOfWork.MedicalHistory.Add(medicalHistory);
-                _unitOfWork.Save();
-            }
-
-            //Añadiendo los objetos de datos del expediente medico del paciente
-
-            if (medicalHistory.MedicalHistoryTreatments != null)
-            {
-                for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
-                {
-                    var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
-                }
-            }
-
-            if (medicalHistory.MedicalHistorySufferings != null)
-            {
-                for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
-                {
-                    var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
-                }
-            }
-
-            if (medicalHistory.MedicalHistoryMedicines != null)
-            {
-                for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
-                {
-                    var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines");
-                }
-            }
-
-            return Json(new { data = medicalHistory, success = true });
-        }
 
         [HttpDelete]
         public IActionResult Delete(int? id)

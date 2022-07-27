@@ -133,24 +133,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return Json(new { data = treatment, success = true });
         }
 
-        public IActionResult Get(string id) //User id
-        {
-            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "MedicalHistoryTreatments");
-
-
-            List<Treatment> treatments = new List<Treatment>();
-
-            for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
-            {
-                var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                Treatment treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments").Treatments;
-                treatments.Add(treatment);
-            }
-
-            return Json(new { data = treatments, success = true });
-        }
-
         [HttpDelete]
         public IActionResult Delete(int? id)
         {

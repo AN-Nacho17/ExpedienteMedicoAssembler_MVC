@@ -131,21 +131,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return Json(new { data = medicine, success = true });
         }
 
-        public IActionResult Get(string id)
-        {
-            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "MedicalHistoryMedicines");
-
-            List<Medicine> medicines = new List<Medicine>();
-
-            for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
-            {
-                var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                Medicine medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines").Medicines;
-                medicines.Add(medicine);
-            }
-            return Json(new { data = medicines, success = true });
-        }
 
         [HttpDelete]
         public IActionResult Delete(int? id)

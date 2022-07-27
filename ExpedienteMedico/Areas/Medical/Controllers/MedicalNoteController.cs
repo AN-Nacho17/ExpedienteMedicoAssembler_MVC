@@ -91,15 +91,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             //return RedirectToAction("Index");
         }
 
-
-        #region API
-
-        public IActionResult GetAll()
-        {
-            var medicalNote = _unitOfWork.MedicalNote.GetAll();
-            return Json(new { data = medicalNote, success = true });
-        }
-        #endregion
     }
 }
 

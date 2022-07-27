@@ -4,6 +4,7 @@ using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -130,22 +131,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         {
             var suffering = _unitOfWork.Suffering.GetAll();
             return Json(new { data = suffering, success = true });
-        }
-
-        public IActionResult Get(string id)//User id or expedient id, is the same
-        {
-            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                includeProperties: "MedicalHistorySufferings");
-
-            List<Suffering> sufferings = new List<Suffering>();
-
-            for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
-            {
-                var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                Suffering suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings").Sufferings;
-                sufferings.Add(suffering);
-            }
-            return Json(new { data = sufferings, success = true });
         }
 
         [HttpDelete]
