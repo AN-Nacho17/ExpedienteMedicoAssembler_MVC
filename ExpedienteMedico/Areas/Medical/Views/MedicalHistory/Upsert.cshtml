@@ -18,18 +18,22 @@
 
                 <div asp-validation-summary="All"></div>
                 <br />
+                
+                <label class="form-label">Treatments</label>
                 <div>
                     @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
                     {
                         <table>
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians)
-                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments)
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name)
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
                         </table>
                     }
+                    
+                    <label class="form-label">Sufferings</label>
                 </div>
                 <br />
                 <div>
@@ -38,28 +42,32 @@
                         <table>
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians)
-                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings)
+                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings.Name)
+                                    @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
                         </table>
                     }
                 </div>
                 <br />
+                
+                <label class="form-label">Medicines</label>
                 <div>
                     @for (int i = 0; i < @Model.MedicalHistoryMedicines.Count(); i++)
                     {
                         <table>
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians)
-                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines)
+                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines.Name)
+                                    @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
                         </table>
                     }
                 </div>
                 <br />
+                
+                <label class="form-label">Medical Notes</label>
                 <div>
                 @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
                 {
@@ -75,6 +83,8 @@
                 }
                 </div>
                 <br />
+                
+                <label class="form-label">Medical Images</label>
                 <div>
                 @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
                 {
