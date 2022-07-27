@@ -50,7 +50,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
+                    var treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
                 }
             }
 
@@ -59,7 +59,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
+                    var suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
                 }
             }
 
@@ -68,7 +68,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                    var physicianSpecialty = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines");
+                    var medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines");
                 }
             }
 

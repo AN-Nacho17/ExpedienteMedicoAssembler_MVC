@@ -26,6 +26,24 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(objSufferingList);
         }
 
+        public IActionResult View(string id)
+        {
+
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalHistorySufferings");
+
+            List<Suffering> sufferings = new List<Suffering>();
+
+            for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
+                Suffering suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings").Sufferings;
+                sufferings.Add(suffering);
+            }
+
+            return View(sufferings);
+        }
+
         public IActionResult Create()
         {
             return View();
