@@ -96,19 +96,18 @@ namespace ExpedienteMedico.Areas.Api
         [HttpGet]
         public IActionResult GetMedicalNotes(string id)
         {
-                MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                    includeProperties: "MedicalNotes");
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalNotes");
 
-                List<MedicalNote> notes = new List<MedicalNote>();
+            List<MedicalNote> notes = new List<MedicalNote>();
 
-                for (int j = 0; j < medicalHistory.MedicalNotes.Count(); j++)
-                {
-                    var aux = medicalHistory.MedicalNotes.ElementAt(j);
-                    MedicalNote note = _unitOfWork.MedicalNote.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "MedicalNotes");
-                    notes.Add(note);
-                }
+            for (int j = 0; j < medicalHistory.MedicalNotes.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalNotes.ElementAt(j);
+                notes.Add(aux);
+            }
 
-                return Json(new { data = notes, success = true });
+            return Json(new { data = notes, success = true });
         }
 
         //HISTORIAL MEDICO COMPLE
@@ -158,7 +157,23 @@ namespace ExpedienteMedico.Areas.Api
             return Json(new { data = medicalHistory, success = true });
         }
 
+        [Route("labimages")]
+        [HttpGet]
+        public IActionResult GetImages(string id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalImages");
 
+            List<MedicalImage> images = new List<MedicalImage>();
+
+            for (int j = 0; j < medicalHistory.MedicalImages.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalImages.ElementAt(j);
+                images.Add(aux);
+            }
+
+            return Json(new { data = images, success = true });
+        }
 
 
     }
