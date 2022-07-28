@@ -48,7 +48,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         [HttpPost]
         public IActionResult CreateForHistory(MedicalImageVM objMedicalImage, IFormFile? file)
         {
-            if (ModelState.IsValid)
+            if (objMedicalImage.Image.Description != null)
             {
 
                 #region imageManage
@@ -90,8 +90,15 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 #endregion
 
             }
+            else
+            {
+                TempData["error"] = "A description is a requirement";
+                return View();
+            }
 
-            return RedirectToAction("Index");
+            string url = "/Medical/MedicalHistory/Upsert?id=" + objMedicalImage.Image.MedicalHistoryId;
+
+            return Redirect(url);
         }
 
         [HttpPost]

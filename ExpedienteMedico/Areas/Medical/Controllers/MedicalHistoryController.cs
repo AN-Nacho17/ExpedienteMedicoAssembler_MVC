@@ -55,6 +55,10 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                     var treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
                 }
             }
+            else
+            {
+                medicalHistory.MedicalHistoryTreatments = new List<MedicalHistory_Treatment>();
+            }
 
             if (medicalHistory.MedicalHistorySufferings != null)
             {
@@ -64,14 +68,34 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                     var suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
                 }
             }
+            else
+            {
+                medicalHistory.MedicalHistorySufferings = new List<MedicalHistory_Suffering>();
+            }
 
             if (medicalHistory.MedicalHistoryMedicines != null)
             {
                 for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                    var medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines");
+                    var medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(
+                        u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId,
+                        includeProperties: "Medicines");
                 }
+            }
+            else
+            {
+                medicalHistory.MedicalHistoryMedicines = new List<MedicalHistory_Medicine>();
+            }
+
+            if (medicalHistory.MedicalNotes == null)
+            {
+                medicalHistory.MedicalNotes = new List<MedicalNote>();
+            }
+
+            if (medicalHistory.MedicalImages == null)
+            {
+                medicalHistory.MedicalImages = new List<MedicalImage>();
             }
 
 

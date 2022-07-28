@@ -102,15 +102,19 @@ namespace ExpedienteMedico.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [StringLength(9)]
+            [Display(Name = "User DNI")]
             public string UserId { get; set; } //Cedula
 
             [Required]
+            [Display(Name = "Complete name")]
             public string CompleteName { get; set; }
 
             [Required]
             public DateTime LastDateAttended { get; set; }
 
             [Required]
+            [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
             public string? Role { get; set; }
