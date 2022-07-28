@@ -42,7 +42,8 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                sufferings.Add(aux);
+                var suffering = aux.Sufferings;
+                sufferings.Add(suffering);
             }
             return Json(new { data = sufferings, success = true });
         }
@@ -61,7 +62,8 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                treatments.Add(aux);
+                var treatment = aux.Treatments;
+                treatments.Add(treatment);
             }
 
             return Json(new { data = treatments, success = true });
@@ -80,7 +82,8 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                medicines.Add(aux);
+                var medicine = aux.Medicines;
+                medicines.Add(medicine);
             }
             return Json(new { data = medicines, success = true });
         }
