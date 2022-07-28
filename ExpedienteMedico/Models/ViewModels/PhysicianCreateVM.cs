@@ -6,8 +6,9 @@ namespace ExpedienteMedico.Models.ViewModels
 {
     public class PhysicianCreateVM
     {
-        [ValidateNever]
         public Physician Physician { get; set; }
+
+        [ValidateNever]
         public List<SpecialtySelectVM> Specialties { get; set; }
 
     }

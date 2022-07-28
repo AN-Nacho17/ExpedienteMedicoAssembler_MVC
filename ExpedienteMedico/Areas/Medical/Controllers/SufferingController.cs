@@ -56,22 +56,30 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 _unitOfWork.Suffering.Add(Suffering);
                 _unitOfWork.Save();
                 savedSuffering = _unitOfWork.Suffering.GetLast();
+
+
+                Physician Physician =
+                    _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email);
+
+                var historySuffering = new MedicalHistory_Suffering()
+                {
+                    MedicalHistoryId = vm.HistoryId,
+                    SufferingId = savedSuffering.Id,
+                    PhysicianId = Physician.Id, 
+                    Physicians = Physician
+                };
+
+                _unitOfWork.HistorySuffering.Add(historySuffering);
+                _unitOfWork.Save();
+                TempData["success"] = "Suffering added successfully";
+                string url = "/Medical/MedicalHistory/Upsert?id=" + vm.HistoryId;
+                return Redirect(url);
+            }
+            else
+            {
+                return View(vm);
             }
 
-            int PhysicianId =
-                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
-
-            var historySuffering = new MedicalHistory_Suffering()
-            {
-                MedicalHistoryId = vm.HistoryId,
-                SufferingId = savedSuffering.Id,
-                PhysicianId = PhysicianId
-            };
-
-            _unitOfWork.HistorySuffering.Add(historySuffering);
-            _unitOfWork.Save();
-            TempData["success"] = "Suffering added successfully";
-            return RedirectToAction("Index");
         }
 
         public IActionResult Create()

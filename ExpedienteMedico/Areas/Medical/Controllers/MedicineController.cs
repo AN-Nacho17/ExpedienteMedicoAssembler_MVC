@@ -55,22 +55,29 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 _unitOfWork.Medicine.Add(Medicine);
                 _unitOfWork.Save();
                 savedMedicine = _unitOfWork.Medicine.GetLast();
+
+
+                Physician Physician =
+                    _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email);
+
+                var historyMedicine = new MedicalHistory_Medicine()
+                {
+                    MedicalHistoryId = vm.HistoryId,
+                    MedicineId = savedMedicine.Id,
+                    PhysicianId = Physician.Id,
+                    Physicians = Physician
+                };
+
+                _unitOfWork.HistoryMedicine.Add(historyMedicine);
+                _unitOfWork.Save();
+                TempData["success"] = "Medicine added successfully";
+                string url = "/Medical/MedicalHistory/Upsert?id=" + vm.HistoryId;
+                return Redirect(url);
             }
-
-            int PhysicianId =
-                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
-
-            var historyMedicine = new MedicalHistory_Medicine()
+            else
             {
-                MedicalHistoryId = vm.HistoryId,
-                MedicineId = savedMedicine.Id,
-                PhysicianId = PhysicianId
-            };
-
-            _unitOfWork.HistoryMedicine.Add(historyMedicine);
-            _unitOfWork.Save();
-            TempData["success"] = "Medicine added successfully";
-            return RedirectToAction("Index");
+                return View(vm);
+            }
         }
 
         public IActionResult Create()

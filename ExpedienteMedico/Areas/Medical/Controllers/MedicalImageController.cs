@@ -36,7 +36,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             MedicalImageVM objMedicalImage = new MedicalImageVM();
             objMedicalImage.Image = new MedicalImage();
 
-            
+
             int PhysicianId =
                 _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
             objMedicalImage.Image.PhysicianId = PhysicianId;
@@ -48,7 +48,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         [HttpPost]
         public IActionResult CreateForHistory(MedicalImageVM objMedicalImage, IFormFile? file)
         {
-            if (objMedicalImage.Image.Description != null)
+            if (ModelState.IsValid)
             {
 
                 #region imageManage
@@ -87,18 +87,15 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 _unitOfWork.Save();
                 TempData["success"] = "Medical image added succesfully";
 
+                string url = "/Medical/MedicalHistory/Upsert?id=" + objMedicalImage.Image.MedicalHistoryId;
+                return Redirect(url);
                 #endregion
 
             }
             else
             {
-                TempData["error"] = "A description is a requirement";
-                return View();
+                return View(objMedicalImage);
             }
-
-            string url = "/Medical/MedicalHistory/Upsert?id=" + objMedicalImage.Image.MedicalHistoryId;
-
-            return Redirect(url);
         }
 
         [HttpPost]
