@@ -15,39 +15,38 @@
             <div class="border p-3 mt-4 row">
 
                 <div class="col-12 pb-2">
-                    <h2 class="text-primary">@(Model.UserId == null ? "Create" : "Update") Physician</h2><hr />
+                    <h2 class="text-primary text-center">@(Model.UserId == null ? "Create" : "Update") Physician</h2><hr />
                 </div>
 
                 <div asp-validation-summary="All"></div>
                 <br />
-                <label class="form-label">Treatments</label>
-                <br />
-                <br />
+                <label class="form-label text-black">Treatments</label>
+                <br /><br />
                 <div class="text-info">
                     @for (int i = 0; i < @Model.MedicalHistoryTreatments.Count(); i++)
                     {
-                        <table class="table table-stripped table-sm text-info">
+                        <table class="table table-stripped table-sm table-info text-info" style="width=100%">
                             <thead class="text-dark">
-                            <tr>
-                                <td>
-                                    Name
-                                </td>
-                                <td>
-                                    Description
-                                </td>
-                                <td>
-                                    Physician name
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Description
+                                    </td>
+                                    <td>
+                                        Physician name
+                                    </td>
+                                </tr>
                             </thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name) 
+                                <td width=30%>
+                                    @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name)
                                 </td>
-                                <td>
+                                <td width=30%>
                                     @Html.Raw(@Model.MedicalHistoryTreatments.ElementAt(i).Treatments.Description)
                                 </td>
-                                <td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
@@ -58,22 +57,36 @@
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new treatment
                     </a>
-                    <br />
-                    <br />
+                    <br /><br />
                 </div>
-                <br />
-                <br />
-                <label class="form-label">Sufferings</label>
-                <br />
-                <br />
+                <br /><br /><br /><br />
+                <label class="form-label text-black">Sufferings</label>
+                <br /><br />
                 <div class="text-info">
                     @for (int i = 0; i < @Model.MedicalHistorySufferings.Count(); i++)
                     {
-                        <table>
+                        <table class="table table-stripped table-sm table-info text-info" style="width=100%">
+                            <thead class="text-dark">
+                                <tr>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Description
+                                    </td>
+                                    <td>
+                                        Physician name
+                                    </td>
+                                </tr>
+                            </thead>
                             <tr>
-                                <td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings.Name)
+                                </td>
+                                <td width=30%>
                                     @Html.Raw(@Model.MedicalHistorySufferings.ElementAt(i).Sufferings.Description)
+                                </td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
@@ -84,21 +97,30 @@
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new suffering
                     </a>
-                    <br />
-                    <br />
+                    <br /><br />
                 </div>
-                <br />
-                <br />
-                <label class="form-label">Medicines</label>
-                <br />
-                <br />
-                <div>
+                <br /><br /><br /><br />
+                <label class="form-label text-black">Medicines</label>
+                <br /><br />
+                <div class="text-info">
                     @for (int i = 0; i < @Model.MedicalHistoryMedicines.Count(); i++)
                     {
-                        <table>
+                        <table class="table table-stripped table-sm table-info text-info" style="width=100%">
+                            <thead class="text-dark">
+                                <tr>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Physician
+                                    </td>
+                                </tr>
+                            </thead>
                             <tr>
-                                <td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines.Name)
+                                </td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians.Name)
                                 </td>
                             </tr>
@@ -109,23 +131,37 @@
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medicine
                     </a>
-                    <br />
-                    <br />
+                    <br /><br />
                 </div>
-                <br />
-                <br />
-                <label class="form-label">Medical Notes</label>
-                <br />
-                <br />
+                <br /><br /><br /><br />
+                <label class="form-label text-black">Medical Notes</label>
+                <br /><br />
                 <div>
                     @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
                     {
-                        <table>
+                        <table class="table table-stripped table-sm table-info text-info" style="width=100%">
+                            <thead class="text-dark">
+                                <tr>
+                                    <td>
+                                        Note
+                                    </td>
+                                    <td>
+                                        Note date
+                                    </td>
+                                    <td>
+                                        Physician name
+                                    </td>
+                                </tr>
+                            </thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Note)
+                                <td width=30%>
+                                    @Html.Raw(@Model.MedicalNotes.ElementAt(i).Note)
+                                </td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).NoteDate)
-                                    @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Physician)
+                                </td>
+                                <td width=30%>
+                                    @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Physician.Name)
                                 </td>
                             </tr>
                         </table>
@@ -135,49 +171,44 @@
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medical note
                     </a>
-                    <br />
-                    <br />
+                    <br /><br />
                 </div>
-                <br />
-
-                <label class="form-label">Medical Images</label>
-                <br />
-                <br />
+                <br /><br /><br /><br />
+                <label class="form-label text-black">Medical Images</label>
+                <br /><br />
                 <div>
-                    @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
-                    {
-                        <table>
-                            <tr>
-                                <td>
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="row p-2">
-                                            @*@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Id)*@
-                                            <div class="card" style="width: 15rem; height: 15rem;">
-                                                <img src="~/@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)" class="card-img-top rounded" />
-                                            </div>
-                                            <br>
-                                            <div class="card-body">
-                                                <div class="pl-1">
-                                                    <p class="card-title h5 text-primary">@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Description)</p>
+                    <div class="card-group">
+                        @for (int i = 0; i < @Model.MedicalImages.Count(); i++)
+                        {
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <div class="row p-2">
+                                                @*@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).Id)*@
+                                                <div class="card border-info" style="max-width: 25rem;">
+                                                    <img class="card-img-top" src="~/@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)" class="card-img-top rounded" alt="Card image cap" />
+                                                </div>
+                                                <br>
+                                                <div class="card-body text-info">
+                                                    <div class="pl-1">
+                                                        <h2 class="card-title h5 text-info">@Html.Raw(@Model.MedicalImages.ElementAt(i).Description)</h2>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    }
-                    <br />
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
                     <a asp-controller="MedicalImage" asp-action="CreateForHistory" asp-route-id="@Model.UserId" class="btn btn-info btn-sm text-success">
                         <i class="bi bi-plus-circle"></i>
                         &nbsp; Add new medical image
                     </a>
-                    <br />
-                    <br />
+                    <br /><br /><br />
                 </div>
-                <br />
-                <br />
-
+                <br /><br /><br />
                 <a asp-area="User" asp-action="Index" asp-controller="User" class="btn btn-primary text-info">
                     Back to Users
                 </a>
