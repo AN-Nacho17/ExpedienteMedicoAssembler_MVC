@@ -22,6 +22,7 @@ namespace ExpedienteMedico.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [ValidateNever]
         [Display(Name = "Phone number")]
         public int PhoneNumber { get; set; }
 
@@ -31,6 +32,7 @@ namespace ExpedienteMedico.Models
         [Required]
         public string UserId { get; set; }
 
+        [ValidateNever]
         public User User { get; set; }
 
 

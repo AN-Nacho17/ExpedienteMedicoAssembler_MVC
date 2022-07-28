@@ -8,9 +8,10 @@ namespace ExpedienteMedico.Models
         [Key]
         public int Id { get; set; }
         
-        [Required]
+        [ValidateNever]
         public string ImageUrl { get; set; }
 
+        [ValidateNever]
         public string PdfUrl { get; set; }
         
         [Required]
@@ -22,8 +23,8 @@ namespace ExpedienteMedico.Models
         [ValidateNever]
         public Physician Physician { get; set; }
 
-        [Required]
         [StringLength(200)]
+        [Required]
         public string Description { get; set; }
 
     }

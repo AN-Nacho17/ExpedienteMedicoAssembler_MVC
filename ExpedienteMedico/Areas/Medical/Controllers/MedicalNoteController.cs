@@ -1,7 +1,9 @@
 ﻿using ExpedienteMedico.Models;
+using ExpedienteMedico.Models.ViewModels;
 using ExpedienteMedico.Repository.IRepository;
 using ExpedienteMedico.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,47 +16,45 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostEnvironment;
+        private UserManager<IdentityUser> _userManager;
 
-        public MedicalNoteController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public MedicalNoteController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult CreateForHistory(string id)
         {
-            IEnumerable<MedicalNote> objMedicalNoteList = _unitOfWork.MedicalNote.GetAll();
-            return View(objMedicalNoteList);
+            MedicalNoteVM objMedicalNote = new MedicalNoteVM();
+            objMedicalNote.Note = new MedicalNote();
+
+
+            int PhysicianId =
+                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
+            objMedicalNote.Note.PhysicianId = PhysicianId;
+            objMedicalNote.Note.MedicalHistoryId = id;
+
+            return View(objMedicalNote);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(MedicalNote obj)
+        public IActionResult CreateForHistory(MedicalNoteVM vm)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.MedicalNote.Add(obj);
+                _unitOfWork.MedicalNote.Add(vm.Note);
                 _unitOfWork.Save();
+                TempData["success"] = "Medical note added succesfully";
+                string url = "/Medical/MedicalHistory/Upsert?id=" + vm.Note.MedicalHistoryId;
+                return Redirect(url);
             }
-            TempData["success"] = "Medical Note created succesfully";
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(MedicalNote obj)
-        {
-
-            if (ModelState.IsValid)
+            else
             {
-                _unitOfWork.MedicalNote.Update(obj);
-                _unitOfWork.Save();
+                return View(vm);
             }
-
-            TempData["success"] = "Medical Note edited succesfully";
-            return RedirectToAction("Index");
         }
-
         public IActionResult Edit(int? id)
         {
             if (id == null)

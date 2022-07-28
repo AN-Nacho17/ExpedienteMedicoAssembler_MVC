@@ -50,29 +50,38 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         [HttpPost]
         public IActionResult CreateForHistory(TreatmentVM vm) //User id
         {
-            Treatment savedTreatment = null;
             if (ModelState.IsValid)
             {
-                var treatment = new Treatment() {Name = vm.Treatment.Name, Description = vm.Treatment.Description };
+
+                Treatment savedTreatment = null;
+                var treatment = new Treatment() { Name = vm.Treatment.Name, Description = vm.Treatment.Description };
                 _unitOfWork.Treatment.Add(treatment);
                 _unitOfWork.Save();
                 savedTreatment = _unitOfWork.Treatment.GetLast();
+
+
+                Physician Physician =
+                    _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email);
+
+                var historyTreatment = new MedicalHistory_Treatment()
+                {
+                    MedicalHistoryId = vm.HistoryId,
+                    TreatmentId = savedTreatment.Id,
+                    PhysicianId = Physician.Id,
+                    Physicians = Physician
+                };
+
+                _unitOfWork.HistoryTreatment.Add(historyTreatment);
+                _unitOfWork.Save();
+                TempData["success"] = "Treatment added successfully";
+
+                string url = "/Medical/MedicalHistory/Upsert?id=" + vm.HistoryId;
+                return Redirect(url);
             }
-
-            int PhysicianId =
-                _unitOfWork.Physician.GetByEmail(_userManager.FindByNameAsync(User.Identity.Name).Result.Email).Id;
-
-            var historyTreatment = new MedicalHistory_Treatment()
+            else
             {
-                MedicalHistoryId = vm.HistoryId,
-                TreatmentId = savedTreatment.Id,
-                PhysicianId = PhysicianId
-            };
-
-            _unitOfWork.HistoryTreatment.Add(historyTreatment);
-            _unitOfWork.Save();
-            TempData["success"] = "Treatment added successfully";
-            return RedirectToAction("Index");
+                return View(vm);
+            }
         }
 
         public IActionResult Create()

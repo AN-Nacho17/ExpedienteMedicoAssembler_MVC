@@ -52,7 +52,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                    var treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments");
+                    var treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments,Physicians");
                 }
             }
             else
@@ -65,7 +65,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                    var suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings");
+                    var suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings,Physicians");
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                     var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
                     var medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(
                         u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId,
-                        includeProperties: "Medicines");
+                        includeProperties: "Medicines,Physicians");
                 }
             }
             else
@@ -88,12 +88,28 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 medicalHistory.MedicalHistoryMedicines = new List<MedicalHistory_Medicine>();
             }
 
-            if (medicalHistory.MedicalNotes == null)
+            if (medicalHistory.MedicalNotes != null)
+            {
+                for (int i = 0; i<medicalHistory.MedicalNotes.Count; i++)
+                {
+                    var aux = medicalHistory.MedicalNotes.ElementAt(i);
+                    var note = _unitOfWork.MedicalNote.GetFirstOrDefault(x => x.Id == aux.Id, null, includeProperties:"Physician");
+                }
+            }
+            else
             {
                 medicalHistory.MedicalNotes = new List<MedicalNote>();
             }
 
-            if (medicalHistory.MedicalImages == null)
+            if (medicalHistory.MedicalImages != null)
+            {
+                for (int i = 0; i < medicalHistory.MedicalImages.Count; i++)
+                {
+                    var aux = medicalHistory.MedicalImages.ElementAt(i);
+                    var note = _unitOfWork.MedicalImage.GetFirstOrDefault(x => x.Id == aux.Id, null, includeProperties: "Physician");
+                }
+            }
+            else
             {
                 medicalHistory.MedicalImages = new List<MedicalImage>();
             }
@@ -102,102 +118,6 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return View(medicalHistory);
 
         }
-
-        //POST **********************************
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Upsert(MedicalHistory obj, IFormFile? file)
-        {
-            bool IsGetted = false;
-            if (ModelState.IsValid)
-            {
-
-                #region imageManage
-                //string wwwRootPath = _hostEnvironment.WebRootPath;
-
-                //if (file != null)
-                //{
-                //    string fileName = Guid.NewGuid().ToString();
-                //    var uploads = Path.Combine(wwwRootPath, @"images\Physicians");
-                //    var extension = Path.GetExtension(file.FileName);
-
-                //    if (obj.Physician.PicturePath != null)
-                //    {
-                //        var oldImageUrl = Path.Combine(wwwRootPath, obj.Physician.PicturePath);
-                //        if (System.IO.File.Exists(oldImageUrl))
-                //        {
-                //            System.IO.File.Delete(oldImageUrl);
-                //        }
-                //    }
-
-                //    using (var fileStreams =
-                //           new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                //    {
-                //        file.CopyTo(fileStreams);
-                //    }
-
-                //    obj.Physician.PicturePath = @"images\Physicians\" + fileName + extension;
-                //}
-
-                #endregion
-
-                //var Physician = obj.Physician;
-
-                //if (obj.Physician.Id == 0)
-                //{
-                //    _unitOfWork.Physician.Add(obj.Physician);
-                //    _unitOfWork.Save();
-                //    IsGetted = true;
-                //    Physician = _unitOfWork.Physician.GetLast();
-                //}
-
-                #region specialtiesManage
-
-
-                //foreach (var selectedSpecialty in obj.Specialties.Where(c => c.IsSelected))
-                //{
-                //    var specialty = new Specialty { Id = selectedSpecialty.SpecialtyId, Name = selectedSpecialty.Name };
-
-                //    var physicianSpecialty = new PhysicianSpecialty
-                //    {
-                //        PhysicianId = Physician.Id,
-                //        SpecialtyId = specialty.Id
-                //    };
-
-                //    var physicianSpecialtyAux = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(
-                //        u => u.SpecialtyId == selectedSpecialty.SpecialtyId, x => x.PhysicianId == Physician.Id);
-                //    if (physicianSpecialtyAux == null)
-                //    {
-                //        Physician.PhysicianSpecialties.Add(physicianSpecialty);
-                //        _unitOfWork.Physician.Add(Physician);
-                //    }
-                //}
-
-                //foreach (var selectedSpecialty in obj.Specialties.Where(c => !c.IsSelected))
-                //{
-                //    var physicianSpecialtyAux = _unitOfWork.PhysicianSpecialty.GetFirstOrDefault(
-                //        u => u.SpecialtyId == selectedSpecialty.SpecialtyId, x => x.PhysicianId == Physician.Id);
-                //    if (physicianSpecialtyAux != null)
-                //    {
-                //        _unitOfWork.PhysicianSpecialty.Remove(physicianSpecialtyAux);
-                //    }
-
-                //}
-
-                #endregion
-
-                //_unitOfWork.Physician.Update(Physician);
-                //if (!IsGetted)
-                //    TempData["success"] = "Physician updated successfully";
-                //else
-                //    TempData["success"] = "Physician saved successfully";
-
-                //_unitOfWork.Save();
-
-            }
-            return Redirect("/User/User/Index");
-        }
-
         #endregion
 
         #region API
