@@ -42,8 +42,7 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistorySufferings.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistorySufferings.ElementAt(j);
-                Suffering suffering = _unitOfWork.HistorySuffering.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.SufferingId == aux.SufferingId, includeProperties: "Sufferings").Sufferings;
-                sufferings.Add(suffering);
+                sufferings.Add(aux);
             }
             return Json(new { data = sufferings, success = true });
         }
@@ -62,8 +61,7 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistoryTreatments.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistoryTreatments.ElementAt(j);
-                Treatment treatment = _unitOfWork.HistoryTreatment.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.TreatmentId == aux.TreatmentId, includeProperties: "Treatments").Treatments;
-                treatments.Add(treatment);
+                treatments.Add(aux);
             }
 
             return Json(new { data = treatments, success = true });
@@ -82,8 +80,7 @@ namespace ExpedienteMedico.Areas.Api
             for (int j = 0; j < medicalHistory.MedicalHistoryMedicines.Count(); j++)
             {
                 var aux = medicalHistory.MedicalHistoryMedicines.ElementAt(j);
-                Medicine medicine = _unitOfWork.HistoryMedicine.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.MedicineId == aux.MedicineId, includeProperties: "Medicines").Medicines;
-                medicines.Add(medicine);
+                medicines.Add(aux);
             }
             return Json(new { data = medicines, success = true });
         }
