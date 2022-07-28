@@ -94,14 +94,14 @@ namespace ExpedienteMedico.Areas.Api
         public IActionResult GetMedicalNotes(string id)
         {
                 MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
-                    includeProperties: "MedicalNotes");
+                    includeProperties: "MedicalNote");
 
                 List<MedicalNote> notes = new List<MedicalNote>();
 
                 for (int j = 0; j < medicalHistory.MedicalNotes.Count(); j++)
                 {
                     var aux = medicalHistory.MedicalNotes.ElementAt(j);
-                    MedicalNote note = _unitOfWork.MedicalNote.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "MedicalNotes");
+                    MedicalNote note = _unitOfWork.MedicalNote.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "MedicalNote");
                     notes.Add(note);
                 }
 
