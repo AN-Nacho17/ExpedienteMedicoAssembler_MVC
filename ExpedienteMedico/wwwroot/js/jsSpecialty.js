@@ -23,7 +23,7 @@ function loadDataTable() {
 
                                 <a onClick=Delete('/Administration/Specialty/Delete/${data}')
                                    class="btn btn-primary mx-4">
-							    <i class="bi bi-pencil-square"></i>Delete</a>
+							    <i class="bi bi-trash"></i>Delete</a>
                             </div>
                             `;
                 },

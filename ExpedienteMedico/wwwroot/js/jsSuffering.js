@@ -17,7 +17,7 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <div class="btn-group w-75">
+                            <div class="btn-group w-75 sm">
 
                                 <a href="/Medical/Suffering/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
@@ -25,11 +25,11 @@ function loadDataTable() {
 
                                 <a href="/Medical/Suffering/Suspend?id=${data}"
                                    class="btn btn-primary mx-2">
-							    <i class="bi bi-pencil-square"></i>Suspend or activate</a>
+							    <i class="bi bi-clipboard-check-fill"></i>Suspend or activate</a>
 
                                 <a onClick=Delete('/Medical/Suffering/Delete/${data}')
                                    class="btn btn-primary mx-2">
-							    <i class="bi bi-pencil-square"></i>Delete</a>
+							    <i class="bi bi-trash"></i>Delete</a>
                             </div>
                             `;
                 },
