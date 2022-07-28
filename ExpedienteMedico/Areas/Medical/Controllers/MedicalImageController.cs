@@ -165,8 +165,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             for (int j = 0; j < medicalHistory.MedicalImages.Count(); j++)
             {
                 var aux = medicalHistory.MedicalImages.ElementAt(j);
-                MedicalImage image = _unitOfWork.MedicalImage.GetFirstOrDefault(u => u.MedicalHistoryId == aux.MedicalHistoryId, x => x.Id == aux.Id, includeProperties: "Images");
-                images.Add(image);
+                images.Add(aux);
             }
 
             return Json(new { data = images, success = true });
