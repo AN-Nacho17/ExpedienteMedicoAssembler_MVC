@@ -222,8 +222,11 @@
                                                 <div class="card-body text-info">
                                                     <div class="pl-1">
                                                         <h2 class="card-title h5 text-info">@Html.Raw(@Model.MedicalImages.ElementAt(i).Description)</h2>
+                                                        <br>
+                                                        <label> Physician Name: </label> @Html.DisplayFor(it => it.MedicalNotes.ElementAt(i).Physician.Name)
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </td>
