@@ -157,7 +157,23 @@ namespace ExpedienteMedico.Areas.Api
             return Json(new { data = medicalHistory, success = true });
         }
 
+        [Route("labimages")]
+        [HttpGet]
+        public IActionResult GetImages(string id)
+        {
+            MedicalHistory medicalHistory = _unitOfWork.MedicalHistory.GetFirstOrDefault(x => x.UserId == id, null,
+                includeProperties: "MedicalImages");
 
+            List<MedicalImage> images = new List<MedicalImage>();
+
+            for (int j = 0; j < medicalHistory.MedicalImages.Count(); j++)
+            {
+                var aux = medicalHistory.MedicalImages.ElementAt(j);
+                images.Add(aux);
+            }
+
+            return Json(new { data = images, success = true });
+        }
 
 
     }
