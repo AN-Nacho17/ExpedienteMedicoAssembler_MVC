@@ -29,13 +29,23 @@ namespace ExpedienteMedico.Areas.User.Controllers
         public IActionResult Login(string email, string password)
         {
             IdentityUser user = _userManager.FindByEmailAsync(email).Result;
-            if (user != null && _userManager.CheckPasswordAsync(user, password).Result)
+            bool isCorrect = _userManager.CheckPasswordAsync(user, password).Result;
+            if (user != null && isCorrect)
             {
                 return Json(new { data = user, success = true });
             }
             else
             {
-                return Json(new { data = "No se pudo encontrar el usuario", success = false });
+                string errorData = "";
+                if (user == null)
+                {
+                    errorData = "Usuario no encontrado";
+                }
+                else if (isCorrect == false)
+                {
+                    errorData = "Contraseña incorrecta";
+                }
+                return Json(new { data = errorData, success = false });
             }
         }
 
