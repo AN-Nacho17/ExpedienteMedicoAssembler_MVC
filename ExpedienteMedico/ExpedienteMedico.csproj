@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\MedicalImages\" />
+    <Folder Include="wwwroot\pdfs\MedicalPdfs\" />
   </ItemGroup>
 
 </Project>

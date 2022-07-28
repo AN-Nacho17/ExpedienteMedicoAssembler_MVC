@@ -46,7 +46,7 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateForHistory(MedicalImageVM objMedicalImage, IFormFile? file)
+        public IActionResult CreateForHistory(MedicalImageVM objMedicalImage, IFormFile? file, IFormFile? filePdf)
         {
             if (ModelState.IsValid)
             {
@@ -77,6 +77,34 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                     }
 
                     objMedicalImage.Image.ImageUrl = @"images\MedicalImages\" + fileName + extension;
+                }
+
+                #endregion
+
+                #region pdfManage
+
+                if (filePdf != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"pdfs\MedicalPdfs");
+                    var extension = Path.GetExtension(filePdf.FileName);
+
+                    if (objMedicalImage.Image.PdfUrl != null)
+                    {
+                        var oldPdfUrl = Path.Combine(wwwRootPath, objMedicalImage.Image.PdfUrl);
+                        if (System.IO.File.Exists(oldPdfUrl))
+                        {
+                            System.IO.File.Delete(oldPdfUrl);
+                        }
+                    }
+
+                    using (var fileStreams =
+                           new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        filePdf.CopyTo(fileStreams);
+                    }
+
+                    objMedicalImage.Image.PdfUrl = @"pdfs\MedicalPdfs\" + fileName + extension;
                 }
 
                 #endregion
