@@ -4,6 +4,7 @@ using ExpedienteMedico.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpedienteMedico.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220728132040_addingColumnSuspend")]
+    partial class addingColumnSuspend
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +34,9 @@ namespace ExpedienteMedico.Migrations
 
                     b.Property<int>("PhysicianId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isSuspend")
+                        .HasColumnType("bit");
 
                     b.HasKey("MedicalHistoryId", "MedicineId");
 
@@ -53,6 +58,9 @@ namespace ExpedienteMedico.Migrations
                     b.Property<int>("PhysicianId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isSuspend")
+                        .HasColumnType("bit");
+
                     b.HasKey("MedicalHistoryId", "SufferingId");
 
                     b.HasIndex("PhysicianId");
@@ -72,6 +80,9 @@ namespace ExpedienteMedico.Migrations
 
                     b.Property<int>("PhysicianId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isSuspend")
+                        .HasColumnType("bit");
 
                     b.HasKey("MedicalHistoryId", "TreatmentId");
 
@@ -183,9 +194,6 @@ namespace ExpedienteMedico.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsSuspended")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -263,9 +271,6 @@ namespace ExpedienteMedico.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("IsSuspended")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -287,9 +292,6 @@ namespace ExpedienteMedico.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsSuspended")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

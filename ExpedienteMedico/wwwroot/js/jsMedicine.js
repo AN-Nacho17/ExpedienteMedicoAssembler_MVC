@@ -11,6 +11,7 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "name", "width": "15%" },
+            { "data": "isSuspended", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -20,6 +21,10 @@ function loadDataTable() {
                                 <a href="/Medical/Medicine/Edit?id=${data}"
                                    class="btn btn-primary mx-2"> 
 							    <i class="bi bi-pencil-square"></i>Edit</a>
+
+                                <a href="/Medical/Medicine/Suspend?id=${data}"
+                                   class="btn btn-primary mx-2">
+							    <i class="bi bi-pencil-square"></i>Suspend or activate</a>
 
                                 <a onClick=Delete('/Medical/Medicine/Delete/${data}')
                                    class="btn btn-primary mx-2">

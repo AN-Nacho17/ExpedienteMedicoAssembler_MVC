@@ -102,6 +102,24 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Suspend(int? id)
+        {
+            var treatment = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
+            if (treatment.IsSuspended == false)
+            {
+                treatment.IsSuspended = true;
+                TempData["success"] = "Treatment suspended succesfully";
+            }
+            else
+            {
+                treatment.IsSuspended = false;
+                TempData["success"] = "Treatment activated succesfully";
+            }
+            _unitOfWork.Treatment.Update(treatment);
+            _unitOfWork.Save();
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Treatment obj)

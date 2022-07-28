@@ -7,7 +7,7 @@ namespace ExpedienteMedico.Models.IntermediateTables
 
         [Required]
         public string MedicalHistoryId { get; set; }
-        
+
 
         [Required]
         public int TreatmentId { get; set; }

@@ -14,5 +14,8 @@ namespace ExpedienteMedico.Models
         [StringLength(200)]
         public string Description { get; set; }
 
+        [Required]
+        public bool IsSuspended { get; set; }
+
     }
 }

@@ -9,5 +9,8 @@ namespace ExpedienteMedico.Models
 
         [Required]
         public string Name {get; set; }
+
+        [Required]
+        public bool IsSuspended { get; set; }
     }
 }
