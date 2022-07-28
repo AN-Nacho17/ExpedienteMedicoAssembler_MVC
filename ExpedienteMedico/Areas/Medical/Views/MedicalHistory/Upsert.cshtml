@@ -44,16 +44,16 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.Name)
                                 </td>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.Raw(@Model.MedicalHistoryTreatments.ElementAt(i).Treatments.Description)
                                 </td>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Physicians.Name)
                                 </td>
-                                <td>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistoryTreatments.ElementAt(i).Treatments.IsSuspended)
                                 </td>
                             </tr>
@@ -90,17 +90,16 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings.Name)
                                 </td>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.Raw(@Model.MedicalHistorySufferings.ElementAt(i).Sufferings.Description)
                                 </td>
-                                <td width=30%>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Physicians.Name)
                                 </td>
-                                
-                                <td>
+                                <td width=25%>
                                     @Html.DisplayFor(it => it.MedicalHistorySufferings.ElementAt(i).Sufferings.IsSuspended)
                                 </td>
                             </tr>
@@ -141,7 +140,7 @@
                                 <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Physicians.Name)
                                 </td>
-                                <td>
+                                <td width=30%>
                                     @Html.DisplayFor(it => it.MedicalHistoryMedicines.ElementAt(i).Medicines.IsSuspended)
                                 </td>
 
