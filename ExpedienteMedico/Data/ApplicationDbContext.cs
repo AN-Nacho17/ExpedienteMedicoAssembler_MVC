@@ -57,6 +57,8 @@ namespace ExpedienteMedico.Data
             modelBuilder.Entity<Physician>().HasOne(d => d.User)
                 .WithOne().OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<MedicalImage>().Property(m => m.PdfUrl).IsRequired(false);
+
         }
     }
 
