@@ -45,6 +45,12 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
                 _unitOfWork.Save();
             }
 
+            //establecer la fecha de atendido al cliente cada vez que el medico lo atienda
+            Models.User user = _unitOfWork.User.GetFirstOrDefault(x => x.Id == id, null);
+            user.LastDateAttended = DateTime.Now;
+            _unitOfWork.User.Update(user);
+            _unitOfWork.Save();
+
             //Añadiendo los objetos de datos del expediente medico del paciente
 
             if (medicalHistory.MedicalHistoryTreatments != null)

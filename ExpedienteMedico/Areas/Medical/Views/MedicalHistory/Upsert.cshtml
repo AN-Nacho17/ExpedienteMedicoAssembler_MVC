@@ -159,7 +159,7 @@
                 <label class="form-label text-black">Medical Notes</label>
                 <br /><br />
                 <div>
-                    @for (int i = 0; i < @Model.MedicalNotes.Count(); i++)
+                    @for (int i = @Model.MedicalNotes.Count() - 1; i >= 0; i--)
                     {
                         <table class="table table-stripped table-sm table-info text-info" style="width=100%">
                             <thead class="text-dark">
@@ -208,7 +208,7 @@
                                         <div>
                                             <div class="row p-2">
                                                 <div class="card border-info" style="max-width: 25rem; max-height: 30rem">
-                                                    <img class="card-img-top" src="~/@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)" class="card-img-top rounded" alt="Card image cap" />
+                                                    <img class="card-img-top" src="~/@Html.DisplayFor(it => it.MedicalImages.ElementAt(i).ImageUrl)" class="card-img-top rounded" alt="Card image cap" width="400px" height="400px"/>
                                                 </div>
                                                 
                                                 @if (@Model.MedicalImages.ElementAt(i).PdfUrl != null)

@@ -100,18 +100,18 @@ namespace ExpedienteMedico.Areas.Medical.Controllers
 
         public IActionResult Suspend(int? id)
         {
-            var treatment = _unitOfWork.Treatment.GetFirstOrDefault(x => x.Id == id, null);
-            if (treatment.IsSuspended == false)
+            var medicine = _unitOfWork.Medicine.GetFirstOrDefault(x => x.Id == id, null);
+            if (medicine.IsSuspended == false)
             {
-                treatment.IsSuspended = true;
-                TempData["success"] = "Treatment suspended succesfully";
+                medicine.IsSuspended = true;
+                TempData["success"] = "medicine suspended succesfully";
             }
             else
             {
-                treatment.IsSuspended = false;
-                TempData["success"] = "Treatment activated succesfully";
+                medicine.IsSuspended = false;
+                TempData["success"] = "medicine activated succesfully";
             }
-            _unitOfWork.Treatment.Update(treatment);
+            _unitOfWork.Medicine.Update(medicine);
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }

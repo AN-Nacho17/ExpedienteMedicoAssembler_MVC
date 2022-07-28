@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblDataPatient').DataTable({
-        order: [[4, 'asc']],
+        order: [[4, 'desc']],
         "ajax": {
             "url": "/User/User/getallmedical"
         },
