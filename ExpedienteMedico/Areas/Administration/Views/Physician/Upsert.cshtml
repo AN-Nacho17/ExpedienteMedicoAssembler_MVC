@@ -72,13 +72,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            @* <span>@Model.Specialties.ElementAt(i).Name </span> @Html.CheckBoxFor(m => m.Specialties.ElementAt(i).IsSelected, false)
-                                <label asp-for="@Model.Specialties.ElementAt(i).Name" class="form-control">@Model.Specialties.ElementAt(i).Name</label>
-                                <input asp-for="@Model.Specialties.ElementAt(i).IsSelected" type="checkbox" class="form-control" />
-                                <input asp-for="@Model.Specialties.ElementAt(i).SpecialtyId" class="form-control"/>
-                                <br>*@
                         }
-                        @*<input asp-for="@Model.Specialties.Add(@Model.Specialties.ElementAt(0))" class="form-control"/>*@
                         <br />
                     </div>
 

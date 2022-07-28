@@ -29,7 +29,7 @@ namespace ExpedienteMedico.Models
         [ValidateNever]
         public string PicturePath { get; set; }
 
-        [Required]
+        [ValidateNever]
         public string UserId { get; set; }
 
         [ValidateNever]
